@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/marginTop"
+    android:layout_height="@dimen/ItemHeight"
+    android:background="@color/WHITE">
+
+    <TextView
+        android:text="出发地"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/textColorTripWaitAddr"
+        android:textSize="@dimen/textSizeCallCar"
+        android:id="@+id/tv_tripwait_item_line1"
+      />
+
+    <ImageView
+        android:layout_width="@dimen/ImageSizeTrip"
+        android:layout_height="@dimen/ImageSizeTrip"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/icon_start"
+        android:id="@+id/iv_tripwait_item_imageview"
+         />
+
+    <TextView
+        android:text="南山科技中三路"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:textSize="@dimen/textSizeCallCar"
+        android:textColor="@color/textColorTripWaitAddr"
+        android:id="@+id/tv_tripwait_item_line2"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainbackcolor">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_margin ="@dimen/margin10"
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/tv_userinfo_name"
+            android:textColor="@color/textColorUserInfoLine1"
+            android:textSize="@dimen/textSizeCallCar"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <com.powercn.grentechtaxi.view.CircleImageView
+                android:layout_width="@dimen/ImageHeadLarge"
+                android:layout_height="@dimen/ImageHeadLarge"
+                android:layout_marginLeft ="@dimen/margin10"
+                android:src="@drawable/icon_head_mine"
+
+                android:id="@+id/iv_head" />
+
+            <TextView
+                android:layout_margin ="@dimen/margin10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/textSizeCallCar"
+                android:id="@+id/tv_content"
+                android:textColor="@color/textColorUserInfoLine2"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:layout_margin ="@dimen/margin10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/edt_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/textSizeCallCar"
+                android:textColor="@color/textColorUserInfoLine2"
+                android:background="@drawable/edit_noborder"
+                android:layout_weight="1" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/activity_divisive"></include>
+</LinearLayout>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_marginBottom="@dimen/marginBottom"
+    android:id="@+id/layout_trip_finsh">
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor">
+
+        <ImageView
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:src="@drawable/btn_back"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_title_back_finsh" />
+
+        <TextView
+            android:text="行程结束"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TitleTextViewStyle"
+            android:id="@+id/tv_title_back_hint" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:clickable="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/layout_bk"
+            android:padding="20dp"
+            style="@style/marginNoTop"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/ImageSizeTrip16px"
+                    android:layout_height="@dimen/ImageSizeTrip16px"
+                    app:srcCompat="@drawable/close_24px"
+                    android:id="@+id/iv_tripfinsh_close" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="-8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="支付"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/textSize"
+                        android:id="@+id/textView13" />
+
+                    <TextView
+                        android:text="支付王师你车费"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/textSizeCallCar"
+                        android:layout_marginTop="@dimen/marginTop"
+                        android:id="@+id/textView12" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/marginTop">
+
+                        <TextView
+                            android:text="共"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:id="@+id/textView16"
+                              />
+
+                        <TextView
+                            android:text="17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:id="@+id/textView15"
+                              />
+
+                        <TextView
+                            android:text="元"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/marginBottom"
+                android:layout_marginTop="@dimen/marginTop"
+                android:background="@color/listViewSeparatorColor"
+                android:id="@+id/textView6" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_tripfinsh_list"/>
+
+            <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/marginTop"
+                android:background="@color/listViewSeparatorColor"
+                android:id="@+id/textView7" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:text="确认支付17元"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button2"
+                    android:background="@drawable/btn_clickcolor"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

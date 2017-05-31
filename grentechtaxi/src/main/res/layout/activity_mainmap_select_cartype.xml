@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/textViewDefaultHeight"
+    android:background="@color/mainbackcolor"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:text="网约车"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_mainmap_cattype_netword"
+            android:textSize="@dimen/textSizeCallCar"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/textColorSelectCarFocus"
+            android:layout_weight="1" />
+        <TextView
+            android:text="网约车类型"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:id="@+id/tv_carnetword_hint"
+            android:layout_gravity="center"
+            android:textColor="@color/MainMapTitleBackColor"
+            android:background="@color/MainMapTitleBackColor"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:text="出租车"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_mainmap_cattype_taxi"
+            android:textSize="@dimen/textSizeCallCar"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/textColorSelectCarNoFocus"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="出租车类型"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:id="@+id/tv_cartaxi_hint"
+            android:layout_gravity="center"
+            android:textColor="@color/MainMapTitleBackColor"
+            android:background="@color/MainMapTitleBackColor"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

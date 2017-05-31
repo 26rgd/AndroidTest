@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/ItemHeight"
+    android:background="@color/mainbackcolor"
+    android:layout_marginTop="@dimen/marginTop"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/circle_green_16px_33352_easyicon"
+        android:id="@+id/iv_tripfinsh_hint"
+         />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeCallCar"
+        android:id="@+id/tv_tripfinsh_payname"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/dir15"
+        android:id="@+id/iv_tripfinsh_select"
+        android:layout_marginRight="@dimen/marginRight"
+         />
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_trip_order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/tv_title_back_hint"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的订单" />
+
+        <ImageView
+            android:id="@+id/iv_title_back_order"
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/btn_back" />
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/lv_triporder_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/listViewBkColor"
+
+         />
+
+</LinearLayout>

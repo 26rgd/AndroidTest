@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/MainMapTitleBackColor">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor">
+
+        <ImageView
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:src="@drawable/btn_back"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_title_back" />
+
+        <TextView
+            android:text="登录"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TitleTextViewStyle"
+            android:id="@+id/tv_title_back_hint" />
+        <ImageView
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:src="@drawable/btn_back"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/iv_title_back1"
+            android:visibility="invisible"/>
+    </LinearLayout>
+</LinearLayout>

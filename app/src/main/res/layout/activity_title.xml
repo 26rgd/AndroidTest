@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/TitleHeight"
+    android:background="@color/BLACK"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_title"
+        android:id="@+id/iv_titel_homepage"
+        android:background="@color/BLACK"
+         />
+
+    <TextView
+        android:text="app测试程序"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_titel_margin_left"
+        android:textSize="@dimen/textSizeTitle"
+        android:id="@+id/textView"
+        android:textColor="@color/WHITE"
+        android:layout_weight="1"
+        android:background="@color/BLACK"
+       />
+
+</LinearLayout>

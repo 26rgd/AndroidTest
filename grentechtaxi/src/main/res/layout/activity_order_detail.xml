@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:background="@color/mainbackcolor"
+    android:id="@+id/layout_oder_detail">
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor">
+
+        <ImageView
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:src="@drawable/btn_back"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_order_detail_back" />
+
+        <TextView
+            android:text="订单详情"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TitleTextViewStyle"
+            android:id="@+id/tv_title_back_hint" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin">
+            <com.powercn.grentechtaxi.view.CircleImageView
+                android:layout_height="@dimen/ImageHeadLarge"
+                android:layout_width="@dimen/ImageHeadLarge"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_driver"
+                ></com.powercn.grentechtaxi.view.CircleImageView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/marginLeft"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:text="王师你"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorTripWaitInfo"
+                        android:textSize="@dimen/textSize"
+                        android:id="@+id/textView9"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/TitleImageSize"
+                        android:layout_height="@dimen/TitleImageSize"
+                        android:layout_marginLeft="@dimen/marginLeft"
+                        app:srcCompat="@drawable/icon_star"
+                        android:id="@+id/imageView5"
+                        />
+
+                    <TextView
+                        android:text="4.9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView11"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:text="粤 B001N3 白色 本田思域"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/textSizeCallCar"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/textColorTripWaitInfo"
+                    android:id="@+id/textView10" />
+
+            </LinearLayout>>
+        </LinearLayout>
+
+        <include layout="@layout/activity_divisive"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:id="@+id/lv_order_detail_addr"/>
+
+        <include layout="@layout/activity_divisive"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_order_detail_star"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+        <include layout="@layout/activity_divisive"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+        <Button
+            android:text="评价"
+            android:layout_margin="@dimen/margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_order_detail_sub"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:textColor="@color/textColorTripWaitInfo"
+             />
+
+    </LinearLayout>
+
+</LinearLayout>

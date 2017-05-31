@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <com.amap.api.maps.MapView
+        android:id="@+id/map_mainmap_gaode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.amap.api.maps.MapView>
+
+<include layout="@layout/activity_mainmap"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></include>
+
+    <include layout="@layout/activity_loginnew"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></include>
+    <include layout="@layout/activity_mainmap_depart"
+        android:visibility="gone"></include>
+    <include layout="@layout/activity_mainmap_destination"
+        android:visibility="gone"></include>
+    <include layout="@layout/activity_datetime"
+        android:visibility="gone"></include>
+    <include layout="@layout/activity_trip_wait"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_trip_finsh"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_trip_run"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_trip_order"
+        android:visibility="gone"></include>
+
+
+    <include layout="@layout/activity_userinfo"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_select_homecompany"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_order_detail"
+        android:visibility="gone"></include>
+
+    <include layout="@layout/activity_mainmap_callaction"
+        android:visibility="gone"></include>
+
+
+    <include layout="@layout/activity_trip_evaluate"
+        android:visibility="gone"></include>
+</FrameLayout>

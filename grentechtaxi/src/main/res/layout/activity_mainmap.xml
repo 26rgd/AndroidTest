@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_mainmap"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/layout_mainmap_popupwindow_postion"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
+
+    <include
+        layout="@layout/activity_titlebar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <include layout="@layout/activity_mainmap_select_cartype"
+            android:id="@+id/in_mainmap_cartype"></include>>
+
+
+        <LinearLayout
+            android:clickable="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_bk"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="@dimen/margin10"
+            android:layout_marginRight="@dimen/margin10"
+            android:layout_gravity="bottom">
+
+            <include layout="@layout/activity_mainmap_callcar"
+                ></include>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

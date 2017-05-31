@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_select_homecompany"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="@color/WHITE">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/tv_setaddr_title"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setmyhome" />
+
+        <ImageView
+            android:id="@+id/iv_setaddr_back"
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/btn_back" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+
+        <com.powercn.grentechtaxi.view.SearchEditText
+            android:layout_width="match_parent"
+            android:id="@+id/search_homecompany"
+            style="@style/editTextSeachStyle"
+            android:layout_marginTop="1dp"
+            android:layout_height="@dimen/searchTextHeight" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_homecompany"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

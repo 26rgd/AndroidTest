@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="@dimen/ImageSizeTrip16px"
+            android:layout_height="@dimen/ImageSizeTrip16px"
+            app:srcCompat="@drawable/icon_home"
+            android:id="@+id/imageView4"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/marginLeft"
+              />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_myhome_detail"
+                android:text="家"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:textSize="@dimen/textSizeCallCar"
+                android:textColor="@color/textColorPoiItemFocus"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="设置家的地址"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/textSizeCallCar"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:id="@+id/tv_myhome"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:textColor="@color/textColorPoiItemNoFocus"
+                android:maxLines="1"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/activity_divisive_h"></include>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="@dimen/ImageSizeTrip16px"
+            android:layout_height="@dimen/ImageSizeTrip16px"
+            android:id="@+id/imageView40"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/marginLeft"
+            app:srcCompat="@drawable/icon_company" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_mycompany_detail"
+                android:text="公司"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:textColor="@color/textColorPoiItemFocus"
+                android:textSize="@dimen/textSizeCallCar"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="设置公司地址"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/textSizeCallCar"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:id="@+id/tv_mycompany"
+                android:gravity="center_vertical"
+                android:textColor="@color/textColorPoiItemNoFocus"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

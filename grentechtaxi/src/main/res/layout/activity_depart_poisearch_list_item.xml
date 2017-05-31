@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mainbackcolor"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/textView5"
+        android:background="@color/listViewSeparatorColor"
+          />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="@dimen/ImageSizeTrip16px"
+            android:layout_height="@dimen/ImageSizeTrip16px"
+            app:srcCompat="@drawable/icon_address"
+            android:id="@+id/imageView4"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/marginLeft"
+              />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_depart_poisearch_list_item_line1"
+                android:text=""
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:textColor="@color/textColorPoiItemFocus"
+                android:textSize="@dimen/textSizeCallCar"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="1"
+                  />
+
+            <TextView
+                android:text="22"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/textSizeCallCar"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:id="@+id/tv_depart_poisearch_list_item_line2"
+                android:gravity="center_vertical"
+                android:textColor="@color/textColorPoiItemNoFocus"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
