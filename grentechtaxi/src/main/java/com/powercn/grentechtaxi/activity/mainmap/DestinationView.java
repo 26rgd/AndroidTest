@@ -21,7 +21,7 @@ import lombok.Getter;
  * Created by Administrator on 2017/5/11.
  */
 @Getter
-public class DestinationView  extends AbstractChildView implements  PoiSearch.OnPoiSearchListener {
+public class DestinationView  extends MainChildView implements  PoiSearch.OnPoiSearchListener {
     private SearchEditText et_destination_search_edit;
     private ListView lv_destination_poisearch;
     private ImageView iv_title_destination;
@@ -59,7 +59,7 @@ public class DestinationView  extends AbstractChildView implements  PoiSearch.On
             public void onSearchClick(View view) {
                 SearchEditText v=(SearchEditText)view;
                 String keyword= v.getText().toString();
-                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", "0755");
+                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", activity.cityCode);
                 poiQuery.setPageSize(25);// 设置每页最多返回多少条poiitem
                 poiQuery.setPageNum(0);//设置查询页码
                 PoiSearch poiSearch = new PoiSearch(activity, poiQuery);
@@ -94,7 +94,7 @@ public class DestinationView  extends AbstractChildView implements  PoiSearch.On
         {
             myCompanyDetail.setText(activity.company.name);
         }
-        seachHotPoi();
+
     }
 
     @Override
@@ -166,10 +166,12 @@ public class DestinationView  extends AbstractChildView implements  PoiSearch.On
 
     }
 
+
+
     public void seachHotPoi()
     {
 
-        PoiSearch.Query poiQuery = new PoiSearch.Query("深圳", "","0755");
+        PoiSearch.Query poiQuery = new PoiSearch.Query(activity.cityName, "",activity.cityCode);
         poiQuery.setPageSize(25);// 设置每页最多返回多少条poiitem
         poiQuery.setPageNum(0);//设置查询页码
         PoiSearch poiSearch = new PoiSearch(activity, poiQuery);

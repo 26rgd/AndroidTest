@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="15dp">
 
         <ImageView
             android:layout_width="@dimen/ImageSizeTrip16px"
@@ -50,14 +50,16 @@
               />
     </LinearLayout>
 
-    <include layout="@layout/activity_divisive"></include>
+    <include layout="@layout/activity_divisive"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -78,14 +80,26 @@
             android:textSize="@dimen/textSizeCallCar" />
     </LinearLayout>
 
-    <include layout="@layout/activity_divisive"></include>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin"
+        >
 
+        <include layout="@layout/activity_divisive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+
+
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <ImageView

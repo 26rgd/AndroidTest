@@ -35,7 +35,7 @@ android:background="@color/listViewBkColor"
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/textSizeCallCar"
                 android:layout_weight="1"
-                android:textColor="@color/textColorOrder3"
+                android:textColor="@color/textColorOrder1"
                 android:text="TextView" />
 
             <TextView
@@ -68,8 +68,8 @@ android:background="@color/listViewBkColor"
             android:layout_marginRight="@dimen/marginRight"
             android:layout_marginTop="@dimen/marginTop10">
             <ImageView
-                android:layout_width="@dimen/ImageSizeTrip"
-                android:layout_height="@dimen/ImageSizeTrip"
+                android:layout_width="@dimen/ImageSizeTrip16px"
+                android:layout_height="@dimen/ImageSizeTrip16px"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/icon_start"
                 android:id="@+id/iv_start"
@@ -95,8 +95,8 @@ android:background="@color/listViewBkColor"
             android:layout_marginRight="@dimen/marginRight"
             android:layout_marginTop="@dimen/marginTop10">
             <ImageView
-                android:layout_width="@dimen/ImageSizeTrip"
-                android:layout_height="@dimen/ImageSizeTrip"
+                android:layout_width="@dimen/ImageSizeTrip16px"
+                android:layout_height="@dimen/ImageSizeTrip16px"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/icon_end"
                 android:id="@+id/iv_end"
@@ -141,7 +141,7 @@ android:background="@color/listViewBkColor"
                 android:layout_marginBottom="@dimen/marginBottom"
                 android:textSize="@dimen/textSizeCallCar"
                 android:text="TextView"
-                android:textColor="@color/textColorOrder3"
+                android:textColor="@color/textColorOrder1"
                 android:layout_weight="1" />
 
         </LinearLayout>

@@ -10,7 +10,7 @@ import com.powercn.grentechtaxi.R;
  * Created by Administrator on 2017/5/15.
  */
 
-public class TripRunView extends AbstractChildView {
+public class TripRunView extends MainChildView {
     private ImageView ivBack;
     public TripRunView(MainActivity activity, int resId) {
         super(activity, resId);

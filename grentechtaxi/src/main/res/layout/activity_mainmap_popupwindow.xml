@@ -23,7 +23,7 @@
             android:text="13800138000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginTop"
+            android:layout_marginTop="@dimen/margin10"
             android:gravity="center"
             android:textSize="@dimen/textSizeCallCar"
             android:textColor="@color/WHITE"
@@ -35,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"/>
+
+        android:layout_marginTop="40dp"/>
 
     <LinearLayout
         android:orientation="vertical"

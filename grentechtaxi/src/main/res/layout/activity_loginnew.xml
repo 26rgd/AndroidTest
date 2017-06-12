@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_login"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:focusable="true"
-    android:visibility="gone"
+
     android:background="@color/WHITE"
     android:clickable="true"
     android:focusableInTouchMode="true">
 
 <include layout="@layout/activity_titlebar_back"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"></include>
+    android:layout_height="@dimen/TitleHeight"></include>
 
     <ScrollView
         android:id="@+id/sv_login_form1"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/WHITE">
 
         <LinearLayout
             android:id="@+id/la_login_form1"
@@ -67,7 +68,6 @@
                         android:maxLines="1"
                         android:theme="@style/TaxiEditText"
                         android:layout_weight="1" />
-
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
@@ -77,8 +77,8 @@
                     android:id="@+id/bt_login_crc_send"
                     android:background="@drawable/btn_clickcolor"
                     android:textColor="@color/textColorDefautl"
-                    android:layout_marginRight="3dp"
-                    android:layout_gravity="right"/>
+                    android:layout_marginEnd="3dp"
+                    android:layout_gravity="end"/>
 
             </FrameLayout>
 
@@ -93,14 +93,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="30dp">
-
-    </LinearLayout>
 
 
 </LinearLayout>

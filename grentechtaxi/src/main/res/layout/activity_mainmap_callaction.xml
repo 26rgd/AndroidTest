@@ -50,11 +50,12 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ItemHeight">
+            android:layout_height="@dimen/LinearHeight">
 
             <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1">
 
                 <LinearLayout
@@ -78,7 +79,6 @@
                         android:text="现在"
                         android:layout_width="wrap_content"
                         android:layout_height="45dp"
-
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:id="@+id/tv_call_time"
@@ -98,15 +98,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                    android:layout_height="@dimen/LinearHeight"
                     android:textSize="@dimen/textSizeCallCar"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:id="@+id/tv_mileage"
+
                     android:textColor="@color/textColorOrder1"
                      />
 
@@ -118,24 +120,31 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"></include>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin10"
-            android:layout_marginBottom="@dimen/margin10"
-            android:layout_marginLeft="@dimen/margin"
-            android:id="@+id/lv_callaction"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin10"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="@dimen/margin">
+                <include
+                    layout="@layout/addressinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></include>
+            </LinearLayout>
+
         <include layout="@layout/activity_divisive"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"></include>
 
             <TextView
                 android:text="0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/LinearHeight"
                 android:textColor="@color/textColorOrder0"
                 android:textSize="@dimen/textSizeCallCar"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:id="@+id/tv_money"
                 android:layout_weight="1" />
 
@@ -143,7 +152,7 @@
             android:layout_marginTop="@dimen/margin10"
             android:text="叫车"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/textViewDefaultHeight"
+            android:layout_height="@dimen/LinearHeight"
             android:gravity="center"
             android:background="@drawable/btn_clickcolor"
             android:id="@+id/tv_callcar_call_sub" />
@@ -154,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/textViewDefaultHeight"
             android:gravity="center"
-
+            android:visibility="gone"
             android:id="@+id/tv_callcar_call_cancel" />
         </LinearLayout>
     </FrameLayout>

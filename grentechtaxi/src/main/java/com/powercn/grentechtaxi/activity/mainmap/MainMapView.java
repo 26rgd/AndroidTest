@@ -1,10 +1,8 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,15 +29,12 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.AoiItem;
 import com.amap.api.services.geocoder.GeocodeAddress;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
 
 import com.amap.api.services.route.BusRouteResult;
 import com.amap.api.services.route.DrivePath;
@@ -50,17 +45,22 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
+import com.powercn.grentechtaxi.activity.LoginActivity;
+import com.powercn.grentechtaxi.activity.OrderListActivity;
+import com.powercn.grentechtaxi.activity.SettingActivity;
 import com.powercn.grentechtaxi.adapter.chlid.PopupWindowAdapter;
 import com.powercn.grentechtaxi.common.http.HttpRequestTask;
 import com.powercn.grentechtaxi.common.unit.GsonUnit;
+import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.common.unit.ViewUnit;
+import com.powercn.grentechtaxi.entity.LoginInfo;
+import com.powercn.grentechtaxi.entity.OrderInfo;
 import com.powercn.grentechtaxi.map.DrivingRouteOverlay;
 import com.powercn.grentechtaxi.view.CircleImageView;
 
 import lombok.Getter;
 
 import static com.powercn.grentechtaxi.R.id.civ_mainmap_titlebar_account;
-import static com.powercn.grentechtaxi.R.id.et_mainmap_taxi_dest;
 import static com.powercn.grentechtaxi.common.unit.CoordinateSystem.gcj2wgs84;
 
 /**
@@ -68,7 +68,7 @@ import static com.powercn.grentechtaxi.common.unit.CoordinateSystem.gcj2wgs84;
  */
 
 @Getter
-public class MainMapView extends AbstractChildView implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener {
+public class MainMapView extends MainChildView implements LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener {
     private MapView mapView;
     private AMap aMap;
     public AMapLocationClient mLocationClient = null;
@@ -85,8 +85,8 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
     private TextView tv_mainmap_cattype_netword;
     private TextView carTaxiLine;
     private TextView carNetWordLine;
+    private TextView tvCity;
     private DrivingRouteOverlay drivingRouteOverlay;
-
     public InfowWindowMarkerAdapter infowWindowMarkerAdapter = new InfowWindowMarkerAdapter(activity);
 
     private MainMapView(MainActivity activity, int resId) {
@@ -100,17 +100,15 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
         initMap();
     }
 
-
     @Override
     protected void initView() {
         ivHead = (CircleImageView) findViewById(civ_mainmap_titlebar_account);
         layout_mainmap_popupwindow_postion = (LinearLayout) findViewById(R.id.layout_mainmap_popupwindow_postion);
         tv_mainmap_cattype_netword = (TextView) findViewById(R.id.tv_mainmap_cattype_netword);
         tv_mainmap_cattype_taxi = (TextView) findViewById(R.id.tv_mainmap_cattype_taxi);
-
+        tvCity = (TextView) findViewById(R.id.tv_city);
         carTaxiLine = (TextView) findViewById(R.id.tv_cartaxi_hint);
         carNetWordLine = (TextView) findViewById(R.id.tv_carnetword_hint);
-
     }
 
     @Override
@@ -122,12 +120,7 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
 
     @Override
     protected void initData() {
-//        AnimationDrawable animationDrawable=(AnimationDrawable)civ_mainmap_titlebar_account.getBackground();
-//        animationDrawable.start();
-        Bitmap bitmap=BitmapFactory.decodeFile(activity.headpath+activity.headsmall);
 
-       // if(activity.headBitmap!=null)
-        ivHead.setImageBitmap(activity.readHeadImage());
     }
 
     private void initMap() {
@@ -155,29 +148,26 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
         aMap.clear();//清除所以MARK 包括定位蓝点
     }
 
-
-    @Override
-    public void onPoiSearched(PoiResult poiResult, int i) {
-    }
-
-    @Override
-    public void onPoiItemSearched(PoiItem poiItem, int i) {
-    }
-
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-        System.out.println("onRegeocodeSearched---------------------");
-        AoiItem address = regeocodeResult.getRegeocodeAddress().getAois().get(0);
-        activity.callCarView.getTvStart().setText(address.getAoiName());
-        activity.startAddr.init(address.getAoiName(),address.getAoiCenterPoint().getLatitude(),address.getAoiCenterPoint().getLongitude());
-        System.out.println(address.getAoiName());
-        System.out.println(regeocodeResult.getRegeocodeAddress().getFormatAddress());
+        StringUnit.println(tag ,"***************-----" + regeocodeResult.getRegeocodeAddress().getFormatAddress());
+        tvCity.setText(regeocodeResult.getRegeocodeAddress().getCity());
+        activity.cityName=regeocodeResult.getRegeocodeAddress().getCity();
+        activity.cityName= activity.cityName.replace("市","");
+        activity.cityCode=regeocodeResult.getRegeocodeAddress().getCityCode();
+        String addr = "";
+        if (regeocodeResult.getRegeocodeAddress().getAois().size() == 0) {
+            addr = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+        } else {
+            AoiItem address = regeocodeResult.getRegeocodeAddress().getAois().get(0);
+            addr = address.getAoiName();
+        }
+        activity.startAddr.init(addr, regeocodeResult.getRegeocodeQuery().getPoint().getLatitude(), regeocodeResult.getRegeocodeQuery().getPoint().getLongitude());
+        activity.callCarView.getTvStart().setText(addr);
     }
 
     @Override
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-        System.out.println("onGeocodeSearched---------------------");
-        System.out.println(GsonUnit.toJson(geocodeResult));
         GeocodeAddress address = geocodeResult.getGeocodeAddressList().get(0);
         activity.callCarView.getTvDest().setText(address.getBuilding());
     }
@@ -196,11 +186,10 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
                 if (aMapLocation != null && aMapLocation.getLatitude() > 0//&& aMapLocation.getErrorCode() == 0
                         ) {
                     myLocation = aMapLocation;
-                    System.out.println(aMapLocation.getLatitude() + "|" + aMapLocation.getLongitude());
+                    StringUnit.println(tag,aMapLocation.getLatitude() + "|" + aMapLocation.getLongitude());
                     LatLonPoint latLonPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                    if(gpscount==0)
-                    {
-                        activity.startAddr.init("",aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                    if (gpscount == 0) {
+                        activity.startAddr.init("", aMapLocation.getLatitude(), aMapLocation.getLongitude());
                     }
                     if (gpscount < 3) {
                         mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
@@ -214,8 +203,8 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
                     }
                     gpscount = gpscount + 1;
                 } else {
-                    String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
-                    System.out.println("AmapErr: " + errText);
+//                    String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
+//                    StringUnit.println("AmapErr: " + errText);
                 }
             }
         } catch (Exception e) {
@@ -240,6 +229,9 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
                 aMapLocation = new AMapLocation("GPS");
                 aMapLocation.setLatitude(22.543471);
                 aMapLocation.setLongitude(113.941133);
+//
+//                aMapLocation.setLatitude(23.099971);
+//                aMapLocation.setLongitude(113.277233);
                 this.onLocationChanged(aMapLocation);
             }
         } catch (Exception e) {
@@ -271,9 +263,10 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
         switch (v.getId()) {
             case civ_mainmap_titlebar_account:
                 HttpRequestTask.getUserInfo(activity.loginInfo.phone);
-                if (activity.currentLoginSuccess == false) {
+                if (LoginInfo.currentLoginSuccess == false) {
 
-                    activity.loginView.getView().setVisibility(View.VISIBLE);
+                    //activity.loginView.getView().setVisibility(View.VISIBLE);
+                    activity.jumpForResult(LoginActivity.class, MainActivity.otherCode);
                     return;
                 }
                 if (layout_mainmap_popupwindow_postion != null)
@@ -284,14 +277,14 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
             case R.id.tv_mainmap_cattype_taxi:
                 carTaxiLine.setVisibility(View.VISIBLE);
                 carNetWordLine.setVisibility(View.INVISIBLE);
-                tv_mainmap_cattype_taxi.setTextColor(ViewUnit.getColor(activity,R.color.textColorSelectCarFocus));
-                tv_mainmap_cattype_netword.setTextColor(ViewUnit.getColor(activity,R.color.textColorSelectCarNoFocus));
+                tv_mainmap_cattype_taxi.setTextColor(ViewUnit.getColor(activity, R.color.textColorSelectCarFocus));
+                tv_mainmap_cattype_netword.setTextColor(ViewUnit.getColor(activity, R.color.textColorSelectCarNoFocus));
                 break;
             case R.id.tv_mainmap_cattype_netword:
                 carTaxiLine.setVisibility(View.INVISIBLE);
                 carNetWordLine.setVisibility(View.VISIBLE);
-                tv_mainmap_cattype_netword.setTextColor(ViewUnit.getColor(activity,R.color.textColorSelectCarFocus));
-                tv_mainmap_cattype_taxi.setTextColor(ViewUnit.getColor(activity,R.color.textColorSelectCarNoFocus));
+                tv_mainmap_cattype_netword.setTextColor(ViewUnit.getColor(activity, R.color.textColorSelectCarFocus));
+                tv_mainmap_cattype_taxi.setTextColor(ViewUnit.getColor(activity, R.color.textColorSelectCarNoFocus));
                 break;
         }
     }
@@ -302,18 +295,19 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
                 R.layout.activity_mainmap_popupwindow, null);
         ListView listView = (ListView) contentView.findViewById(R.id.lv_mainmap_popupwindows);
         TextView tv_mainmap_popupwindows_name = (TextView) contentView.findViewById(R.id.tv_mainmap_popupwindows_name);
-        CircleImageView icon=(CircleImageView)contentView.findViewById(R.id.popuwindow_icon);
-        tv_mainmap_popupwindows_name.setText(activity.responseUerInfo.getNickName());
+        CircleImageView popupWindowIcon = (CircleImageView) contentView.findViewById(R.id.popuwindow_icon);
+        tv_mainmap_popupwindows_name.setText(activity.loginInfo.phone);
         final PopupWindowAdapter popupWindowAdapter = new PopupWindowAdapter(activity, null, R.layout.activity_mainmap_popupwindow_list_item);
         listView.setAdapter(popupWindowAdapter);
+        listView.setDivider(null);
         int width = ViewUnit.getDisplayWidth(activity) * 7 / 15;
-        System.out.println("屏幕: " + ViewUnit.getDisplayWidth(activity) + "|" + ViewUnit.getDisplayHeight(activity));
+        StringUnit.println(tag ,"屏幕: " + ViewUnit.getDisplayWidth(activity) + "|" + ViewUnit.getDisplayHeight(activity));
         final PopupWindow popupWindow = new PopupWindow(contentView,
                 width, ViewGroup.LayoutParams.MATCH_PARENT, true);
         popupWindow.setTouchable(true);
 
 
-            icon.setImageBitmap(activity.readHeadImage());
+        popupWindowIcon.setImageBitmap(activity.readHeadImage());
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -326,20 +320,22 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
                 PopupWindowAdapter.PopuWindowInfo popuWindowInfo = (PopupWindowAdapter.PopuWindowInfo) popupWindowAdapter.getItem(position);
                 switch (popuWindowInfo) {
                     case Order:
-                        activity.tripOrderView.setVisibility(View.VISIBLE);
+                        //activity.tripOrderView.setVisibility(View.VISIBLE);
+                        activity.jumpForResult(OrderListActivity.class,55);
                         break;
 
-                    case Service:
-                        activity.tripEvaluateView.setVisibility(View.VISIBLE);
-                        break;
+//                    case Service:
+//                        activity.tripEvaluateView.setVisibility(View.VISIBLE);
+//                        break;
                     case Setting:
-                        //activity.userInfoView.setVisibility(View.VISIBLE);
+                        activity.jumpForResult(SettingActivity.class, activity.otherCode);
+                        //activity.jumpNotFinish(SettingActivity.class);
                         break;
                 }
                 popupWindow.dismiss();
             }
         });
-        icon.setOnClickListener(new View.OnClickListener() {
+        popupWindowIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.userInfoView.setVisibility(View.VISIBLE);
@@ -351,19 +347,16 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
     }
 
 
-
-
     public void router() {
-        if(activity.startAddr.dlat==0||activity.startAddr.dlng==0)
-        {
+        if (activity.startAddr.dlat == 0 || activity.startAddr.dlng == 0) {
             activity.showToast("出发地获取有误,请重新选择");
             return;
-        }        if(activity.destAddr.dlat==0||activity.destAddr.dlng==0)
-        {
+        }
+        if (activity.destAddr.dlat == 0 || activity.destAddr.dlng == 0) {
             activity.showToast("目的地获取有误,请重新选择");
             return;
         }
-       this.removeLineRouter();
+        this.removeLineRouter();
         final RouteSearch routeSearch = new RouteSearch(activity);
         final LatLonPoint start = new LatLonPoint(activity.startAddr.dlat, activity.startAddr.dlng);
         final LatLonPoint end = new LatLonPoint(activity.destAddr.dlat, activity.destAddr.dlng);
@@ -373,7 +366,7 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
             @Override
             public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
                 if (i == 1000)
-                    System.out.println(GsonUnit.toJson(busRouteResult));
+                    StringUnit.println(tag ,GsonUnit.toJson(busRouteResult));
                 else {
                     activity.showToast("busRouteResult规划失败");
                 }
@@ -382,41 +375,39 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
             @Override
             public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
                 if (i == 1000) {
-                    System.out.println(driveRouteResult.getTaxiCost());
-                    System.out.println(driveRouteResult.getPaths().size());
+
                     DrivePath drivePath = driveRouteResult.getPaths().get(0);
-                    System.out.println(drivePath.getSteps().get(0).toString());
-                    System.out.println(drivePath.getSteps().get(0).getDistance());
-                    float n=0;
-                    for(DriveStep step:drivePath.getSteps())
-                    {
-                        n=n+step.getDistance();
+
+                    float n = 0;
+                    for (DriveStep step : drivePath.getSteps()) {
+                        n = n + step.getDistance();
                     }
-                    activity.totalMileage=(int)(n/1000);
-                    activity.totalMoney=(int)driveRouteResult.getTaxiCost();
+                    activity.totalMileage = (int) (n / 1000);
+                    activity.totalMoney = (int) driveRouteResult.getTaxiCost();
                     drivingRouteOverlay = new DrivingRouteOverlay(activity, aMap, drivePath, start, end, null);
                     drivingRouteOverlay.addToMap();
 
-                 showCall();
+                    showCall();
                 } else {
                     activity.showToast("driveRouteResult规划失败");
                 }
             }
-            public void showCall()
-            {
+
+            public void showCall() {
 
 
-               try {
-                   Thread.sleep(200);
-               }catch (Exception e)
-               {}
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+                }
                 setVisibility(View.GONE);
                 activity.callActionView.setVisibility(View.VISIBLE);
             }
+
             @Override
             public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
                 if (i == 1000)
-                    System.out.println(GsonUnit.toJson(walkRouteResult));
+                    StringUnit.println(tag ,GsonUnit.toJson(walkRouteResult));
                 else {
                     activity.showToast("walkRouteResult规划失败");
                 }
@@ -425,7 +416,7 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
             @Override
             public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
                 if (i == 1000)
-                    System.out.println(GsonUnit.toJson(rideRouteResult));
+                    StringUnit.println(tag,GsonUnit.toJson(rideRouteResult));
                 else {
                     activity.showToast("rideRouteResult规划失败");
                 }
@@ -509,9 +500,8 @@ public class MainMapView extends AbstractChildView implements LocationSource, AM
         public double lng;
     }
 
-    public void removeLineRouter()
-    {
-        if(drivingRouteOverlay!=null)
+    public void removeLineRouter() {
+        if (drivingRouteOverlay != null)
             drivingRouteOverlay.removeFromMap();
     }
 }

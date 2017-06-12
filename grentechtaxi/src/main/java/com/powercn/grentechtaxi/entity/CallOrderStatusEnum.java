@@ -7,6 +7,7 @@ package com.powercn.grentechtaxi.entity;
  * 订单状态
  */
 public enum CallOrderStatusEnum implements GenericEnum{
+    RESVER(0, "保留"),
     NEW(1, "新建"),
     PENDING(2, "抢单中"),
     BOOKED(3, "已经抢单"),

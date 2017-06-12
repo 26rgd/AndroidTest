@@ -5,7 +5,7 @@
 
     <TextView
         android:text=""
-        android:layout_width="1dp"
+        android:layout_width="1px"
         android:layout_height="match_parent"
         android:background="@color/listViewSeparatorColor"
         android:id="@+id/textView20" />

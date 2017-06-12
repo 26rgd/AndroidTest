@@ -3,13 +3,14 @@ package com.powercn.grentechtaxi.common.http;
 import android.os.AsyncTask;
 
 import com.powercn.grentechtaxi.common.unit.GsonUnit;
+import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.entity.CallOrder;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static com.powercn.grentechtaxi.MainActivity.phone;
+
 import static com.powercn.grentechtaxi.common.http.HttpRequestParam.ApiType.evaluate;
 
 /**
@@ -17,10 +18,14 @@ import static com.powercn.grentechtaxi.common.http.HttpRequestParam.ApiType.eval
  */
 
 public class HttpRequestTask {
+    private static String tag=HttpRequestTask.class.getName();
+    private static String ip="192.168.13.99:8080";
     //http://192.168.13.52/taxi/app/gis/getGatheringInfo
- //  public static String url = "http://192.168.5.64:8080/taxi/api/";
-    public static String url = "http://192.168.13.99:8080/taxi/api/";
+   //public static String url = "http://192.168.5.54:8080/taxi/api/";
+    public static String url = "http://"+ip+"/taxi/api/";
     //public static String url = "http://192.168.13.41:8080/taxi/app/";
+    public static String webSocketurl="ws://"+ip+"/taxi/api/webSocketServer";
+   // "ws://192.168.5.169:60000/grentechTaxiWx/webSocketServer"
     public final static Executor executor = Executors.newFixedThreadPool(3);
 
     public static void text(String phone) {
@@ -29,7 +34,7 @@ public class HttpRequestTask {
         httpRequestConfig.apiType = HttpRequestParam.ApiType.SendSmsCrc;
         httpRequestConfig.paramMap.put("phone", phone);
         bulidDefaultTask(httpRequestConfig);
-        System.out.println("getDeviceOkList");
+        StringUnit.println(tag,"getDeviceOkList");
     }
 
     public static void getSmsCrc(String phone) {
@@ -70,8 +75,10 @@ public class HttpRequestTask {
 
     public static void callOrder(CallOrder callOrder) {
         HttpRequestParam httpRequestParam = bulidHttpRequestParamApp("callOrder/wxCallApi", HttpRequestParam.ApiType.BookOrder);
-        httpRequestParam.paramMap.put("", GsonUnit.toJson(callOrder));
+        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
+        httpRequestParam.paramMap.put("order", GsonUnit.toJson(callOrder));
         bulidDefaultTask(httpRequestParam);
+        StringUnit.println( tag,GsonUnit.toJson(callOrder));
         //cancleOrder(callOrder.getPhone());
     }
 
@@ -85,8 +92,8 @@ public class HttpRequestTask {
     public static void getAllOrderByMobile(String phone, int start, int limit) {
 //   http://localhost:8080/taxi/app/callOrder/getAllOrderByMobile?phone=%2215811810630%22&start=1&limit=2
 
-        HttpRequestParam httpRequestParam = bulidHttpRequestParamApp("callOrder/getAllOrderByMobile?", HttpRequestParam.ApiType.GetAllOrderByMobile);
-        httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
+        HttpRequestParam httpRequestParam = bulidHttpRequestParamApp("callOrder/getAllOrderByMobile", HttpRequestParam.ApiType.GetAllOrderByMobile);
+        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("phone", phone);
         httpRequestParam.paramMap.put("start", String.valueOf(start));
         httpRequestParam.paramMap.put("limit", String.valueOf(limit));
@@ -102,7 +109,7 @@ public class HttpRequestTask {
     }
 
     public static void saveUserInfo(String passengerInfo) {
-         System.out.println(passengerInfo);
+        StringUnit.println(tag,passengerInfo);
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/savePassenger", HttpRequestParam.ApiType.SaveUserInfo);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("passengerInfo", passengerInfo);
@@ -120,12 +127,23 @@ public class HttpRequestTask {
 
     public static void headUplod(String phone ,String filepath) {
         //{"status":"200","token":17285A189F2E6958BA25FBB8D991671C"info":"用户已经注册登录成功"}
-       // if(phone.length()>0)return;
-       // HttpRequestParam httpRequestParam = bulidHttpRequestParam("driver/uplod", HttpRequestParam.ApiType.UpFile);
-        HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/headUplod", HttpRequestParam.ApiType.UpFile);
+        // if(phone.length()>0)return;
+        // HttpRequestParam httpRequestParam = bulidHttpRequestParam("driver/uplod", HttpRequestParam.ApiType.UpFile);
+        HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/headUpload", HttpRequestParam.ApiType.UpFile);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostFile;
         httpRequestParam.paramMap.put("filepath", filepath);
+        httpRequestParam.paramMap.put("filekey", "file");
         httpRequestParam.paramMap.put("phone", phone);
+        bulidDefaultTask(httpRequestParam);
+    }
+
+    public static void loadFile(String filepath) {
+        //{"status":"200","token":17285A189F2E6958BA25FBB8D991671C"info":"用户已经注册登录成功"}
+        // if(phone.length()>0)return;
+        // HttpRequestParam httpRequestParam = bulidHttpRequestParam("driver/uplod", HttpRequestParam.ApiType.UpFile);
+        if(StringUnit.isEmpty(filepath))return;
+        HttpRequestParam httpRequestParam = bulidHttpRequestParamMedia(filepath, HttpRequestParam.ApiType.LoadFile);
+        httpRequestParam.requestType = HttpRequestParam.RequestType.LoadFile;
         bulidDefaultTask(httpRequestParam);
     }
     //*************************************************************************************************************************
@@ -137,11 +155,16 @@ public class HttpRequestTask {
     }
     private static HttpRequestParam bulidHttpRequestParamApp(String path, HttpRequestParam.ApiType apiType) {
         HttpRequestParam httpRequestParam = new HttpRequestParam();
-        httpRequestParam.url = url.replace("api","app") + path;
+        httpRequestParam.url = url.replace("api","api") + path;
         httpRequestParam.apiType = apiType;
         return httpRequestParam;
     }
-
+    private static HttpRequestParam bulidHttpRequestParamMedia(String path, HttpRequestParam.ApiType apiType) {
+        HttpRequestParam httpRequestParam = new HttpRequestParam();
+        httpRequestParam.url =   path;
+        httpRequestParam.apiType = apiType;
+        return httpRequestParam;
+    }
     private static void bulidDefaultTask(HttpRequestParam requestConfig) {
         MainBackGroundTask mAuthTask = new MainBackGroundTask();
         mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestConfig);
@@ -153,7 +176,7 @@ public class HttpRequestTask {
     }
 
     public static ResponeInfo executeHttp(HttpRequestParam... params) {
-        System.out.println("executeHttp");
+        StringUnit.println(tag,"executeHttp");
         ResponeInfo responeInfo = null;
         HttpRequestParam param = params[0];
         HttpUnit httpUnit = new HttpUnit(param.url, null);
@@ -168,6 +191,8 @@ public class HttpRequestTask {
             responeInfo = httpUnit.executePostText();
         else if(param.requestType == HttpRequestParam.RequestType.PostFile)
             responeInfo = httpUnit.executePostFile();
+        else if(param.requestType == HttpRequestParam.RequestType.LoadFile)
+            responeInfo = httpUnit.executeLoadFile();
         else responeInfo = httpUnit.executeGet();
         responeInfo.setApiType(param.apiType);
         return responeInfo;

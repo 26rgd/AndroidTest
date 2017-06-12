@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.powercn.grentechtaxi.R;
-import com.powercn.grentechtaxi.activity.mainmap.TripEvaluateView;
 import com.powercn.grentechtaxi.adapter.AbstractRecyclerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

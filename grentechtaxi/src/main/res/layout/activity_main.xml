@@ -14,11 +14,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"></include>
 
-    <include layout="@layout/activity_loginnew"
+<!--    <include layout="@layout/activity_loginnew"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></include>
+        android:layout_height="match_parent"></include>-->
+
     <include layout="@layout/activity_mainmap_depart"
-        android:visibility="gone"></include>
+        android:visibility="gone" ></include>
     <include layout="@layout/activity_mainmap_destination"
         android:visibility="gone"></include>
     <include layout="@layout/activity_datetime"

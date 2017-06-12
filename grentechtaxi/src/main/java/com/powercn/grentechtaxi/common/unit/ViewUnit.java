@@ -117,6 +117,7 @@ public class ViewUnit {
     }
 
     public static void callPhone(Context context, String number) {
+        if(number==null)number="";
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+number));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
@@ -127,6 +128,7 @@ public class ViewUnit {
     }
 
     public static void sendSms(Context context, String number) {
+        if(number==null)number="";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:"+number));
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {

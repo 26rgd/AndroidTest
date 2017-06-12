@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/grentechdriver" />
             <option value="$PROJECT_DIR$/grentechtaxi" />
           </set>
         </option>

@@ -2,5 +2,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/buttonColorClick"></solid>
     <corners android:radius="@dimen/shapeRadius"></corners>
-    <stroke android:width="@dimen/shapeStroke" android:color="#EAEAEE"></stroke>
+
 </shape>

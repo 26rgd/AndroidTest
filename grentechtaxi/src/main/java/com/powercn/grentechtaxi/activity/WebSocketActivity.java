@@ -10,8 +10,10 @@ import org.java_websocket.drafts.Draft_17;
 
 import java.net.URI;
 
+import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.common.websocket.WebSocketTask;
+import com.powercn.grentechtaxi.entity.LoginInfo;
 
 
 /**
@@ -78,8 +80,7 @@ public class WebSocketActivity extends AbstractBasicActivity {
 
     private void sendWebSocket(String msg) {
         try {
-            c.send("13510197040");
-            c.send("测试--handshake");
+            //c.send(MainActivity.phone);
         } catch (Exception e) {
             e.printStackTrace();
         }

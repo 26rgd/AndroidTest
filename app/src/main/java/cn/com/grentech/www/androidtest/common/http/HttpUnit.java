@@ -42,7 +42,7 @@ public class HttpUnit {
         try {
             try {
                 URL url = new URL(urlAddr + this.urlParams.toString());
-                System.out.println(url.toString());
+                StringUnit.println(url.toString());
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
                 httpUrlConnection.setRequestMethod("GET");
 
@@ -64,7 +64,7 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        System.out.println(sessionId);
+                        StringUnit.println(sessionId);
                     }
                 } else {
                 }
@@ -82,7 +82,7 @@ public class HttpUnit {
         try {
             try {
                 URL url = new URL(urlAddr);
-                System.out.println(url.toString());
+                StringUnit.println(url.toString());
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
                 httpUrlConnection.setRequestMethod("POST");
                 httpUrlConnection.setRequestProperty("Charset", "UTF-8");
@@ -110,7 +110,7 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        System.out.println(sessionId);
+                        StringUnit.println(sessionId);
                     }
                 } else {
                 }

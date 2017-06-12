@@ -3,6 +3,8 @@ package com.powercn.grentechtaxi;
 import android.app.Activity;
 import android.app.Application;
 
+import com.powercn.grentechtaxi.common.unit.StringUnit;
+
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
  */
 
 public class SysApplication extends Application {
+    private String tag=this.getClass().getName();
     private List<Activity> list = new ArrayList<>();
     private static SysApplication instance;
 
@@ -23,14 +26,14 @@ public class SysApplication extends Application {
             x.Ext.init(this);//xutils初始化.....
         }catch (Exception e)
         {
-            System.out.println("xutils初始化... Error!!!");
+            StringUnit.println(tag,"xutils初始化... Error!!!");
         }
 
-        System.out.println("SysApplication onCreate ******************************");
+        StringUnit.println(tag,"SysApplication onCreate ******************************");
     }
 
     public SysApplication() {
-        System.out.println("SysApplication ***********************************");
+        StringUnit.println(tag,"SysApplication ***********************************");
         instance=this;
     }
 

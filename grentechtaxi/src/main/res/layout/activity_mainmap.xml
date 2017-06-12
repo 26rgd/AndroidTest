@@ -16,7 +16,7 @@
     <include
         layout="@layout/activity_titlebar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></include>
+        android:layout_height="@dimen/TitleHeight"></include>
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -1,6 +1,5 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -17,7 +16,7 @@ import lombok.Getter;
  */
 
 @Getter
-public class LoginView extends AbstractChildView {
+public class LoginView extends MainChildView {
     private ImageView iv_title_back;
     private AutoCompleteTextView tv_login_phone;
     private AutoCompleteTextView tv_login_crc;

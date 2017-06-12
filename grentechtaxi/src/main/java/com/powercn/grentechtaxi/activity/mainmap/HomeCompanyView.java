@@ -22,7 +22,7 @@ import lombok.Getter;
  * Created by Administrator on 2017/5/15.
  */
 
-public class HomeCompanyView extends AbstractChildView implements  PoiSearch.OnPoiSearchListener  {
+public class HomeCompanyView extends MainChildView implements  PoiSearch.OnPoiSearchListener  {
     private SearchEditText searchEditText;
     private ListView listView;
     private ImageView ivBack;
@@ -51,7 +51,7 @@ public class HomeCompanyView extends AbstractChildView implements  PoiSearch.OnP
             public void onSearchClick(View view) {
                 SearchEditText v=(SearchEditText)view;
                 String keyword= v.getText().toString();
-                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", "0755");
+                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", activity.cityCode);
                 poiQuery.setPageSize(25);// 设置每页最多返回多少条poiitem
                 poiQuery.setPageNum(0);//设置查询页码
                 PoiSearch poiSearch = new PoiSearch(activity, poiQuery);

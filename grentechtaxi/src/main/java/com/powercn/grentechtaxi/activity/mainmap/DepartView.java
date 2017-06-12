@@ -23,7 +23,7 @@ import lombok.Getter;
  */
 
 @Getter
-public class DepartView extends AbstractChildView implements PoiSearch.OnPoiSearchListener {
+public class DepartView extends MainChildView implements PoiSearch.OnPoiSearchListener {
     private SearchEditText et_depart_search_edit;
     private ListView lv_depart_poisearch;
     private TextView tv_title_back_hint;
@@ -51,7 +51,7 @@ public class DepartView extends AbstractChildView implements PoiSearch.OnPoiSear
             public void onSearchClick(View view) {
                 SearchEditText v = (SearchEditText) view;
                 String keyword = v.getText().toString();
-                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", "0755");
+                PoiSearch.Query poiQuery = new PoiSearch.Query(keyword, "", activity.cityCode);
                 poiQuery.setPageSize(15);// 设置每页最多返回多少条poiitem
                 poiQuery.setPageNum(0);//设置查询页码
                 PoiSearch poiSearch = new PoiSearch(activity, poiQuery);
@@ -107,7 +107,7 @@ public class DepartView extends AbstractChildView implements PoiSearch.OnPoiSear
 
     public void onSearchNear(LatLonPoint latLonPoint) {
         try {
-            PoiSearch.Query poiQuery = new PoiSearch.Query("", "", "0755");
+            PoiSearch.Query poiQuery = new PoiSearch.Query("", "", activity.cityCode);
             poiQuery.setPageSize(15);// 设置每页最多返回多少条poiitem
             poiQuery.setPageNum(0);//设置查询页码
             PoiSearch poiSearch = new PoiSearch(activity, poiQuery);

@@ -38,85 +38,44 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/marginLeft"
+            android:layout_margin="@dimen/margin10"
             android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin10"
+            android:layout_marginBottom="@dimen/margin10"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin">
+            <include
+                layout="@layout/driverinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+           </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/marginBottom"
-                android:orientation="horizontal">
-
-                <com.powercn.grentechtaxi.view.CircleImageView
-                    android:layout_height="@dimen/ImageHeadLarge"
-                    android:layout_width="@dimen/ImageHeadLarge"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_driver"></com.powercn.grentechtaxi.view.CircleImageView>
-
-                <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin10"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginRight="@dimen/margin">
+                <include
+                    layout="@layout/addressinfo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:layout_marginLeft="@dimen/marginLeft"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="王师你"
-                            android:textSize="@dimen/textSize" />
-
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="@dimen/TitleImageSize"
-                            android:layout_height="@dimen/TitleImageSize"
-                            android:layout_marginLeft="@dimen/marginLeft"
-                            app:srcCompat="@drawable/icon_star" />
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center_vertical"
-                            android:text="4.9" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:gravity="center_vertical"
-                        android:text="粤 B001N3 白色 本田思域"
-                        android:textSize="@dimen/textSizeCallCar" />
-
-                </LinearLayout>
-                >
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <include layout="@layout/activity_divisive"></include>
 
-            <ListView
-                android:id="@+id/lv_tripwait_list"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lv_star"
+                android:layout_marginTop="@dimen/margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -127,10 +86,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/marginTop"
-                android:background="@drawable/edit_border"
+                android:background="@drawable/edit_noborder"
                 android:ems="10"
                 android:gravity="top"
+                android:padding="@dimen/margin"
                 android:hint="其它想说的"
+                android:textSize="@dimen/textSizeCallCar"
                 android:inputType="textMultiLine"
                 android:textColor="@color/BLACK" />
 
@@ -139,8 +100,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/marginTop"
+
                 android:layout_weight="1"
-                android:background="@drawable/btn_clickcolor"
+                android:background="@drawable/btn_clickcolor_radius"
                 android:text="提交" />
 
         </LinearLayout>

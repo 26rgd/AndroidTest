@@ -1,7 +1,6 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amap.api.maps.model.Text;
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.adapter.AbstractAdpter;
@@ -23,7 +21,7 @@ import java.util.List;
  * Created by Administrator on 2017/5/15.
  */
 
-public class TripFinshView extends AbstractChildView {
+public class TripFinshView extends MainChildView {
 
     private ListView listView;
     private ImageView ivBack;

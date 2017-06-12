@@ -1,56 +1,38 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
-import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
-import com.powercn.grentechtaxi.adapter.AbstractAdpter;
-import com.powercn.grentechtaxi.adapter.chlid.AddressAdpter;
 import com.powercn.grentechtaxi.common.http.HttpRequestTask;
 import com.powercn.grentechtaxi.common.unit.DateUnit;
-import com.powercn.grentechtaxi.common.unit.ViewUnit;
 import com.powercn.grentechtaxi.dialog.RequestProgressDialog;
 import com.powercn.grentechtaxi.entity.CallOrder;
 
-import java.util.List;
-
 import lombok.Getter;
-
-
-import static com.powercn.grentechtaxi.R.id.lv_tripwait_list;
-import static com.powercn.grentechtaxi.R.id.tv_callcar_call_sub;
+import lombok.Setter;
 
 
 /**
  * Created by Administrator on 2017/5/12.
  */
 @Getter
-public class CallActionView extends AbstractChildView {
+public class CallActionView extends MainChildView {
     private TextView tv_call_time;
     private TextView tv_callcar_call_sub;
     private TextView tvMileage;
     private TextView tvMoney;
     private TextView tv_callcar_call_cance;
     private ImageView iv_time;
-    private ListView listView;
-    private AddressAdpter myAdpter;
     private ImageView ivBack;
+    private AddressView addressView;
+    @Setter
+    private RequestProgressDialog requestProgressDialog;
 
     public CallActionView(MainActivity activity, int resId) {
         super(activity, resId);
@@ -66,8 +48,8 @@ public class CallActionView extends AbstractChildView {
 
         iv_time = (ImageView) findViewById(R.id.iv_time);
         ivBack = (ImageView) findViewById(R.id.iv_callaction_back);
+        addressView=new AddressView(this);
 
-        listView = (ListView) findViewById(R.id.lv_callaction);
     }
 
     @Override
@@ -82,8 +64,8 @@ public class CallActionView extends AbstractChildView {
 
     @Override
     protected void initData() {
-        myAdpter = new AddressAdpter(activity, null, R.layout.activity_trip_wait_item);
-        listView.setAdapter(myAdpter);
+
+
     }
 
     @Override
@@ -97,11 +79,10 @@ public class CallActionView extends AbstractChildView {
                 break;
 
             case R.id.tv_callcar_call_sub:
-                RequestProgressDialog requestProgressDialog = new RequestProgressDialog(activity);
+                requestProgressDialog = new RequestProgressDialog(activity);
                 requestProgressDialog.show("正在叫车......");
                 setVisibility(View.GONE);
                 getCallOrder();
-
                 activity.callCarView.setVisibility(View.VISIBLE);
 
                 break;
@@ -124,7 +105,7 @@ public class CallActionView extends AbstractChildView {
     private void getCallOrder() {
         try {
             CallOrder callOrder = new CallOrder();
-            callOrder.setPhone(activity.phone);
+            callOrder.setPhone(activity.loginInfo.phone);
             callOrder.setFrom(activity.callCarView.getTvStart().getText().toString());
             callOrder.setTo(activity.callCarView.getTvDest().getText().toString());
             if (activity.startAddr.dlat != 0 && activity.startAddr.dlng != 0) {
@@ -153,7 +134,7 @@ public class CallActionView extends AbstractChildView {
 
     @Override
     public void setVisibility(int visibility) {
-        myAdpter.clear();
+
         tv_call_time.setText(activity.callCarView.getTvShowTime().getText());
         String s="约"+String.valueOf(activity.totalMileage)+"公里";
         Spannable sp=new SpannableString(s);
@@ -167,8 +148,8 @@ public class CallActionView extends AbstractChildView {
         sp1.setSpan(new AbsoluteSizeSpan(28,true),1,len+1,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         tvMoney.setText(sp1);
        // tvMoney.setText(String.valueOf(activity.totalMoney));
-        myAdpter.getData().add(activity.startAddr.name);
-        myAdpter.getData().add(activity.destAddr.name);
+
+        addressView.setInfo(activity.startAddr.name,activity.destAddr.name);
         super.setVisibility(visibility);
 
     }

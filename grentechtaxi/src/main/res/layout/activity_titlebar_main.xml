@@ -6,9 +6,11 @@
     android:background="@color/MainMapTitleBackColor">
 <com.powercn.grentechtaxi.view.CircleImageView
     android:id="@+id/civ_mainmap_titlebar_account"
-    android:layout_width="45dp"
-    android:layout_height="45dp"
-    android:layout_margin="5dp"
+    android:layout_width="@dimen/ImageHeadSmall"
+    android:layout_height="@dimen/ImageHeadSmall"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="5dp"
     android:scaleType="fitCenter"
     android:src="@drawable/head33"
      />
@@ -17,12 +19,11 @@
         android:text="深圳市"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/textView2"
+        android:id="@+id/tv_city"
         android:textColor="@color/WHITE"
         android:textSize="@dimen/textSizeTitle"
         android:gravity="center"
         android:layout_gravity="center"
-
          />
 
 </FrameLayout>

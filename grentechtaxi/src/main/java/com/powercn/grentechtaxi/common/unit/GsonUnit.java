@@ -49,7 +49,7 @@ public class GsonUnit {
 
             builder.registerTypeAdapter(CallOrderTypeEnum.class,new CallOrderTypeEnumSerializer());
             builder.registerTypeAdapter(CallOrderStatusEnum.class,new CallOrderStatusEnumSerializer());
-            Gson gson = builder.create();
+            Gson gson = builder.serializeNulls().create();
             return gson;
         }
 

@@ -19,7 +19,7 @@ public class HttpRequestParam {
     }
 
     public enum RequestType {
-        Post("Post", 0), Get("Get", 1), PostText("Post", 2),PostFile("Post", 3);
+        Post("Post", 0), Get("Get", 1), PostText("Post", 2),PostFile("Post", 3),LoadFile("POST",4);
         private String methond;
         private int index;
 
@@ -47,7 +47,8 @@ public class HttpRequestParam {
         UpFile("上传图片",6),
         GetUserInfo("获取用户信息",7),
         SaveUserInfo("保存用户信息",8),
-        evaluate("订单评价",8);
+        evaluate("订单评价",9),
+        LoadFile("下载图片",10);
         private String name;
         private int index;
         private ApiType(String name, int index) {

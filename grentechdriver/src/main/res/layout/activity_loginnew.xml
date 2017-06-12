@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+
+    android:background="@color/WHITE"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
+<include layout="@layout/common_titlebar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/TitleHeight"></include>
+
+    <ScrollView
+        android:id="@+id/sv_login_form1"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/WHITE">
+
+        <LinearLayout
+            android:id="@+id/la_login_form1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#BDBDBD">
+                <AutoCompleteTextView
+                    android:id="@+id/tv_login_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_usmane"
+                    android:text="13800138000"
+                    android:textColor="#BDBDBD"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:theme="@style/TaxiEditText"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/form_login_form2">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BDBDBD"
+                    >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_login_crc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_crc"
+                        android:textColor="#BDBDBD"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:theme="@style/TaxiEditText"
+                        android:layout_weight="1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:text="发送"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bt_login_crc_send"
+                    android:background="@drawable/btn_clickcolor"
+                    android:textColor="@color/textColorDefautl"
+                    android:layout_marginEnd="3dp"
+                    android:layout_gravity="end"/>
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/bt_login_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/action_sign_in"
+                android:textColor="@color/textColorDefautl"
+                android:background="@drawable/btn_clickcolor"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

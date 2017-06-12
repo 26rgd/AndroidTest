@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:background="@color/MainMapTitleBackColor"
     >
 
     <LinearLayout
@@ -18,7 +19,6 @@
             android:layout_height="30dp"
             app:srcCompat="@drawable/circle_green_16px_33352_easyicon"
             android:id="@+id/lv_mainmap_popupwindow_item_name"
-
             android:layout_weight="1" />
 
         <TextView

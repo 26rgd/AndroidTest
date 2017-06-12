@@ -7,14 +7,20 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.powercn.grentechtaxi.MainActivity;
+import com.powercn.grentechtaxi.common.unit.StringUnit;
+
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by Administrator on 2017/4/11.
  */
 public class RequestProgressDialog extends ProgressDialog {
+    public final static String dialogAction="timeout";
+    private String tag=this.getClass().getName();
     private boolean isRun=false;
-    private int timeOut = 15 * 1000;
+    private Boolean noTimeOut;
+    private int timeOut = 20 * 1000;
 
     public RequestProgressDialog(Context context) {
         super(context);
@@ -38,7 +44,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-            System.out.println("RequestProgressDialog show error");
+            StringUnit.println(tag,"RequestProgressDialog show error");
         }
 
 
@@ -56,7 +62,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-         System.out.println("RequestProgressDialog show error");
+            StringUnit.println(tag,"RequestProgressDialog show error");
         }
 
 
@@ -64,6 +70,8 @@ public class RequestProgressDialog extends ProgressDialog {
     public synchronized void hide()
     {
         try {
+
+
             if(isRun==true)
             super.hide();
 
@@ -82,14 +90,18 @@ public class RequestProgressDialog extends ProgressDialog {
                 long st = System.currentTimeMillis();
                 long ed = System.currentTimeMillis();
                 try {
-                    while ((ed - st) < timeOut && isRun==true) {
+                    while (( noTimeOut=((ed - st) < timeOut)) && isRun==true) {
                         Thread.sleep(40);
                         ed = System.currentTimeMillis();
                     }
                 } catch (Exception e) {
                 }finally {
                     hide();
-                    System.out.println("end thread");
+                    if(!noTimeOut)
+                    {
+                        MainActivity.sendHandleMessage("data",dialogAction,null);
+                    }
+                    StringUnit.println(tag,"dialog thread end hide");
                 }
 
             }

@@ -37,10 +37,12 @@ public class StringUnit {
         return result;
     }
 
-    public static void println(String s) {
-        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  " + s);
+    public static void println(String className,String s) {
+        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+className+" | " + s);
     }
-
+//    public static void println(  String s) {
+//        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+" | " + s);
+//    }
     /**
      * 字符串补齐
      * <p>

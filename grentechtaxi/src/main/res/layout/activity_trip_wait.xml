@@ -45,112 +45,37 @@
             android:layout_marginBottom="@dimen/marginBottom"
             android:layout_marginLeft="@dimen/margin10"
             android:layout_marginRight="@dimen/margin10">
-
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
-                <com.powercn.grentechtaxi.view.CircleImageView
-                    android:layout_height="@dimen/ImageHeadLarge"
-                    android:layout_width="@dimen/ImageHeadLarge"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_driver"></com.powercn.grentechtaxi.view.CircleImageView>
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin10"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginRight="@dimen/margin">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <include
+                    layout="@layout/driverinfo"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/marginLeft"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:text="王师你"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/textColorTripWaitInfo"
-                            android:textSize="@dimen/textSize"
-                            android:id="@+id/textView9"
-                            />
-
-                        <ImageView
-                            android:layout_width="@dimen/TitleImageSize"
-                            android:layout_height="@dimen/TitleImageSize"
-                            android:layout_marginLeft="@dimen/marginLeft"
-                            app:srcCompat="@drawable/icon_star"
-                            android:id="@+id/imageView5"
-                              />
-
-                        <TextView
-                            android:text="4.9"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center_vertical"
-                            android:id="@+id/textView11"
-                             />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="粤 B001N3 白色 本田思域"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/textSizeCallCar"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/textColorTripWaitInfo"
-                        android:id="@+id/textView10" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="@dimen/ImageSizeTrip36px"
-                            android:layout_height="@dimen/ImageSizeTrip36px"
-                            android:layout_marginRight="@dimen/marginRight"
-                            app:srcCompat="@drawable/icon_message"
-                            android:layout_gravity="center"
-                            android:id="@+id/iv_tripwait_sms"
-                              />
-
-                        <ImageView
-                            android:layout_width="@dimen/ImageSizeTrip36px"
-                            android:layout_height="@dimen/ImageSizeTrip36px"
-                            android:layout_marginRight="@dimen/marginRight"
-                            app:srcCompat="@drawable/icon_phone_dengdai"
-                            android:layout_gravity="center"
-                            android:id="@+id/iv_tripwait_call"
-                             />
-
-                    </LinearLayout>
-
-                </LinearLayout>>
+                    android:layout_height="wrap_content"></include>
             </LinearLayout>
 
             <include layout="@layout/activity_divisive"></include>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin10"
+                android:layout_marginBottom="@dimen/margin10"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginRight="@dimen/margin">
 
-                <ListView
+                <include
+                    layout="@layout/addressinfo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lv_tripwait_list"/>
+                    android:layout_height="wrap_content"></include>
             </LinearLayout>
-
-
             <include layout="@layout/activity_divisive"></include>
 
             <LinearLayout

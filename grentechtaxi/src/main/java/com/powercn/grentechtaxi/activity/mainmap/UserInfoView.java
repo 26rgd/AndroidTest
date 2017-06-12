@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.KeyListener;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,25 +20,17 @@ import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.adapter.AbstractAdpter;
 import com.powercn.grentechtaxi.common.http.HttpRequestTask;
 import com.powercn.grentechtaxi.common.unit.GsonUnit;
+import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.entity.ResponseUerInfo;
 import com.powercn.grentechtaxi.view.CircleImageView;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import static android.R.attr.breadCrumbShortTitle;
-import static android.R.attr.name;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
-import static com.powercn.grentechtaxi.R.id.iv_userinfo_back;
-import static com.powercn.grentechtaxi.R.id.tv_select_camera;
-import static com.powercn.grentechtaxi.R.id.tv_select_gallery;
-import static com.powercn.grentechtaxi.R.id.tv_userinfo_sub;
 import static com.powercn.grentechtaxi.activity.mainmap.UserInfoView.UserInfoItem.INFO_ICON;
 import static java.lang.Integer.parseInt;
 
@@ -49,7 +38,7 @@ import static java.lang.Integer.parseInt;
  * Created by Administrator on 2017/5/19.
  */
 @Getter
-public class UserInfoView extends AbstractChildView {
+public class UserInfoView extends MainChildView {
     private ListView listView;
     private UserAdpter userAdpter = null;
     private ImageView ivBack;
@@ -92,7 +81,7 @@ public class UserInfoView extends AbstractChildView {
         list.add(UserInfoItem.INFO_MARK);
         userAdpter = new UserAdpter(activity, list, R.layout.activity_userinfo_item1);
         listView.setAdapter(userAdpter);
-        activity.upBitmap=null;
+        activity.upBitmap = null;
     }
 
     @Override
@@ -103,7 +92,7 @@ public class UserInfoView extends AbstractChildView {
                 break;
             case R.id.tv_userinfo_sub:
                 for (UserInfoItem infoItem : UserInfoItem.values()) {
-                    System.out.println(infoItem.getName() + "|" + infoItem.getValue());
+                    StringUnit.println(tag,infoItem.getName() + "|" + infoItem.getValue());
                 }
                 saveUserInfo();
                 activity.jumpMianMapView(this);
@@ -128,7 +117,7 @@ public class UserInfoView extends AbstractChildView {
         responseUerInfo.setSex(sex);
         responseUerInfo.setIndustry(UserInfoItem.INFO_JOB.getValue());
         responseUerInfo.setSign(UserInfoItem.INFO_MARK.getValue());
-        System.out.println(GsonUnit.toJson(responseUerInfo));
+        StringUnit.println(tag,GsonUnit.toJson(responseUerInfo));
         HttpRequestTask.saveUserInfo(GsonUnit.toJson(responseUerInfo));
 
     }
@@ -139,7 +128,6 @@ public class UserInfoView extends AbstractChildView {
         private UserInfoItem currentItem;
         @Getter
         private CircleImageView head;
-
 
 
         public UserAdpter(Context context, List data, int itemres) {
@@ -160,8 +148,10 @@ public class UserInfoView extends AbstractChildView {
                 iv_head.setVisibility(View.VISIBLE);
                 head = iv_head;
 
-                    try{iv_head.setImageBitmap(activity.readHeadImage());}catch (Exception e){}
-
+                try {
+                    iv_head.setImageBitmap(activity.readUserInfoHeadImage());
+                } catch (Exception e) {
+                }
 
 
             } else if (item == UserInfoItem.INFO_SEX) {
@@ -185,12 +175,10 @@ public class UserInfoView extends AbstractChildView {
             line2.setOnFocusChangeListener(this);
             tv_content.setOnClickListener(this);
             iv_head.setOnClickListener(this);
-            if(item==currentItem)
-            {
+            if (item == currentItem) {
                 line2.requestFocus();
                 line2.setSelection(line2.length());
-            }else
-            {
+            } else {
                 line2.clearFocus();
             }
             return view;
@@ -259,6 +247,7 @@ public class UserInfoView extends AbstractChildView {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         activity.startActivityForResult(intent, 3);
     }
+
     public void cropPhotoshoot(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");

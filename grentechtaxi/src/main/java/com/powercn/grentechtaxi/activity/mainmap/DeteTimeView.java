@@ -3,12 +3,10 @@ package com.powercn.grentechtaxi.activity.mainmap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
-import android.widget.RadioButton;
 
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.common.unit.DateUnit;
-import com.powercn.grentechtaxi.common.unit.NumberUnit;
 import com.powercn.grentechtaxi.common.unit.StringUnit;
 
 import java.util.Calendar;
@@ -16,18 +14,13 @@ import java.util.Date;
 
 import lombok.Getter;
 
-import static android.R.attr.breadCrumbShortTitle;
-import static android.R.attr.visibility;
 import static android.media.CamcorderProfile.get;
-import static com.powercn.grentechtaxi.R.id.numberPicker0;
-import static com.powercn.grentechtaxi.R.id.numberPicker1;
-import static com.powercn.grentechtaxi.R.id.numberPicker2;
 
 /**
  * Created by Administrator on 2017/5/12.
  */
 @Getter
-public class DeteTimeView extends AbstractChildView implements NumberPicker.Formatter, NumberPicker.OnValueChangeListener {
+public class DeteTimeView extends MainChildView implements NumberPicker.Formatter, NumberPicker.OnValueChangeListener {
     private Button bt_selecttitme_sub;
     Button bt_selecttitme_cancle;
     NumberPicker numberPicker0;

@@ -1,10 +1,14 @@
 package com.powercn.grentechtaxi.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,14 +20,21 @@ import java.util.TimerTask;
 
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.SysApplication;
+import com.powercn.grentechtaxi.activity.mainmap.AbstractChildView;
+import com.powercn.grentechtaxi.activity.mainmap.MainChildView;
+import com.powercn.grentechtaxi.common.unit.StringUnit;
+import com.powercn.grentechtaxi.entity.OrderInfo;
 
 /**
  * Created by Administrator on 2017/4/20.
  */
 
 public abstract class AbstractBasicActivity extends AppCompatActivity implements View.OnClickListener {
+    protected String tag=this.getClass().getName();
     private Boolean isExit = false;
     private ImageView homePage;
+    protected ConnectionService connectionService;
+    protected AbstractChildView self;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +48,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         initView();
         bindListener();
         initData();
+
     }
 
 
@@ -71,6 +83,8 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         }
     }
 
+
+
     protected void jumpMainActivity() {
         if (!(this instanceof MainActivity)) {
             Intent intent = new Intent(this, MainActivity.class);
@@ -79,21 +93,31 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         }
     }
 
-    protected void jumpFinish(Class<?> cls) {
+    public void jumpFinish(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
         finish();
-        System.out.println("jumpFinish");
+        StringUnit.println(tag ," jumpFinish");
 
     }
 
 
-    protected void jumpNotFinish(Class<?> cls) {
+    public void jumpNotFinish(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
-
-
+    public void jumpForResult(Class<?> cls,int requestCode) {
+        Intent intent = new Intent(this, cls);
+        startActivityForResult(intent,requestCode);
+    }
+    public void jumpForResult(Class<?> cls, OrderInfo object, int requestCode) {
+        Intent intent = new Intent(this, cls);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("object",object);
+        intent.putExtras(bundle);
+        startActivityForResult(intent,requestCode);
+       // startActivity(intent);
+    }
     @Override
     public void onClick(View v) {
 
@@ -112,6 +136,20 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         try {
             Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+        }
+    }
+
+    public class ConnectionService implements ServiceConnection
+    {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
         }
     }
 }

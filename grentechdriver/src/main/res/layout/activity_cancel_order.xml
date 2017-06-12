@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_cir">
+
+    <TextView
+        android:text="取消订单"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeTitle"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin"
+        android:id="@+id/textView14" />
+    <include layout="@layout/activity_divisive"></include>
+
+    <TextView
+        android:text="确认取消订单?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin"
+        android:textSize="@dimen/textSizeCallCar"
+        android:textColor="@color/textColorSelectCarNoFocus"
+        android:id="@+id/textView17" />
+
+    <include layout="@layout/activity_divisive"></include>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="联系师父"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_contact"
+            android:gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:textColor="@color/MainMapTitleBackColor"
+            android:layout_weight="1" />
+<include layout="@layout/activity_divisive_h"></include>
+        <TextView
+            android:text="取消行程"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_sub"
+            android:gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:textColor="@color/MainMapTitleBackColor"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>
