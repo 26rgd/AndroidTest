@@ -12,6 +12,7 @@ import com.powercn.grentechtaxi.common.http.ResponeInfo;
 import com.powercn.grentechtaxi.common.unit.GsonUnit;
 import com.powercn.grentechtaxi.common.unit.MapUnit;
 import com.powercn.grentechtaxi.common.unit.StringUnit;
+import com.powercn.grentechtaxi.common.websocket.WebSocketTask;
 import com.powercn.grentechtaxi.common.websocket.WebSocketThread;
 import com.powercn.grentechtaxi.entity.CallOrderStatusEnum;
 import com.powercn.grentechtaxi.entity.LoginInfo;
@@ -68,15 +69,12 @@ public class LoginMessageHandler extends Handler {
                                 LoginInfo.saveUserLoginInfo(activity, loginInfo);
                                 LoginInfo.currentLoginSuccess = true;
                                 WebSocketThread.getInstance().start(loginInfo.phone);
-                               // String filepath=map.get("headImage").toString();
                                 String filepath= MapUnit.toString(map,"headImage");
                                 filename= getFileName(filepath);
                                 if (loginInfo.bitmapPath.equals(filename))
                                 {
                                     HttpRequestTask.loadFile(filepath);
                                 }
-
-
                                 activity.finish();
                                 HttpRequestTask.getUserInfo(loginInfo.phone);
                             } else {
@@ -92,6 +90,8 @@ public class LoginMessageHandler extends Handler {
             StringUnit.println(tag,"LoginhandleMessage Error");
         }
     }
+
+
 
     private String getFileName(String path)
     {

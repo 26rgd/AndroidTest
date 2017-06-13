@@ -1,8 +1,11 @@
 package com.powercn.grentechtaxi.common.unit;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +25,7 @@ import com.powercn.grentechtaxi.R;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import static com.powercn.grentechtaxi.R.id.tv_mainmap_cattype_netword;
 import static com.powercn.grentechtaxi.R.id.tv_mainmap_cattype_taxi;
@@ -48,12 +52,12 @@ public class ViewUnit {
 
     }
 
-    public static String getResString(Context context,int resId)
-    {
-        Resources resources=context.getResources();
+    public static String getResString(Context context, int resId) {
+        Resources resources = context.getResources();
         return resources.getString(resId);
 
     }
+
     public static void setWindowStatusBarColor(Activity activity, int colorResId) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -117,8 +121,8 @@ public class ViewUnit {
     }
 
     public static void callPhone(Context context, String number) {
-        if(number==null)number="";
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+number));
+        if (number == null) number = "";
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             context.startActivity(intent);
@@ -128,13 +132,64 @@ public class ViewUnit {
     }
 
     public static void sendSms(Context context, String number) {
-        if(number==null)number="";
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:"+number));
+        if (number == null) number = "";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + number));
+
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
+            // intent.putExtra("sms_body","number");
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void sendSms(Context context, String number, String msg) {
+        if (number == null) number = "";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:" + number));
+
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            intent.putExtra("sms_body", msg);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void systemShare(Context context, String message) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        //intent.setPackage("com.tencent.mm");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(intent, "分享"));
+    }
+
+    public static List<ResolveInfo> getShareTargets(Context activity) {
+        Intent intent = new Intent(Intent.ACTION_SEND, null);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setType("text/plain");
+        PackageManager pm = activity.getPackageManager();
+        return pm.queryIntentActivities(intent, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+
+    }
+
+    public static void CreateShare(String title, String content, Activity activity, ResolveInfo appInfo) {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setComponent(new ComponentName(appInfo.activityInfo.packageName, appInfo.activityInfo.name));
+            //这里就是组织内容了，
+            // shareIntent.setType("text/plain");
+            shareIntent.setType("image/*");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(shareIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
         }
     }
 }

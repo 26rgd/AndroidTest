@@ -54,7 +54,13 @@
 
         <activity
             android:name=".activity.OrderInfoActivity"
-            android:theme="@style/Theme.NoTitle"></activity>
+            android:theme="@style/Theme.NoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".activity.OrderListActivity"

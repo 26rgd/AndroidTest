@@ -264,8 +264,6 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
             case civ_mainmap_titlebar_account:
                 HttpRequestTask.getUserInfo(activity.loginInfo.phone);
                 if (LoginInfo.currentLoginSuccess == false) {
-
-                    //activity.loginView.getView().setVisibility(View.VISIBLE);
                     activity.jumpForResult(LoginActivity.class, MainActivity.otherCode);
                     return;
                 }

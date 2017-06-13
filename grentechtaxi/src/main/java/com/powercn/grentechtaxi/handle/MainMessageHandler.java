@@ -75,13 +75,10 @@ public class MainMessageHandler extends Handler {
                             info = map.get("message").toString();
                             if (success == true) {
                                 activity.showToast(info);
-                                // activity.loginView.getView().setVisibility(View.GONE);
                                 LoginInfo.currentLoginSuccess = true;
                                 WebSocketThread.getInstance().start(activity.loginInfo.phone);
                                 HttpRequestTask.getUserInfo(activity.loginInfo.phone);
-                                //String filepath=map.get("headImage").toString();
                                 String filepath = MapUnit.toString(map, "headImage");
-
                                 filename = getFileName(filepath);
                                 if (!activity.loginInfo.bitmapPath.equals(filename)) {
                                     HttpRequestTask.loadFile(filepath);
@@ -94,7 +91,7 @@ public class MainMessageHandler extends Handler {
                             }
                             break;
 
-              
+
                         case GetUserInfo:
                             WebSocketThread.getInstance().setOnReceiver(new WebSocketTask.onReceiver() {
                                 @Override
@@ -164,6 +161,7 @@ public class MainMessageHandler extends Handler {
         }
     }
 
+
     private void handleWebSocket(OrderInfo orderInfo) {
         MainActivity activity = (MainActivity) this.mActivity.get();
         if(activity==null)return;
@@ -191,10 +189,7 @@ public class MainMessageHandler extends Handler {
                 case NOCHECK:
                 break;
                 case  NOTAXI:
-
                     activity.postMessage(MainActivity.PostType.CallAction,NOTAXI);
-
-
                 break;
                 case  FINISH:
                 break;

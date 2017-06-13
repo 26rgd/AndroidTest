@@ -1,5 +1,6 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
+import android.content.pm.ResolveInfo;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,6 +8,10 @@ import android.widget.TextView;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.common.unit.ViewUnit;
 import com.powercn.grentechtaxi.entity.OrderInfo;
+
+import java.util.List;
+
+import static com.powercn.grentechtaxi.common.unit.ViewUnit.getShareTargets;
 
 /**
  * Created by Administrator on 2017/6/9.
@@ -44,7 +49,9 @@ public class DriverView implements View.OnClickListener {
                 ViewUnit.callPhone(childView.getView().getContext(), phone);
                 break;
             case R.id.iv_sms:
-                ViewUnit.sendSms(childView.getView().getContext(), phone);
+//               List<ResolveInfo>  list=ViewUnit.getShareTargets(childView.getView().getContext());
+//                ViewUnit.systemShare(childView.getView().getContext(),"sssssssssssssss");
+               ViewUnit.sendSms(childView.getView().getContext(), phone);
                 break;
         }
     }

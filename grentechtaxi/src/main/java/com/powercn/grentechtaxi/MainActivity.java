@@ -62,11 +62,8 @@ public class MainActivity extends AbstractBasicActivity {
     public TripRunView tripRunView;
     public TripWaitView tripWaitView;
     public TripFinshView tripFinshView;
-//    public TripOrderView tripOrderView;
-//    public TripEvaluateView tripEvaluateView;
     public UserInfoView userInfoView;
     public HomeCompanyView homeCompanyView;
-//    public OrderDetailView orderDetailView;
 
 
     public String deviceuuid;
@@ -98,9 +95,7 @@ public class MainActivity extends AbstractBasicActivity {
         super.onCreate(savedInstanceState, R.layout.activity_main);
         autoLogin();
         initMap(savedInstanceState);
-
         //HttpRequestTask.loginByPassword("admin", "loginByPassword");
-
     }
 
     private void autoLogin() {
@@ -118,12 +113,10 @@ public class MainActivity extends AbstractBasicActivity {
 
     @Override
     protected void bindListener() {
-
     }
 
     @Override
     protected void initData() {
-
         headpath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + ViewUnit.getResString(this, R.string.filedir) + "/";
         File file = new File(headpath);
         if (!file.exists()) {
@@ -136,19 +129,14 @@ public class MainActivity extends AbstractBasicActivity {
         company = AddressInfo.readCompany(this);
         callCarView = new CallCarView(this, R.id.layout_mainmap_callcar);
         callActionView = new CallActionView(this, R.id.layout_callaction);
-        // loginView = new LoginView(this, R.id.layout_login);
         departView = new DepartView(this, R.id.layout_mainmap_depart);
         destinationView = new DestinationView(this, R.id.layout_mainmap_destination);
         deteTimeView = new DeteTimeView(this, R.id.layout_datetime);
         tripRunView = new TripRunView(this, R.id.layout_trip_run);
         tripWaitView = new TripWaitView(this, R.id.layout_trip_wait);
         tripFinshView = new TripFinshView(this, R.id.layout_trip_finsh);
-//        tripOrderView = new TripOrderView(this, R.id.layout_trip_order);
-//        tripEvaluateView = new TripEvaluateView(this, R.id.layout_trip_evaluate);
         userInfoView = new UserInfoView(this, R.id.layout_userinfo);
         homeCompanyView = new HomeCompanyView(this, R.id.layout_select_homecompany);
-//        orderDetailView = new OrderDetailView(this, R.id.layout_oder_detail);
-
     }
 
     @Override
@@ -190,7 +178,6 @@ public class MainActivity extends AbstractBasicActivity {
         try {
             File file = new File(headpath + path);
             if (file.exists() == false) {
-
                 file.createNewFile();
             }
             OutputStream inputStream = new FileOutputStream(file);
@@ -200,14 +187,12 @@ public class MainActivity extends AbstractBasicActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void savefile(Bitmap bitmap, String path) {
         try {
             File file = new File(headpath + path);
             if (file.exists() == false) {
-
                 file.createNewFile();
             }
             OutputStream inputStream = new FileOutputStream(file);
@@ -217,7 +202,6 @@ public class MainActivity extends AbstractBasicActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void initMap(Bundle savedInstanceState) {
@@ -261,14 +245,6 @@ public class MainActivity extends AbstractBasicActivity {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-        }
-    }
-
-
     public static void sendHandleMessage(String key, String content, Object object) {
         try {
             Bundle bundle = new Bundle();
@@ -285,30 +261,19 @@ public class MainActivity extends AbstractBasicActivity {
 
     public void postMessage(final PostType what, Object object) {
         try {
-
             mainMessageHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    switch ( what)
-                    {
+                    switch (what) {
                         case CallAction:
-                            //jumpMianMapView(callActionView);
                             showToast(NOTAXI.getName());
-                           // mainMapView.setVisibility(View.GONE);
                             tripWaitView.setVisibility(View.VISIBLE);
                             break;
                     }
-
                 }
             });
-
         } catch (Exception e) {
         }
-    }
-
-
-    public void hideMainView() {
-        mainMapView.setVisibility(View.GONE);
     }
 
     public void jumpMianMapView(MainChildView abstractChildView) {
@@ -320,6 +285,9 @@ public class MainActivity extends AbstractBasicActivity {
         String filename = loginInfo.bitmapPath;
         Bitmap bitmap = null;
         try {
+            if(LoginInfo.currentLoginSuccess==false)
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
+                else
             bitmap = BitmapFactory.decodeFile(headpath + filename);
             if (bitmap == null) {
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
@@ -327,7 +295,6 @@ public class MainActivity extends AbstractBasicActivity {
         } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
         }
-
         return bitmap;
     }
 
@@ -354,15 +321,12 @@ public class MainActivity extends AbstractBasicActivity {
     public enum PostType {
         CallAction("叫车");
         private String name;
-
         private PostType(String name) {
             this.name = name;
         }
-
         public String getName() {
             return name;
         }
-
         public void setName(String name) {
             this.name = name;
         }

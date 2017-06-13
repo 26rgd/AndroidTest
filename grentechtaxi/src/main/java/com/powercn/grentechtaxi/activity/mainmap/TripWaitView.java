@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.common.http.HttpRequestTask;
+import com.powercn.grentechtaxi.common.unit.DateUnit;
 import com.powercn.grentechtaxi.common.unit.ViewUnit;
 import com.powercn.grentechtaxi.dialog.CancelOrderDialog;
+import com.powercn.grentechtaxi.entity.OrderInfo;
 
 import lombok.Getter;
 
@@ -75,7 +77,8 @@ public class TripWaitView extends MainChildView {
                 userDialog.setOnCliclBySub(this);
                 break;
             case R.id.btn_tripwait_share:
-                ViewUnit.sendSms(activity,activity.loginInfo.phone);
+                ViewUnit.systemShare(activity,getShareMessage(activity.orderInfo));
+                //ViewUnit.sendSms(activity,"",getShareMessage(activity.orderInfo));
                 break;
             case  R.id.tv_order_contact:
                 ViewUnit.callPhone(activity,activity.orderInfo.getDriverPhone());
@@ -87,5 +90,12 @@ public class TripWaitView extends MainChildView {
                 break;
         }
     }
+
+    private String getShareMessage(OrderInfo info)
+    {
+        String s= DateUnit.formatDate(info.getScheduledTime().getTime(),"HH:mm")+"出发"+info.getInAddress()+"至"+info.getDownAddress()+"|"+info.getCarNo()+"|"+info.getDriverName()+"|"+info.getDriverPhone();
+        return s;
+    }
+
 
 }
