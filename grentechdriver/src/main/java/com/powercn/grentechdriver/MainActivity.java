@@ -174,7 +174,7 @@ public class MainActivity extends AbstractBasicActivity {
                 file.createNewFile();
             }
             OutputStream inputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, inputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, inputStream);
             inputStream.flush();
             inputStream.close();
         } catch (Exception e) {

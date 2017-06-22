@@ -1,1 +1,1 @@
-include ':grentechtaxi', ':grentechdriver'
+include ':grentechtaxi', ':grentechdriver', ':specialcar'

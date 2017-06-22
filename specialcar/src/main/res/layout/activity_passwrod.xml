@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/mainbackcolor">
+
+    <include
+        layout="@layout/titlebar_default"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"></include>
+
+    <ScrollView
+        android:id="@+id/sv_login_form1"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp">
+
+        <LinearLayout
+            android:id="@+id/la_login_form1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#BDBDBD">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="手机号码"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="15989037612"
+                    android:textColor="#BDBDBD"
+                    android:theme="@style/TaxiEditText" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#BDBDBD">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_password1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入新密码"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="Default123"
+                    android:textColor="#BDBDBD"
+                    android:theme="@style/TaxiEditText" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#BDBDBD">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_password2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入新密码"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="Default123"
+                    android:textColor="#BDBDBD"
+                    android:theme="@style/TaxiEditText" />
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BDBDBD">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_smscrc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="验证码"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="Default123"
+                        android:textColor="#BDBDBD"
+                        android:theme="@style/TaxiEditText" />
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:text="获取验证码"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/textColorDefautl"
+                    android:background="@drawable/btn_clickcolor"
+                    android:id="@+id/bt_getcrc" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/bt_password_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_clickcolor"
+                android:text="保存"
+                android:textColor="@color/textColorDefautl"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

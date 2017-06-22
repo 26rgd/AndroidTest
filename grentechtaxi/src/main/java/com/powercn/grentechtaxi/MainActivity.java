@@ -31,6 +31,7 @@ import com.powercn.grentechtaxi.common.unit.GsonUnit;
 import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.common.unit.ViewUnit;
 import com.powercn.grentechtaxi.entity.AddressInfo;
+import com.powercn.grentechtaxi.entity.CallOrderStatusEnum;
 import com.powercn.grentechtaxi.entity.LoginInfo;
 import com.powercn.grentechtaxi.entity.OrderInfo;
 import com.powercn.grentechtaxi.entity.ResponseUerInfo;
@@ -42,7 +43,17 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import static com.powercn.grentechtaxi.common.unit.GsonUnit.toObject;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.NEW;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.BOOKED;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.CANCEL_ADMIN;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.CANCEL_DRIVER;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.CANCEL_PASSENGER;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.FINISH;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.NOCHECK;
 import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.NOTAXI;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.PENDING;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.RESVER;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.RUNNING;
 
 
 /**
@@ -74,7 +85,8 @@ public class MainActivity extends AbstractBasicActivity {
     public static MainMessageHandler mainMessageHandler = null;
 
 
-    public OrderInfo orderInfo;
+    //public OrderInfo orderInfo;
+    public OrderInfo webOrderInfo;
     public AddressInfo startAddr = new AddressInfo();
     public AddressInfo destAddr = new AddressInfo();
     public int totalMileage;
@@ -89,6 +101,7 @@ public class MainActivity extends AbstractBasicActivity {
 
 
     public final static int otherCode = 0xFFFF;
+    public final static int selectTime = 0xFFFE;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,13 +161,14 @@ public class MainActivity extends AbstractBasicActivity {
                     break;
                 case 2:
                     File temp = new File(headpath + this.tempShootfile);
-                    this.userInfoView.cropPhotoshoot(Uri.fromFile(temp));
+                    //this.userInfoView.cropPhotoshoot(Uri.fromFile(temp));
+                    this.userInfoView.cropPhotoshoot(temp);
                     break;
                 case 3:
                     if (data != null) {
                         Bundle extras = data.getExtras();
                         Bitmap head = null;// 头像Bitmap
-                        head = BitmapFactory.decodeStream(getContentResolver().openInputStream(this.userInfoView.getUritempFile()));
+                        head = BitmapFactory.decodeStream(getContentResolver().openInputStream(this.userInfoView.getUriUpFile()));
                         if (head != null) {
                             savefileup(head, upfile);
                             HttpRequestTask.headUplod(loginInfo.phone, headpath + upfile);
@@ -166,6 +180,11 @@ public class MainActivity extends AbstractBasicActivity {
                     loginInfo = LoginInfo.readUserLoginInfo(this);
                     mainMapView.getIvHead().setImageBitmap(readHeadImage());
                     StringUnit.println(tag, GsonUnit.toJson(loginInfo));
+                    break;
+                case selectTime:
+                    Bundle bundle = data.getExtras();
+                    String Time = bundle.getString("selecttime");
+                    callCarView.getTvShowTime().setText(Time);
                     break;
             }
         } catch (Exception e) {
@@ -191,12 +210,19 @@ public class MainActivity extends AbstractBasicActivity {
 
     public void savefile(Bitmap bitmap, String path) {
         try {
+            File filedir = new File(headpath);
+            if (filedir.exists() == false) {
+
+                filedir.mkdirs();
+            }
+
             File file = new File(headpath + path);
             if (file.exists() == false) {
+
                 file.createNewFile();
             }
             OutputStream inputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, inputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, inputStream);
             inputStream.flush();
             inputStream.close();
         } catch (Exception e) {
@@ -259,20 +285,64 @@ public class MainActivity extends AbstractBasicActivity {
     }
 
 
-    public void postMessage(final PostType what, Object object) {
+    public void postMessage(final PostType what, final Object object) {
         try {
             mainMessageHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     switch (what) {
                         case CallAction:
-                            showToast(NOTAXI.getName());
-                            tripWaitView.setVisibility(View.VISIBLE);
+                            OrderProcess((OrderInfo) object);
                             break;
                     }
                 }
             });
         } catch (Exception e) {
+        }
+    }
+
+    private void OrderProcess(OrderInfo object) {
+        switch (object.getStatus()) {
+            case RESVER:
+                break;
+            case NEW:
+                showToast(NEW.getName());
+                mainMapView.setVisibility(View.VISIBLE);
+                break;
+            case PENDING:
+                showToast(PENDING.getName());
+                break;
+            case NOCHECK:
+                showToast(NOCHECK.getName());
+                mainMapView.setVisibility(View.VISIBLE);
+                break;
+            case NOTAXI:
+                showToast(NOTAXI.getName());
+                mainMapView.setVisibility(View.VISIBLE);
+                break;
+            case FINISH:
+                showToast(FINISH.getName());
+                tripFinshView.setVisibility(View.VISIBLE);
+                break;
+            case CANCEL_ADMIN:
+                showToast(CANCEL_ADMIN.getName());
+                break;
+            case CANCEL_PASSENGER:
+                showToast(CANCEL_PASSENGER.getName());
+                break;
+            case CANCEL_DRIVER:
+                showToast(CANCEL_DRIVER.getName());
+                break;
+            case ASSIGN_CAR:
+                break;
+            case  BOOKED:
+                showToast(BOOKED.getName());
+                tripWaitView.setVisibility(View.VISIBLE);
+                break;
+            case RUNNING:
+                showToast(RUNNING.getName());
+                tripWaitView.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -285,10 +355,10 @@ public class MainActivity extends AbstractBasicActivity {
         String filename = loginInfo.bitmapPath;
         Bitmap bitmap = null;
         try {
-            if(LoginInfo.currentLoginSuccess==false)
+            if (LoginInfo.currentLoginSuccess == false)
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
-                else
-            bitmap = BitmapFactory.decodeFile(headpath + filename);
+            else
+                bitmap = BitmapFactory.decodeFile(headpath + filename);
             if (bitmap == null) {
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
             }
@@ -321,12 +391,15 @@ public class MainActivity extends AbstractBasicActivity {
     public enum PostType {
         CallAction("叫车");
         private String name;
+
         private PostType(String name) {
             this.name = name;
         }
+
         public String getName() {
             return name;
         }
+
         public void setName(String name) {
             this.name = name;
         }

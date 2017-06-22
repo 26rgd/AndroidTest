@@ -58,8 +58,12 @@ public class TripWaitView extends MainChildView {
     @Override
     public void setVisibility(int visibility) {
        // myAdpter.clear();
-        addressView.setInfo(activity.orderInfo);
-        driverView.setInfo(activity.orderInfo);
+        if(visibility==View.VISIBLE)
+        {
+            addressView.setInfo(activity.webOrderInfo);
+            driverView.setInfo(activity.webOrderInfo);
+            activity.mainMapView.setVisibility(View.GONE);
+        }
         super.setVisibility(visibility);
     }
     @Override
@@ -77,15 +81,15 @@ public class TripWaitView extends MainChildView {
                 userDialog.setOnCliclBySub(this);
                 break;
             case R.id.btn_tripwait_share:
-                ViewUnit.systemShare(activity,getShareMessage(activity.orderInfo));
+                ViewUnit.systemShare(activity,getShareMessage(activity.webOrderInfo));
                 //ViewUnit.sendSms(activity,"",getShareMessage(activity.orderInfo));
                 break;
             case  R.id.tv_order_contact:
-                ViewUnit.callPhone(activity,activity.orderInfo.getDriverPhone());
+                ViewUnit.callPhone(activity,activity.webOrderInfo.getDriverPhone());
                 userDialog.dismiss();
                 break;
             case  R.id.tv_order_sub:
-                HttpRequestTask.cancelOrder(activity.orderInfo.getCaller());
+                HttpRequestTask.cancelOrder(activity.webOrderInfo.getCaller());
                 userDialog.dismiss();
                 break;
         }

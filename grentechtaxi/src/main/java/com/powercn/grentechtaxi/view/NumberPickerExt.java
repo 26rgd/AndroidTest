@@ -72,4 +72,61 @@ public class NumberPickerExt extends NumberPicker {
 
         }
     }
+
+    public void setValues(String [] line)
+    {
+        if(line==null)
+        {
+            return;
+        }
+        String [] vs=this.getDisplayedValues();
+        if(vs==null)
+        {      this.setDisplayedValues(line);
+                this.setMinValue(0);
+                this.setMaxValue(line.length-1);
+
+
+        }else
+        {
+            int i=this.getValue();
+            String s=this.getDisplayedValues()[i];
+            if(vs.length>=line.length)
+            {
+               // init();
+                this.setMinValue(0);
+                this.setMaxValue(line.length-1);
+                this.setDisplayedValues(line);
+            }else
+            {
+                //init();
+                this.setDisplayedValues(line);
+                this.setMinValue(0);
+                this.setMaxValue(line.length-1);
+            }
+            for(int n=0;n<this.getDisplayedValues().length;n++)
+            {
+                String li=this.getDisplayedValues()[n];
+                this.setValue(0);
+                if(li.equals(s))
+                {
+                    this.setValue(n);
+                    break;
+                }
+            }
+
+        }
+    }
+
+    public String getCurDisplay()
+    {
+        int i=this.getValue();
+        String display=this.getDisplayedValues()[i];
+        return display;
+    }
+    public void init()
+    {
+        this.setMinValue(0);
+        this.setMaxValue(0);
+        this.setDisplayedValues(null);
+    }
 }

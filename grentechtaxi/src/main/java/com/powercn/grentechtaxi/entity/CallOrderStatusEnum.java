@@ -8,15 +8,15 @@ package com.powercn.grentechtaxi.entity;
  */
 public enum CallOrderStatusEnum implements GenericEnum{
     RESVER(0, "保留"),
-    NEW(1, "新建"),
-    PENDING(2, "抢单中"),
+    NEW(1, "抢单中..."),
+    PENDING(2, "抢单中.."),
     BOOKED(3, "已经抢单"),
     NOCHECK(4, "无人抢单"),
     NOTAXI(5, "无车辆"),
-    FINISH(6, "完成"),
-    CANCEL_ADMIN(7, "平台取消"),
-    CANCEL_PASSENGER(8, "乘客取消"),
-    CANCEL_DRIVER(9, "司机取消"),
+    FINISH(6, "订单完成"),
+    CANCEL_ADMIN(7, "平台取消订单"),
+    CANCEL_PASSENGER(8, "乘客取消订单"),
+    CANCEL_DRIVER(9, "司机取消订单"),
     ASSIGN_CAR(10, "车辆指派"),
     RUNNING(11, "载客中")
     ;

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+
+    android:background="@color/mainbackcolor"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"
+        android:background="@color/MainMapTitleBackColor"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_login_back"
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/btn_back" />
+
+        <TextView
+            android:id="@+id/tv_title_back_hint"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户登录" />
+
+        <TextView
+            android:id="@+id/tv_findpassword"
+            style="@style/TitleTextViewStyle"
+            android:textSize="@dimen/textSizeCallCar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/marginRight"
+            android:text="找回密码" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/sv_login_form1"
+        android:layout_marginTop="100dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
+
+        <LinearLayout
+            android:id="@+id/la_login_form1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#BDBDBD">
+                <AutoCompleteTextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="用户名"
+                    android:text="15989037612"
+                    android:textColor="#BDBDBD"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:theme="@style/TaxiEditText"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BDBDBD"
+                    >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="密码"
+                        android:textColor="#BDBDBD"
+                        android:inputType="number"
+                        android:text="Default123"
+                        android:maxLines="1"
+                        android:theme="@style/TaxiEditText"
+                        android:layout_weight="1" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+            <Button
+                android:id="@+id/bt_login_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="登录"
+                android:textColor="@color/textColorDefautl"
+                android:background="@drawable/btn_clickcolor"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

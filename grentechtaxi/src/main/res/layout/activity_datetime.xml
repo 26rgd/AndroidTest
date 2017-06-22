@@ -33,7 +33,7 @@
             android:textColor="@color/BLACK"
             android:layout_gravity="center"
             android:gravity="center"
-            android:id="@+id/textView3"
+            android:id="@+id/tvTimeFormat"
             android:textSize="@dimen/textSizeTitle"
             android:layout_weight="1" />
 

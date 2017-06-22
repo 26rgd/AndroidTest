@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/MainMapTitleBackColor"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@*android:drawable/ic_menu_allfriends"
+            android:id="@+id/lv_mainmap_popupwindow_item_name"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/WHITE"
+            android:textSize="@dimen/textSizeCallCar"
+            android:id="@+id/tv_mainmap_popupwindow_item_name"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

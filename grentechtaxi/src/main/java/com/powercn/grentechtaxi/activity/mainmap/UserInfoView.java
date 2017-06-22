@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,6 +27,8 @@ import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.entity.ResponseUerInfo;
 import com.powercn.grentechtaxi.view.CircleImageView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +48,7 @@ public class UserInfoView extends MainChildView {
     private UserAdpter userAdpter = null;
     private ImageView ivBack;
     private TextView btnSave;
-    private Uri uritempFile;
+    private Uri uriUpFile;
 
     public UserInfoView(MainActivity activity, int resId) {
         super(activity, resId);
@@ -92,7 +97,7 @@ public class UserInfoView extends MainChildView {
                 break;
             case R.id.tv_userinfo_sub:
                 for (UserInfoItem infoItem : UserInfoItem.values()) {
-                    StringUnit.println(tag,infoItem.getName() + "|" + infoItem.getValue());
+                    StringUnit.println(tag, infoItem.getName() + "|" + infoItem.getValue());
                 }
                 saveUserInfo();
                 activity.jumpMianMapView(this);
@@ -117,7 +122,7 @@ public class UserInfoView extends MainChildView {
         responseUerInfo.setSex(sex);
         responseUerInfo.setIndustry(UserInfoItem.INFO_JOB.getValue());
         responseUerInfo.setSign(UserInfoItem.INFO_MARK.getValue());
-        StringUnit.println(tag,GsonUnit.toJson(responseUerInfo));
+        StringUnit.println(tag, GsonUnit.toJson(responseUerInfo));
         HttpRequestTask.saveUserInfo(GsonUnit.toJson(responseUerInfo));
 
     }
@@ -242,8 +247,8 @@ public class UserInfoView extends MainChildView {
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", false);
-        uritempFile = Uri.parse("file:///" + activity.headpath + activity.tempfile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        uriUpFile = Uri.parse("file:///" + activity.headpath + activity.tempfile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriUpFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         activity.startActivityForResult(intent, 3);
     }
@@ -258,11 +263,77 @@ public class UserInfoView extends MainChildView {
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", false);
-        uritempFile = Uri.parse("file:///" + activity.headpath + activity.tempShootfile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        uriUpFile = Uri.parse("file:///" + activity.headpath + activity.tempShootfile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriUpFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         activity.startActivityForResult(intent, 3);
     }
+
+    public void cropPhotoshoot(File file) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uriUpFile = FileProvider.getUriForFile(activity.getApplicationContext(), "android.support.v4.content.FileProvider", file);
+        } else {
+            uriUpFile = Uri.fromFile(file);
+        }
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), uriUpFile);
+            if (bitmap.getRowBytes() * bitmap.getHeight() > 512 * 1024) {
+                bitmap = compressImage(bitmap);
+                uriUpFile = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, null, null));
+            }
+        } catch (Exception e) {
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 160);
+        intent.putExtra("outputY", 160);
+        intent.putExtra("return-data", false);
+        intent.setDataAndType(uriUpFile, "image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriUpFile);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        activity.startActivityForResult(intent, 3);
+    }
+
+    private void openCamera() {
+
+        Uri imageUri;
+        File file = new File(activity.headpath, activity.tempShootfile);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            imageUri = FileProvider.getUriForFile(activity.getApplicationContext(), "android.support.v4.content.FileProvider", file);
+        } else {
+            imageUri = Uri.fromFile(file);
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);//设置Action为拍照
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
+
+        }
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//将拍取的照片保存到指定URI
+
+        activity.startActivityForResult(intent, 2);
+
+    }
+
 
     private void showPhotoDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -277,16 +348,23 @@ public class UserInfoView extends MainChildView {
                 Intent intent1 = new Intent(Intent.ACTION_PICK, null);
                 intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 activity.startActivityForResult(intent1, 1);
+
                 dialog.dismiss();
             }
         });
         tv_select_camera.setOnClickListener(new View.OnClickListener() {// 调用照相机
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent2.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(new File("/" + activity.headpath, activity.tempShootfile)));
-                activity.startActivityForResult(intent2, 2);// 采用ForResult打开
+//                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                intent2.putExtra(MediaStore.EXTRA_OUTPUT,
+//                        Uri.fromFile(new File("/" + activity.headpath, activity.tempShootfile)));
+//                activity.startActivityForResult(intent2, 2);// 采用ForResult打开
+                try {
+                    openCamera();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 dialog.dismiss();
             }
         });
@@ -380,5 +458,23 @@ public class UserInfoView extends MainChildView {
         public void setValue(String value) {
             this.value = value;
         }
+    }
+
+    //图片压缩
+    private Bitmap compressImage(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int size = image.getRowBytes() * image.getHeight();
+        StringUnit.println(tag, "图片大小:" + size);
+        int scale = size / 1024 * 300;
+        int options = 100;
+        if (size == 0) options = 80;
+        else
+            options = options / (scale + 1);
+        if (options == 0) options = 15;
+        StringUnit.println(tag, "大小" + String.valueOf(options));
+        image.compress(Bitmap.CompressFormat.JPEG, options, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中 ?
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中 ?
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片 ?
+        return bitmap;
     }
 }

@@ -23,12 +23,12 @@
         <activity android:name=".activity.ListViewActivity"></activity>
         <activity android:name=".activity.WebSocketActivity"></activity>
 
-        <service
-            android:name=".service.GrentechService"
+        <cn.com.grentech.specialcar.service
+            android:name=".cn.com.grentech.specialcar.service.GrentechService"
             android:enabled="true"
             android:exported="false"
             android:label="@string/app_name"
-            android:permission="string"></service>
+            android:permission="string"></cn.com.grentech.specialcar.service>
     </application>
 
 </manifest>

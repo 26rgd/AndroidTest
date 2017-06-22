@@ -116,7 +116,7 @@ public class HttpRequestTask {
         bulidDefaultTask(httpRequestParam);
     }
 
-    public static void evaluate(int orderId, int star,String conten) {
+    public static void evaluate(long orderId, int star,String conten) {
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/evaluate", evaluate);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("orderId", String.valueOf(orderId));

@@ -20,7 +20,7 @@ public class MainBackGroundTask extends AsyncTask<HttpRequestParam, Void, Respon
 
     @Override
     protected ResponeInfo doInBackground(HttpRequestParam... params) {
-        // TODO: attempt authentication against a network service.
+        // TODO: attempt authentication against a network cn.com.grentech.specialcar.service.
         ResponeInfo responeInfo = null;
         try {
             try {

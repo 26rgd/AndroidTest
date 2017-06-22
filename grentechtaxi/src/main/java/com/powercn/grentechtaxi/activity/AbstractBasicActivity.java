@@ -25,6 +25,8 @@ import com.powercn.grentechtaxi.activity.mainmap.MainChildView;
 import com.powercn.grentechtaxi.common.unit.StringUnit;
 import com.powercn.grentechtaxi.entity.OrderInfo;
 
+import lombok.Getter;
+
 /**
  * Created by Administrator on 2017/4/20.
  */
@@ -34,6 +36,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
     private Boolean isExit = false;
     private ImageView homePage;
     protected ConnectionService connectionService;
+    @Getter
     protected AbstractChildView self;
 
     @Override
@@ -110,6 +113,13 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, cls);
         startActivityForResult(intent,requestCode);
     }
+    public void jumpForResult(Class<?> cls,int requestCode,String key,String content) {
+        Intent intent = new Intent(this, cls);
+        Bundle bundle=new Bundle();
+        bundle.putString(key,content);
+        intent.putExtras(bundle);
+        startActivityForResult(intent,requestCode);
+    }
     public void jumpForResult(Class<?> cls, OrderInfo object, int requestCode) {
         Intent intent = new Intent(this, cls);
         Bundle bundle=new Bundle();
@@ -135,6 +145,13 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
     public void showToast(String msg) {
         try {
             Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+        }
+    }
+
+    public void showToastLong(String msg) {
+        try {
+            Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
         }
     }

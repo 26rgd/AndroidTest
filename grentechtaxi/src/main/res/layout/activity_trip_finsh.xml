@@ -71,12 +71,12 @@
                         android:id="@+id/textView13" />
 
                     <TextView
-                        android:text="支付王师你车费"
+                        android:text="请用现金支付老王车费"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/textSizeCallCar"
                         android:layout_marginTop="@dimen/marginTop"
-                        android:id="@+id/textView12" />
+                        android:id="@+id/tv_driver_pay" />
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -98,7 +98,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="30sp"
-                            android:id="@+id/textView15"
+                            android:id="@+id/tv_driver_pay_account"
                               />
 
                         <TextView
@@ -115,21 +115,18 @@
             <TextView
                 android:text=""
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:layout_marginBottom="@dimen/marginBottom"
                 android:layout_marginTop="@dimen/marginTop"
                 android:background="@color/listViewSeparatorColor"
                 android:id="@+id/textView6" />
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lv_tripfinsh_list"/>
+<include layout="@layout/addressinfo"></include>
 
             <TextView
                 android:text=""
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/marginTop"
                 android:background="@color/listViewSeparatorColor"
                 android:id="@+id/textView7" />
@@ -139,10 +136,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
-                    android:text="确认支付17元"
+                    android:text="评价"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/button2"
+                    android:id="@+id/bt_evaluate_finish"
                     android:background="@drawable/btn_clickcolor"
                     />
             </LinearLayout>

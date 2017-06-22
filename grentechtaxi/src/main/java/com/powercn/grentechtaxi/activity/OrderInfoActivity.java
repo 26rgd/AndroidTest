@@ -58,8 +58,18 @@ public class OrderInfoActivity extends AbstractBasicActivity {
         starRecyclerAdapter=new StarRecyclerAdapter(this,null,R.layout.activity_star_item);
         recyclerView.setAdapter(starRecyclerAdapter);
         recyclerView.setLayoutManager(starRecyclerAdapter.getLinearHorizontal());
+        starRecyclerAdapter.setStarLevel(info.getEvaluateAnswer());
         addressView.setInfo(info);
         driverView.setInfo(info);
+//        if(info.getEvaluateAnswer()==null||info.getEvaluateAnswer()==0)
+//        {
+//            recyclerView.setVisibility(View.GONE);
+//            btnSub.setVisibility(View.VISIBLE);
+//        }else
+//        {
+//            recyclerView.setVisibility(View.VISIBLE);
+//            btnSub.setVisibility(View.GONE);
+//        }
     }
 
     @Override

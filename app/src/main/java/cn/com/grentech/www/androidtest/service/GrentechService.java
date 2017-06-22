@@ -40,7 +40,7 @@ public class GrentechService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        StringUnit.println("service|" + Process.myPid());
+        StringUnit.println("cn.com.grentech.specialcar.service|" + Process.myPid());
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         showNotification(pendingIntent);

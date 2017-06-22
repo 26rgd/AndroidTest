@@ -41,6 +41,7 @@ import lombok.Data;
 import static android.R.id.list;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.powercn.grentechtaxi.common.unit.GsonUnit.toObject;
+import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.FINISH;
 import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.NOTAXI;
 import static com.powercn.grentechtaxi.entity.CallOrderStatusEnum.RESVER;
 
@@ -147,6 +148,20 @@ public class MainMessageHandler extends Handler {
                             break;
                         case BookOrder:
                             break;
+                        case CancleOrder:
+                            map = (Map) toObject(responeInfo.getJson(), Map.class);
+                            success = (Boolean) map.get("success");
+                            info = map.get("message").toString();
+                            if (success == true) {
+                                try {
+                                    activity.tripWaitView.getUserDialog().dismiss();
+                                    activity.jumpMianMapView(activity.tripWaitView);
+                                } catch (Exception e) {
+                                };
+                            } else {
+                            }
+                            activity.showToastLong(info);
+                            break;
                     }
                 } else {
                     String key = msg.getData().getString("data");
@@ -164,46 +179,20 @@ public class MainMessageHandler extends Handler {
 
     private void handleWebSocket(OrderInfo orderInfo) {
         MainActivity activity = (MainActivity) this.mActivity.get();
-        if(activity==null)return;
-        if(activity.callActionView.getRequestProgressDialog()!=null)
-        {
+        if (activity == null) return;
+        if (activity.callActionView.getRequestProgressDialog() != null) {
             try {
                 activity.callActionView.getRequestProgressDialog().hide();
                 activity.callActionView.setRequestProgressDialog(null);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
 
             }
         }
         if (orderInfo != null) {
-            activity.orderInfo=orderInfo;
-            switch (orderInfo.getStatus()) {
-               case RESVER:
-                break;
-                case NEW:
-                break;
-                case PENDING:
-                break;
-                case  BOOKED:
-                break;
-                case NOCHECK:
-                break;
-                case  NOTAXI:
-                    activity.postMessage(MainActivity.PostType.CallAction,NOTAXI);
-                break;
-                case  FINISH:
-                break;
-                case  CANCEL_ADMIN:
-                break;
-                case  CANCEL_PASSENGER:
-                break;
-                case  CANCEL_DRIVER:
-                break;
-                case  ASSIGN_CAR:
-                break;
-                case  RUNNING:
-                break;
-            }
+            activity.showToast(GsonUnit.toJson(orderInfo));
+            activity.webOrderInfo = orderInfo;
+            activity.postMessage(MainActivity.PostType.CallAction, orderInfo);
+
         }
     }
 

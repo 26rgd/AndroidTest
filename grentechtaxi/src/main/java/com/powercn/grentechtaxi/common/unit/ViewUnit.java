@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,6 +26,8 @@ import com.powercn.grentechtaxi.R;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.powercn.grentechtaxi.R.id.tv_mainmap_cattype_netword;
@@ -192,4 +195,20 @@ public class ViewUnit {
             // TODO: handle exception
         }
     }
+
+
+    public static Bundle getIntent(Activity activity)
+    {
+        Intent intent=activity.getIntent();
+        Bundle bundle =intent.getExtras();
+        return  bundle;
+    }
+
+    public static Calendar getCalendar(Date date)
+    {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
 }

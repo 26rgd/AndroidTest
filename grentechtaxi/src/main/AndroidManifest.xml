@@ -14,9 +14,11 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--允许程序打开网络套接字-->
     <!--允许程序设置内置sd卡的写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--允许程序获取网络状态-->
     <!--允许程序访问WiFi网络信息-->
     <!--允许程序读写手机状态和身份-->
@@ -34,6 +36,16 @@
             android:name="com.amap.api.v2.apikey"
             android:value="8dcaa91885b639adc83a28858e5187f0"></meta-data>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.NoTitle">
@@ -45,8 +57,7 @@
 
         <activity
             android:name=".activity.SettingActivity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
+            android:theme="@style/Theme.NoTitle"></activity>
 
         <activity
             android:name=".activity.LoginActivity"
@@ -69,9 +80,11 @@
         <activity
             android:name=".activity.EvaluateActivity"
             android:theme="@style/Theme.NoTitle"></activity>
+        <activity
+            android:name=".activity.DateSelectorActivity"
+            android:theme="@style/Theme.NoTitle"></activity>
 
-        <service
-            android:name=".service.WebSocketService"></service>
+        <cn.com.grentech.specialcar.service android:name=".cn.com.grentech.specialcar.service.WebSocketService"></cn.com.grentech.specialcar.service>
     </application>
 
 </manifest>

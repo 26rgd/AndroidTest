@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
 import com.powercn.grentechtaxi.activity.mainmap.AddressView;
 import com.powercn.grentechtaxi.activity.mainmap.DriverView;
@@ -73,7 +74,7 @@ public class EvaluateActivity  extends AbstractBasicActivity {
     }
     private void saveEvaluate()
     {
-        HttpRequestTask.evaluate(25,starRecyclerAdapter.getStarLevel(),tvContent.getText().toString());
+        HttpRequestTask.evaluate(info.getId(),starRecyclerAdapter.getStarLevel(),tvContent.getText().toString());
     }
     @Override
     public void onClick(View v) {
@@ -84,7 +85,7 @@ public class EvaluateActivity  extends AbstractBasicActivity {
                 break;
             case R.id.btn_tripevaluate_sub:
                 saveEvaluate();
-                finish();
+                jumpFinish(MainActivity.class);
                 break;
         }
     }

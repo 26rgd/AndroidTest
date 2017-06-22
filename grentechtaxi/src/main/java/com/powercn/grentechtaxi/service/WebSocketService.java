@@ -39,7 +39,7 @@ public class WebSocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        StringUnit.println(tag,"service|" + Process.myPid());
+        StringUnit.println(tag,"cn.com.grentech.specialcar.service|" + Process.myPid());
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         if(connection==false)

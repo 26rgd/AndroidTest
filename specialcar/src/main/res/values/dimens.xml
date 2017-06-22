@@ -1,0 +1,49 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="marginLeft">20dp</dimen>
+    <dimen name="marginRight">20dp</dimen>
+    <dimen name="marginTop">20dp</dimen>
+    <dimen name="marginBottom">20dp</dimen>
+    <dimen name="margin">20dp</dimen>
+
+    <dimen name="marginLeft10">10dp</dimen>
+    <dimen name="marginRight10">10dp</dimen>
+    <dimen name="marginTop10">10dp</dimen>
+    <dimen name="marginBottom10">10dp</dimen>
+    <dimen name="margin10">10dp</dimen>
+
+    <dimen name="marginLeft5">5dp</dimen>
+    <dimen name="marginRight5">5dp</dimen>
+    <dimen name="marginTop5">5dp</dimen>
+    <dimen name="marginBottom5">5dp</dimen>
+    <dimen name="margin5">5dp</dimen>
+
+    <dimen name="textSizeCallCar">14sp</dimen>
+    <dimen name="textSize">18sp</dimen>
+    <dimen name="textSizeTitle">20sp</dimen>
+
+    <dimen name="TitleImageSize">24dp</dimen>
+    <dimen name="TitleBackImageSize">36dp</dimen>
+    <dimen name="TitleHeight">50dp</dimen>
+    <dimen name="mapTopHeight">50dp</dimen>
+
+    <dimen name="ImageSizeTrip">24dp</dimen>
+    <dimen name="ImageSizeTrip16px">16dp</dimen>
+    <dimen name="ImageSizeTrip24px">24dp</dimen>
+    <dimen name="ImageSizeTrip36px">36dp</dimen>
+    <dimen name="ImageSizeTrip40px">40dp</dimen>
+    <dimen name="ImageHeadLarge">80dp</dimen>
+    <dimen name="ImageHeadMidle">60dp</dimen>
+    <dimen name="ImageHeadSmall">43dp</dimen>
+    <dimen name="ItemHeight">45dp</dimen>
+    <dimen name="shapeRadius">10dp</dimen>
+    <dimen name="shapeStroke">1px</dimen>
+
+    <dimen name="textViewDefaultHeight">45dp</dimen>
+    <dimen name="editHeight">55dp</dimen>
+    <dimen name="searchTextHeight">40dp</dimen>
+    <dimen name="listVewItemHeight">45dp</dimen>
+    <dimen name="LinearHeight">55dp</dimen>
+</resources>

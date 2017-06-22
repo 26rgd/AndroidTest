@@ -1,16 +1,20 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
+import com.powercn.grentechtaxi.activity.EvaluateActivity;
 import com.powercn.grentechtaxi.adapter.AbstractAdpter;
+import com.powercn.grentechtaxi.entity.OrderInfo;
 
 import java.util.List;
 
@@ -23,43 +27,37 @@ import java.util.List;
 
 public class TripFinshView extends MainChildView {
 
-    private ListView listView;
     private ImageView ivBack;
     private ImageView ivClose;
-    private MyFinshAdpter myAdpter;
+    private TextView tvDriver;
+    private TextView tvAccount;
+    private Button btSub;
+    private AddressView addressView;
     public TripFinshView(MainActivity activity, int resId) {
         super(activity, resId);
     }
 
     @Override
     protected void initView() {
-        listView=(ListView)findViewById(R.id.lv_tripfinsh_list);
         ivBack=(ImageView)findViewById(R.id.iv_title_back_finsh);
         ivClose=(ImageView)findViewById(R.id.iv_tripfinsh_close);
+
+        tvDriver=(TextView)findViewById(R.id.tv_driver_pay);
+        tvAccount=(TextView)findViewById(R.id.tv_driver_pay_account);
+        btSub=(Button)findViewById(R.id.bt_evaluate_finish);
+        addressView=new AddressView(this);
     }
 
     @Override
     protected void bindListener() {
         ivBack.setOnClickListener(this);
         ivClose.setOnClickListener(this);
+        btSub.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-        myAdpter=new MyFinshAdpter(activity,null,R.layout.activity_trip_finsh_item);
-        MyFinshData  myData1=new MyFinshData("微信支付",R.drawable.icon_weixin);
-        myData1.select=true;
-        myAdpter.getData().add(myData1);
-        MyFinshData myData2=new MyFinshData("支付宝支付",R.drawable.icon_alipay);
-        myAdpter.getData().add(myData2);
-        listView.setAdapter(myAdpter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myAdpter.selectSingle(position);
 
-            }
-        });
     }
     @Override
     public void onClick(View v) {
@@ -69,71 +67,27 @@ public class TripFinshView extends MainChildView {
             case R.id.iv_tripfinsh_close:
                 activity.jumpMianMapView(this);
                 break;
+
+            case R.id.bt_evaluate_finish:
+                activity.jumpMianMapView(this);
+               activity.jumpForResult(EvaluateActivity.class,activity.webOrderInfo,77);
+                break;
         }
     }
-    private class MyFinshAdpter extends AbstractAdpter {
 
-        public MyFinshAdpter(Context context, List data, int itemres) {
-            super(context, data, itemres);
-        }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-
-            ImageView ivHint=(ImageView)view.findViewById(R.id.iv_tripfinsh_hint);
-            ImageView ivSelect=(ImageView)view.findViewById(R.id.iv_tripfinsh_select);
-            TextView tvPayName=(TextView)view.findViewById(R.id.tv_tripfinsh_payname);
-            MyFinshData myData=(MyFinshData)getItem(position);
-            ivHint.setImageResource(myData.ivHint);
-            tvPayName.setText(myData.name);
-            if(myData.select==true)
-             {
-                 ivSelect.setImageResource(myData.ivSelect);
-             }
-            else
-             {
-                 ivSelect.setImageResource(myData.ivNoSelect);
-             }
-            return view;
-        }
-
-        public void selectSingle(int postion)
+    @Override
+    public void setVisibility(int visibility) {
+        if(visibility==View.VISIBLE)
         {
-            for (Object object:getData())
-            {
-                MyFinshData line=(MyFinshData)object;
-                line.select=false;
-            }
-            MyFinshData myData=(MyFinshData) getItem(postion);
-            myData.select=true;
-            notifyDataSetChanged();
+            activity.tripWaitView.setVisibility(View.GONE);
+            activity.mainMapView.setVisibility(View.GONE);
+            String msg="请现金支付"+activity.webOrderInfo.getDriverName()+"车费";
+            tvDriver.setText(msg);
+            String account=String.valueOf(activity.webOrderInfo.getAmount());
+            tvAccount.setText(account);
+            addressView.setInfo(activity.webOrderInfo);
         }
-
-        @Override
-        public void intervalColor(View vi, int position) {
-
-        }
-    }
-
-    private class MyFinshData
-    {
-        public boolean select;
-        public String name;
-        public int ivHint;
-        public int ivSelect=R.drawable.chk16;
-        public int ivNoSelect=R.drawable.chk_un16;
-
-        public MyFinshData(String name, int ivHint, int ivSelect, int ivNoSelect) {
-            this.name = name;
-            this.ivHint = ivHint;
-            this.ivSelect = ivSelect;
-            this.ivNoSelect = ivNoSelect;
-        }
-
-        public MyFinshData(String name, int ivHint) {
-            this.name = name;
-            this.ivHint = ivHint;
-        }
+        super.setVisibility(visibility);
     }
 }

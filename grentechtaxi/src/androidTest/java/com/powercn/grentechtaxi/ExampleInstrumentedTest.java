@@ -1,12 +1,17 @@
 package com.powercn.grentechtaxi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.powercn.grentechtaxi.activity.DateSelectorActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static org.junit.Assert.*;
 
 /**
@@ -20,7 +25,12 @@ public class ExampleInstrumentedTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-
         assertEquals("com.powercn.grentechtaxi", appContext.getPackageName());
+
+        Intent intent=new Intent();
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK );
+        intent.setClass(appContext, DateSelectorActivity.class);
+        appContext.startActivity(intent);
+
     }
 }

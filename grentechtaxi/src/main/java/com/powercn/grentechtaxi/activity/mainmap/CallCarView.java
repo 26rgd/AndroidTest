@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.amap.api.services.core.LatLonPoint;
 import com.powercn.grentechtaxi.MainActivity;
 import com.powercn.grentechtaxi.R;
+import com.powercn.grentechtaxi.activity.DateSelectorActivity;
 
 import lombok.Getter;
 
@@ -54,7 +55,8 @@ public class CallCarView extends MainChildView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_time:
-                activity.deteTimeView.setVisibility(View.VISIBLE);
+                //activity.deteTimeView.setVisibility(View.VISIBLE);
+                activity.jumpForResult(DateSelectorActivity.class,MainActivity.selectTime,"selecttime",this.getTvShowTime().getText().toString());
                 break;
             case et_mainmap_taxi_dest:
                 activity.destinationView.getEt_destination_search_edit().setText("");

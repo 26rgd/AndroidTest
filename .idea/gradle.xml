@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/grentechdriver" />
             <option value="$PROJECT_DIR$/grentechtaxi" />
+            <option value="$PROJECT_DIR$/specialcar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

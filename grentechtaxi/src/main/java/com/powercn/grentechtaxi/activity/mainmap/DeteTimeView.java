@@ -48,10 +48,9 @@ public class DeteTimeView extends MainChildView implements NumberPicker.Formatte
     protected void bindListener() {
         bt_selecttitme_sub.setOnClickListener(this);
         bt_selecttitme_cancle.setOnClickListener(this);
-        ;
+
         numberPicker1.setFormatter(this);
         numberPicker2.setFormatter(this);
-
         numberPicker0.setOnValueChangedListener(this);
     }
 

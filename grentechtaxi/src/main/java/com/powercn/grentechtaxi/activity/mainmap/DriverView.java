@@ -59,7 +59,7 @@ public class DriverView implements View.OnClickListener {
     public void setInfo(OrderInfo info) {
         try {
               tvDriverName.setText(info.getDriverName());
-              tvDriverStar.setText(info.getDriverName());
+              tvDriverStar.setText("4.9");
               tvCarNo.setText(info.getCarNo());
               tvCarColor.setText("");
               tvCarType.setText(info.getCartype());
