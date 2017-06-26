@@ -26,11 +26,15 @@ import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
+import cn.com.grentech.specialcar.broadcast.MainBroadcastReceiver;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.DateUnit;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.GpsInfo;
+import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.entity.OrderStatus;
@@ -51,9 +55,10 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private String locationProvider;
 
     public final static int speedLimit = 38;
-    public final static int minDis = 20;
+    public final static int minDis = 25;
     private Boolean isFisrt = true;
     private Order info;
+    private LoadLine loadLine;
 
     private List<GpsInfo> gps = new ArrayList<GpsInfo>();
 
@@ -84,12 +89,14 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             StringUnit.println(tag, OrderStatus.values()[info.getFlag()].getName());
             LoginInfo.saveProcessOrder(this.getApplicationContext(), info);
             try {
-                if (info.getFlag() == OrderStatus.RunOrder.getValue())
+                if (info.getFlag() == OrderStatus.RunOrder.getValue()) {
+                    readLoadLine(info);
                     starGPS();
-                else
+                } else
                     stopGps();
             } catch (Exception e) {
                 StringUnit.println(tag, "GPS启动或者停止有问题");
+                ErrorUnit.println(tag, e);
             }
         }
 
@@ -120,6 +127,29 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     public void onProviderDisabled(String provider) {
     }
 
+    @Override
+    public void onDestroy() {
+        StringUnit.println(tag,"STOP GPS method...........");
+        super.onDestroy();
+    }
+
+    private LoadLine readLoadLine(Order o) {
+        loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+        if (loadLine == null) {
+            loadLine = new LoadLine(o);
+            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+        }
+
+        return loadLine;
+    }
+
+    private void saveLoadLine(Order o, GpsInfo g) {
+        if (loadLine == null) {
+            readLoadLine(o);
+        }
+        loadLine.addGps(g);
+        FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+    }
 
     private void stopGps() {
         if (locationManager != null) {
@@ -130,6 +160,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
                 return;
             }
             locationManager.removeUpdates(this);
+            locationManager = null;
 
         }
     }
@@ -146,12 +177,17 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             } else {
                 showToast("无可用定位源");
             }
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                showToastLength("GPS被禁用无法定位");
                 return;
             }
-            showToast(locationProvider.trim());
+
+            showToast("start "+locationProvider.trim().toUpperCase());
+
+
             locationManager.requestLocationUpdates(locationProvider.trim(), 4000, 0, this);
+            Location location = locationManager.getLastKnownLocation(locationProvider);
         }
 
     }
@@ -160,10 +196,13 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         if (location == null) return;
         if (isFisrt) {//丢弃第一包
             isFisrt = false;
+            StringUnit.println(tag,"GPS启动一次 | "+(loadLine.getIndex() + 1));
+            loadLine.setIndex(loadLine.getIndex() + 1);
             return;
         }
 
-        showToast(location.getLatitude() + "|" + location.getLongitude());
+        StringUnit.println(tag,location.getLatitude() + "|" + location.getLongitude()+"|" + DateUnit.formatDate(location.getTime(),"yyyy-MM-dd HH:mm:ss"));
+
         GpsInfo last = null;
         GpsInfo gi = bulidGpsInfo(location);
         int size = gps.size();
@@ -171,6 +210,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             last = gps.get(size - 1);
         } else {
             gps.add(gi);
+            saveLoadLine(info, gi);
             FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", GsonUnit.toJson(gi), Context.MODE_APPEND);
         }
         double dis = GpsFilter.gpsDistance(last, gi);
@@ -182,10 +222,16 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             // 超138Km 或者小于20米的点丢掉
         } else {
             gps.add(gi);
-            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", GsonUnit.toJson(gi), Context.MODE_APPEND);
+            saveLoadLine(info, gi);
+            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", GsonUnit.toJson(gi) + "\r\n", Context.MODE_APPEND);
         }
-        HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid(11, info.getId(), gi)));
-        double distance = GpsFilter.getMoveDistance(gps);
+        HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
+        double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
+        Intent intent = new Intent();
+        intent.setAction(MainBroadcastReceiver.action_GPS);
+        intent.putExtra(MainBroadcastReceiver.action_GPS_key, distance);
+        intent.putExtra(MainBroadcastReceiver.action_GPS_orderId, info.getId());
+        sendBroadcast(intent);
     }
 
 

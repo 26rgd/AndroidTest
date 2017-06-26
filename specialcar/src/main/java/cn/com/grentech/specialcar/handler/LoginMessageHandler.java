@@ -55,8 +55,9 @@ public class LoginMessageHandler extends AbstractHandler {
                             success = (Boolean) map.get("success");
                             if (success != null && success) {
                                 LoginInfo.loginInfo = new LoginInfo();
-                                loginInfo.phone = activity.getTvUserName().getText().toString().toString();
+                                loginInfo.phone = activity.getTvUserName().getText().toString().trim();
                                 loginInfo.uuid = LoginInfo.getUuid(activity);
+                                loginInfo.password=activity.getTvPassword().getText().toString().trim();
                                 loginInfo.doLoginSuccess = true;
                                 LoginInfo.saveUserLoginInfo(activity, loginInfo);
                                 activity.jumpFinish(MainActivity.class);

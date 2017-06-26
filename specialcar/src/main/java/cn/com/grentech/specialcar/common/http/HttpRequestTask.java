@@ -215,7 +215,7 @@ public class HttpRequestTask {
     }
     private static void bulidDefaultTask(HttpRequestParam requestConfig) {
         try {
-            StringUnit.println(tag,requestConfig.abstractBasicActivity.getLocalClassName());
+           // StringUnit.println(tag,requestConfig.abstractBasicActivity.getLocalClassName());
             StringUnit.println(tag,requestConfig.abstractBasicActivity.getAbstratorHandler().getClass().getName());
         }catch (Exception e){}
         MainBackGroundTask mAuthTask = new MainBackGroundTask();

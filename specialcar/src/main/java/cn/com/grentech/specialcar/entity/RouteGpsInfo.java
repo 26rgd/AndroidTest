@@ -16,10 +16,10 @@ public class RouteGpsInfo extends GpsInfo {
         super(lat, lng);
     }
 
-    public static RouteGpsInfo bulid(int id ,int orderId,GpsInfo gpsInfo)
+    public static RouteGpsInfo bulid(int orderId,GpsInfo gpsInfo)
     {
         RouteGpsInfo object=new RouteGpsInfo(gpsInfo.getLat(),gpsInfo.getLng());
-        object.setId(id);
+        object.setId(orderId);
         object.setOrderId(orderId);
         object.setCreateTime(gpsInfo.getCreateTime());
         object.setAngle(gpsInfo.getAngle());

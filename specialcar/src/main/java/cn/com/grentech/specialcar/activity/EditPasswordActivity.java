@@ -122,19 +122,7 @@ public class EditPasswordActivity extends AbstractBasicActivity {
     public AbstractHandler getAbstratorHandler() {
         return   abstratorHandler;
     }
-//    @Override
-//    public void sendHandleMessage(String key, String content, Object object) {
-//        try {
-//            Bundle bundle = new Bundle();
-//            bundle.putString(key, content);
-//            Message msg = new Message();
-//            msg.what = 0;
-//            msg.setData(bundle);
-//            msg.obj = object;
-//            abstratorHandler.sendMessage(msg);
-//        } catch (Exception e) {
-//        }
-//    }
+
 
     class TimeCount extends CountDownTimer {
 

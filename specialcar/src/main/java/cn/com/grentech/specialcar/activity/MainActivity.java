@@ -26,6 +26,8 @@ import cn.com.grentech.specialcar.common.unit.ViewUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.handler.MainMessageHandler;
+import cn.com.grentech.specialcar.service.ServiceGPS;
+import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
 public class MainActivity extends AbstractBasicActivity {
@@ -41,7 +43,6 @@ public class MainActivity extends AbstractBasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StringUnit.println(tag, GsonUnit.toJson(savedInstanceState));
         super.onCreate(savedInstanceState, R.layout.activity_main);
     }
 
@@ -70,7 +71,6 @@ public class MainActivity extends AbstractBasicActivity {
 
     @Override
     protected void initData() {
-
         abstratorHandler = new MainMessageHandler(this);
         tvTitle.setText("未完成订单");
         notFinshAdapter = new NotFinshAdapter(this, null, R.layout.listview_item_nofinsh);
@@ -81,6 +81,7 @@ public class MainActivity extends AbstractBasicActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Order info = (Order) notFinshAdapter.getItem(position);
                 jumpForResult(OrderDetailActivity.class, OrderDetailActivity.UnFinish_Order, "order", info);
+                finish();
             }
         });
     }
@@ -161,17 +162,4 @@ public class MainActivity extends AbstractBasicActivity {
     public AbstractHandler getAbstratorHandler() {
         return   abstratorHandler;
     }
-    //    public void sendHandleMessage(String key, String content, Object object) {
-//        try {
-//            Bundle bundle = new Bundle();
-//            bundle.putString(key, content);
-//            Message msg = new Message();
-//            msg.what = 0;
-//            msg.setData(bundle);
-//            msg.obj = object;
-//            abstratorHandler.sendMessage(msg);
-//        } catch (Exception e) {
-//            StringUnit.println(tag,"sendHandleMessage Error");
-//        }
-//    }
 }

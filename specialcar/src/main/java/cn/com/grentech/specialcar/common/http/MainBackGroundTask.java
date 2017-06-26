@@ -2,8 +2,11 @@ package cn.com.grentech.specialcar.common.http;
 
 import android.os.AsyncTask;
 
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
+
 
 public final class MainBackGroundTask extends AsyncTask<HttpRequestParam, Void, ResponeInfo> {
+    private   String tag=this.getClass().getName();
     @Override
     protected ResponeInfo doInBackground(HttpRequestParam... params) {
         // TODO: attempt authentication against a network cn.com.grentech.specialcar.service.
@@ -12,7 +15,7 @@ public final class MainBackGroundTask extends AsyncTask<HttpRequestParam, Void, 
             try {
                 responeInfo = HttpRequestTask.executeHttp(params);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -34,7 +37,7 @@ public final class MainBackGroundTask extends AsyncTask<HttpRequestParam, Void, 
                 HttpResponeTask.onPostHttp(responeInfo);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag,e);
         } finally {
 
         }

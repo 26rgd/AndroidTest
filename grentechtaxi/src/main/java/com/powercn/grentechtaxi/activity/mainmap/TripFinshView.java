@@ -84,7 +84,8 @@ public class TripFinshView extends MainChildView {
             activity.mainMapView.setVisibility(View.GONE);
             String msg="请现金支付"+activity.webOrderInfo.getDriverName()+"车费";
             tvDriver.setText(msg);
-            String account=String.valueOf(activity.webOrderInfo.getAmount());
+            Float d=activity.webOrderInfo.getAmount()==null?0:activity.webOrderInfo.getAmount();
+            String account=String.valueOf(d);
             tvAccount.setText(account);
             addressView.setInfo(activity.webOrderInfo);
         }

@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 
 
@@ -58,6 +59,7 @@ public class HttpUnit {
                 StringUnit.println(tag,url.toString());
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
                 httpUrlConnection.setRequestMethod("GET");
+                StringUnit.println(tag,"cookie|"+sessionId);
                 if (sessionId != null && sessionId.length() != 0) {
                     httpUrlConnection.setRequestProperty("Cookie", sessionId);
                 }
@@ -82,7 +84,7 @@ public class HttpUnit {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -118,7 +120,7 @@ public class HttpUnit {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -154,7 +156,7 @@ public class HttpUnit {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -255,7 +257,7 @@ public class HttpUnit {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -275,16 +277,6 @@ public class HttpUnit {
                     input.mark(0);
                    Bitmap bitmap= BitmapFactory.decodeStream(input);
                     responeInfo.setObject(bitmap);
-//                    input.reset();
-//                    int readsize = 0;
-//                    int size = 0;
-//                    while ((size = input.read(readBuffer, readsize, 1024 * 20)) != -1) {
-//                        readsize = readsize + size;
-//                    }
-//                    byte[] buf = new byte[readsize];
-//                    System.arraycopy(readBuffer, 0, buf, 0, readsize);
-//                    String json = new String(buf, "UTF8").trim();
-//                    responeInfo.setJson(json);
                     responeInfo.setJson("{}");
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
@@ -295,7 +287,7 @@ public class HttpUnit {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorUnit.println(tag,e);
             }
         } finally {
             return responeInfo;
@@ -316,6 +308,9 @@ public class HttpUnit {
         httpUrlConnection = (HttpURLConnection) url.openConnection();
         httpUrlConnection.setRequestMethod(methon);
         httpUrlConnection.setRequestProperty("Charset", "UTF-8");
+
+       // httpUrlConnection.setChunkedStreamingMode(0);//据说可以防止超时重发
+        StringUnit.println(tag,"cookie|"+sessionId);
         if (sessionId != null && sessionId.length() != 0) {
             httpUrlConnection.setRequestProperty("Cookie", sessionId);
         }

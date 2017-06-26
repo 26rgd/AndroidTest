@@ -1,7 +1,11 @@
 package cn.com.grentech.specialcar.common.unit;
 
+import android.content.Context;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cn.com.grentech.specialcar.SysApplication;
 
 import static android.R.attr.path;
 
@@ -40,7 +44,9 @@ public class StringUnit {
     }
 
     public static void println(String className,String s) {
-        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+className+" | " + s);
+        String data=DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+className+" | " + s+"\r\n";
+        System.out.println(data);
+        FileUnit.writeAppLogFile(SysApplication.getInstance().getContext(),"log.txt",data, Context.MODE_APPEND);
     }
 //    public static void println(  String s) {
 //        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+" | " + s);

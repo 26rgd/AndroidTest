@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
+import cn.com.grentech.specialcar.activity.OrderDetailActivity;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 
@@ -17,22 +18,20 @@ import static android.R.attr.tag;
 
 public class MainBroadcastReceiver extends BroadcastReceiver {
     protected String tag=this.getClass().getName();
-
+    public static String action_GPS="action_GPS";
+    public static String action_GPS_key="distance";
+    public static String action_GPS_orderId="orderId";
     public MainBroadcastReceiver() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        StringUnit.println(tag,"我接收广播了");
         StringUnit.println(tag,intent.getAction());
-        if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION))
+        if(intent.getAction().equals("android.intent.action.USER_PRESENT"))
         {
-            startService(context, ServiceGPS.class);
-            showToast(context,"网络已经变化");
-
+            StringUnit.println(tag,"锁屏后开启桌面");
         }
-
-
+        startService(context, ServiceGPS.class);
     }
     public void startService(Context context,Class<?> cls) {
         Intent intent = new Intent(context, cls);

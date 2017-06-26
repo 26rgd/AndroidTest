@@ -101,6 +101,10 @@ public class OrderListActivity  extends AbstractBasicActivity  {
             {
                 status.setTextColor(ViewUnit.getColor(context,R.color.textColorOrder3));
                 cartype.setTextColor(ViewUnit.getColor(context,R.color.textColorOrder3));
+            }else
+            {
+                status.setTextColor(ViewUnit.getColor(context,R.color.textColorOrder1));
+                cartype.setTextColor(ViewUnit.getColor(context,R.color.textColorOrder1));
             }
             detail.setOnClickListener(new View.OnClickListener() {
                 @Override

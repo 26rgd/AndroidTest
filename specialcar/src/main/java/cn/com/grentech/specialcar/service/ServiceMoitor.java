@@ -21,6 +21,8 @@ import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
+import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.http.HttpUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 
@@ -57,28 +59,33 @@ public class ServiceMoitor extends AbstractService {
     @SuppressWarnings("WrongConstant")
     public int onStartCommand(Intent intent, int flags, int startId) {
         StringUnit.println(tag,"ServiceMoitor |" + Process.myPid());
+//        if(StringUnit.isEmpty(HttpUnit.sessionId))
+//        {
+//            StringUnit.println(tag,"ServiceMoitor |" + HttpUnit.sessionId);
+//            LoginInfo loginInfo=LoginInfo.readUserLoginInfo(getApplicationContext());
+//            HttpRequestTask.loginByPassword(null,loginInfo.phone,loginInfo.password);
+//        }
         Intent notificationIntent = new Intent(this, LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         showNotification(pendingIntent);
         return super.onStartCommand(intent,START_STICKY,startId);
     }
     private void start(Context context) {
-        //SimpleLogger.getInstance().log(this, "startMonitor() method");
         if(monitorTask != null) {
             monitorTask.cancel();
         }
         timer = new Timer();
         monitorTask = new MonitorTask(context);
-        timer.scheduleAtFixedRate(monitorTask, 0, 5000);
+        timer.scheduleAtFixedRate(monitorTask, 0, 70000);
     }
 
+
     private void stop() {
-        StringUnit.println(TAG, "stopMonitor method...");
+        StringUnit.println(tag, "STOP SERVICEMONITOR method.........");
         monitorTask.cancel();
         timer.cancel();
     }
     class MonitorTask extends TimerTask {
-
         private Context context;
         private String packageName;
 
@@ -89,7 +96,8 @@ public class ServiceMoitor extends AbstractService {
 
         @Override
         public void run() {
-          //  StringUnit.println(tag,"MonitorTask run method...");
+            Intent intent1=new Intent(ServiceMoitor.this,ServiceGPS.class);
+            startService(intent1);
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> appInfos = am.getRunningAppProcesses();
             boolean  flag = false;
@@ -109,6 +117,7 @@ public class ServiceMoitor extends AbstractService {
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @SuppressWarnings("deprecation")
     public void showNotification(PendingIntent pendingIntent) {
+        //if(1==1)return;
         Notification notification;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD&&Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) {
             notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.telecom.ConnectionService;
@@ -23,8 +24,11 @@ import java.util.TimerTask;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
 import cn.com.grentech.specialcar.SysApplication;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.Order;
+
+import static android.view.KeyEvent.KEYCODE_HOME;
 
 /**
  * Created by Administrator on 2017/4/20.
@@ -41,15 +45,24 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     protected void onCreate(@Nullable Bundle savedInstanceState, int res) {
         super.onCreate(savedInstanceState);
+
         setContentView(res);
         SysApplication.getInstance().addActivity(this);
         initView();
         bindListener();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StringUnit.println(tag,"进入前台");
     }
 
     protected abstract void initView();
@@ -60,13 +73,19 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
 
     @Override
     protected void onStop() {
-        // StringUnit.println(tag,"进入后台或者切换Activity");
+         StringUnit.println(tag,"进入后台或者切换activity");
         super.onStop();
 
     }
 
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode== KEYCODE_HOME)
+        {
+            StringUnit.println(tag,"按了HOME键");
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitBy2Click(); // 调用双击退出函数
         }
@@ -96,7 +115,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, cls);
         startActivity(intent);
         finish();
-        StringUnit.println(tag, " jumpFinish");
+
     }
 
 
@@ -143,7 +162,8 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
             Handler handler = getAbstratorHandler();
             handler.sendMessage(msg);
         } catch (Exception e) {
-            StringUnit.println(tag, "sendHandleMessage Error");
+            ErrorUnit.println(tag,e);
+
         }
     }
 
@@ -151,6 +171,11 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, cls);
         startService(intent);
     }
+    public void stopService(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        stopService(intent);
+    }
+
 
     public void bindService(Class<?> cls) {
         ServiceConnection serviceConnection = new ServiceConnection() {

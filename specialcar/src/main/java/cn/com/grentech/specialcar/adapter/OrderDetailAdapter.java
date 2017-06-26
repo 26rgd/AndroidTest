@@ -106,7 +106,6 @@ public class OrderDetailAdapter extends AbstractAdapter {
                if(line.getName().equals(OrderDetailInfo.mileage.getName()))
                {
                    line.setValue(String.valueOf((int)mileage)+"米");
-
                }
            }
 

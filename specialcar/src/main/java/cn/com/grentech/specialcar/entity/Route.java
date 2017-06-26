@@ -44,4 +44,22 @@ public class Route implements Serializable {
         list.add(route);
         return  getListJson(list);
     }
+
+    public static String bulidListJson(Order info,List<GpsInfo> gpsInfo)
+    {
+        List<Route> list=new ArrayList<>();
+        for (GpsInfo line:gpsInfo)
+        {
+            Route route=new Route();
+            route.setId(info.getId());
+            route.setLat(line.getLat());
+            route.setLng(line.getLng());
+            route.setTime(line.getCreateTime());
+            route.setOrderId(info.getId());
+            list.add(route);
+        }
+
+
+        return  getListJson(list);
+    }
 }

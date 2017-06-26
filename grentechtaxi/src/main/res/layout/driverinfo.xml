@@ -35,7 +35,7 @@
                     android:id="@+id/tv_drivername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="王师你"
+                    android:text="王师父"
                     android:textColor="@color/textColorTripWaitInfo"
                     android:textSize="@dimen/textSize" />
 
@@ -72,6 +72,7 @@
                             android:layout_gravity="center"
                             android:gravity="center_vertical"
                             android:text="4.9"
+                            android:textColor="@color/WHITE"
                             android:layout_weight="1" />
                     </LinearLayout>
                 </FrameLayout>

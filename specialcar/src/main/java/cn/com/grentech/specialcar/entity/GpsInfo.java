@@ -13,14 +13,14 @@ import lombok.Data;
 
 @Data
 public class GpsInfo implements Serializable {
-    private static final long serialVersionUID = -3279843637949859479L;
+    private transient static final long serialVersionUID = -3279843637949859479L;
 
     private double lat;
     private double lng;
     private float speed;
     private double angle;
     private long createTime;
-    private Boolean useable=false;
+    private transient Boolean useable=false;
 
     public GpsInfo(double lat, double lng) {
         this.lat = lat;
