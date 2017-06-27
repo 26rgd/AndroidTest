@@ -29,6 +29,7 @@ import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.HttpUnit;
 import cn.com.grentech.specialcar.common.unit.DialogUtils;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
+import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
@@ -38,6 +39,7 @@ import cn.com.grentech.specialcar.entity.Route;
 import cn.com.grentech.specialcar.entity.RouteGpsInfo;
 import cn.com.grentech.specialcar.handler.OrderDetailMessageHandle;
 import cn.com.grentech.specialcar.service.ServiceGPS;
+import cn.com.grentech.specialcar.service.ServiceLogin;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
@@ -62,6 +64,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     @Getter
     private Button btPause;
     private Button btFinish;
+    private Button btReUp;
     private LinearLayout contanier;
     @Getter
     private OrderDetailAdapter orderDetailAdapter;
@@ -73,7 +76,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_orderdetail);
-
+      StringUnit.println(tag,"OrderDetailActivity Create Process Id|"+Process.myPid());
 
     }
 
@@ -85,6 +88,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         btStart = (Button) findViewById(R.id.bt_order_start);
         btPause = (Button) findViewById(R.id.bt_order_pause);
         btFinish = (Button) findViewById(R.id.bt_order_finish);
+        btReUp = (Button) findViewById(R.id.bt_order_reUp);
         contanier = (LinearLayout) findViewById(R.id.contanier_button_orderdetail);
     }
 
@@ -94,6 +98,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         btStart.setOnClickListener(this);
         btPause.setOnClickListener(this);
         btFinish.setOnClickListener(this);
+        btReUp.setOnClickListener(this);
     }
 
     @Override
@@ -109,9 +114,15 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         if (bundle != null)
             info = (Order) bundle.getSerializable("order");
         if (info == null) {
+
             info = loadLocalOrder();
+            StringUnit.println(tag,"loadLocalOrder|"+ GsonUnit.toJson(info));
         }
         if (info != null && (info.getFlag() == OrderStatus.RunOrder.getValue() || info.getFlag() == OrderStatus.PauseOrder.getValue() || info.getFlag() == OrderStatus.NewOrder.getValue())) {
+            LoadLine loadLine = readLoadLine(info);
+            Double d=loadLine.getTotalDistance();
+            btReUp.setVisibility(View.INVISIBLE);
+            info.setMileage(d);
             contanier.setVisibility(View.VISIBLE);
             if (info.getFlag() == OrderStatus.NewOrder.getValue()) {
                 btStart.setEnabled(true);
@@ -132,6 +143,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             }
 
         } else {
+            btReUp.setVisibility(View.VISIBLE);
             contanier.setVisibility(View.GONE);
         }
         listView.setAdapter(orderDetailAdapter);
@@ -163,8 +175,25 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
             case R.id.bt_order_finish:
                 LoadLine loadLine = readLoadLine(info);
+                Double d=loadLine.getTotalDistance();
                 HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
-                HttpRequestTask.orderFinish(this, info.getId(), info.getMileage(), "", OrderStatus.FinishOrder.getValue());
+                HttpRequestTask.orderFinish(this, info.getId(), d, "", OrderStatus.FinishOrder.getValue());
+                break;
+
+            case R.id.bt_order_reUp:
+                LoadLine reLoadLine = readLoadLine(info);
+                if( reLoadLine.getListGps().size()>0)
+                {
+                    showToastLength("正在补传数据.....");
+                    StringUnit.println(tag,"正在补传数据.....");
+                    StringUnit.println(tag,"补传对象|"+GsonUnit.toJson(info));
+                    HttpRequestTask.reUpGps(this, Route.bulidListJson(info, reLoadLine.getListGps()));
+                }
+                else
+                {
+                    StringUnit.println(tag,"补传数据为空");
+                    showToast("补传数据为空");
+                }
                 break;
         }
     }
@@ -177,6 +206,8 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         if (OrderStatus.PauseOrder.getValue() == this.orderDetailAdapter.getMflag()) {
             HttpRequestTask.orderContinue(this, info.getId());
         } else {
+//            LoadLine loadLine = readLoadLine(info);
+//            Double d=loadLine.getTotalDistance();
             HttpRequestTask.orderPause(this, info.getId(), this.orderDetailAdapter.getMileage());
         }
     }
@@ -210,18 +241,21 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     public void doFinishResult() {
         info.setFlag(OrderStatus.FinishOrder.getValue());
         stopService();
+        jumpFinish(MainActivity.class);
     }
 
 
     private void starService() {
         startService(ServiceGPS.class, info);
         startService(ServiceMoitor.class);
+        startService(ServiceLogin.class);
     }
 
     private void stopService() {
         startService(ServiceGPS.class, info);
         stopService(ServiceGPS.class);
         stopService(ServiceMoitor.class);
+        stopService(ServiceLogin.class);
     }
 
     private LoadLine readLoadLine(Order o) {

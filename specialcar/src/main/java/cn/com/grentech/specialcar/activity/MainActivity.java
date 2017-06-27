@@ -53,7 +53,7 @@ public class MainActivity extends AbstractBasicActivity {
         tvTitle = (TextView) findViewById(R.id.tv_title_back_hint);
         tvTopLine = (TextView) findViewById(R.id.tv_top_line);
         ivBack.setImageResource(R.drawable.icon_menu);
-        refresh   = (SwipeRefreshLayout) findViewById(R.id.contanier_mainrefres);
+        refresh = (SwipeRefreshLayout) findViewById(R.id.contanier_mainrefres);
 
     }
 
@@ -91,9 +91,6 @@ public class MainActivity extends AbstractBasicActivity {
         switch (v.getId()) {
             case R.id.iv_title_back:
                 showPopupWindow(tvTopLine);
-                Intent intent=new Intent();
-                intent.setAction("com.xiazdong");
-                MainActivity.this.sendBroadcast(intent);
                 break;
         }
     }
@@ -149,8 +146,7 @@ public class MainActivity extends AbstractBasicActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void postRefresh(final int timeout)
-    {
+    private void postRefresh(final int timeout) {
         getRefresh().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -158,8 +154,9 @@ public class MainActivity extends AbstractBasicActivity {
             }
         }, timeout);
     }
+
     @Override
     public AbstractHandler getAbstratorHandler() {
-        return   abstratorHandler;
+        return abstratorHandler;
     }
 }

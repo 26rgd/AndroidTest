@@ -3,6 +3,7 @@ package cn.com.grentech.specialcar;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Process;
 
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class SysApplication extends Application {
         context=getApplicationContext();
         FileUnit.iniDir(context);
         UnError unError=new UnError();
-        StringUnit.println(tag,"SysApplication onCreate ******************************");
+        StringUnit.println(tag,"SysApplication onCreate ******************************Process Id|"+ Process.myPid());
     }
 
     public SysApplication() {

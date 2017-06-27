@@ -78,17 +78,26 @@ public class TripFinshView extends MainChildView {
 
     @Override
     public void setVisibility(int visibility) {
-        if(visibility==View.VISIBLE)
-        {
-            activity.tripWaitView.setVisibility(View.GONE);
-            activity.mainMapView.setVisibility(View.GONE);
-            String msg="请现金支付"+activity.webOrderInfo.getDriverName()+"车费";
-            tvDriver.setText(msg);
-            Float d=activity.webOrderInfo.getAmount()==null?0:activity.webOrderInfo.getAmount();
-            String account=String.valueOf(d);
-            tvAccount.setText(account);
-            addressView.setInfo(activity.webOrderInfo);
+        try {
+            if(visibility==View.VISIBLE)
+            {
+//            activity.tripWaitView.setVisibility(View.GONE);
+//            activity.mainMapView.setVisibility(View.GONE);
+                String msg="请现金支付"+activity.webOrderInfo.getDriverName()+"车费";
+                tvDriver.setText(msg);
+                Float d=activity.webOrderInfo.getAmount()==null?0:activity.webOrderInfo.getAmount();
+                String account=String.valueOf(d);
+                tvAccount.setText(account);
+                addressView.setInfo(activity.webOrderInfo);
+                try {
+                    Thread.sleep(500);
+                }catch (Exception e)
+                {e.printStackTrace();}
+            }
+        }catch (Exception e){
+
         }
+
         super.setVisibility(visibility);
     }
 }

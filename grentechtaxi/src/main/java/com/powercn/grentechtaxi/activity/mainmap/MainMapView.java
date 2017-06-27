@@ -343,7 +343,30 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
         popupWindow.setBackgroundDrawable(ViewUnit.getDrawable(activity, R.drawable.search_icon));
         popupWindow.showAsDropDown(view);
     }
+    public void showWati()
+    {
 
+
+        try {
+            Thread.sleep(200);
+        } catch (Exception e) {
+        }
+        setVisibility(View.GONE);
+        activity.tripWaitView.setVisibility(View.VISIBLE);
+    }
+
+    public void showFinish()
+    {
+
+
+        try {
+            Thread.sleep(200);
+        } catch (Exception e) {
+        }
+        setVisibility(View.GONE);
+        activity.tripWaitView.setVisibility(View.GONE);
+        activity.tripFinshView.setVisibility(View.VISIBLE);
+    }
 
     public void router() {
         if (activity.startAddr.dlat == 0 || activity.startAddr.dlng == 0) {
@@ -401,6 +424,9 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
                 setVisibility(View.GONE);
                 activity.callActionView.setVisibility(View.VISIBLE);
             }
+
+
+
 
             @Override
             public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {

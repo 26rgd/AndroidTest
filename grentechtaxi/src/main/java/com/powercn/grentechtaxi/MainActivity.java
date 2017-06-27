@@ -301,53 +301,83 @@ public class MainActivity extends AbstractBasicActivity {
         }
     }
 
+    public void postMessageShow(final int what, final Object object) {
+        try {
+            mainMessageHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch (what) {
+                        case 1:
+                            mainMapView.showWati();
+                            break;
+                        case 2:
+                            mainMapView.showFinish();
+                            break;
+                    }
+                }
+            });
+        } catch (Exception e) {
+        }
+    }
+
     private void OrderProcess(OrderInfo object) {
         switch (object.getStatus()) {
             case RESVER:
                 break;
             case NEW:
-                showToast(NEW.getName());
+                showToastLong(NEW.getName());
                 mainMapView.setVisibility(View.VISIBLE);
                 break;
             case PENDING:
-                showToast(PENDING.getName());
+                showToastLong(PENDING.getName());
                 break;
             case NOCHECK:
-                showToast(NOCHECK.getName());
+                showToastLong(NOCHECK.getName());
                 mainMapView.setVisibility(View.VISIBLE);
                 break;
             case NOTAXI:
-                showToast(NOTAXI.getName());
+                showToastLong(NOTAXI.getName());
                 mainMapView.setVisibility(View.VISIBLE);
                 break;
             case FINISH:
-                showToast(FINISH.getName());
-                tripFinshView.setVisibility(View.VISIBLE);
+                showToastLong(FINISH.getName());
+                postMessageShow(2,null);
+//                mainMapView.showFinish();
+//                tripFinshView.setVisibility(View.VISIBLE);
+//                mainMapView.setVisibility(View.INVISIBLE);
+//                tripWaitView.setVisibility(View.INVISIBLE);
                 break;
             case CANCEL_ADMIN:
-                showToast(CANCEL_ADMIN.getName());
+                showToastLong(CANCEL_ADMIN.getName());
                 break;
             case CANCEL_PASSENGER:
-                showToast(CANCEL_PASSENGER.getName());
+                showToastLong(CANCEL_PASSENGER.getName());
                 break;
             case CANCEL_DRIVER:
-                showToast(CANCEL_DRIVER.getName());
+                showToastLong(CANCEL_DRIVER.getName());
                 break;
             case ASSIGN_CAR:
                 break;
             case  BOOKED:
-                showToast(BOOKED.getName());
-                tripWaitView.setVisibility(View.VISIBLE);
+                showToastLong(BOOKED.getName());
+                postMessageShow(1,null);
+//                mainMapView.showWati();
+//                tripWaitView.setVisibility(View.VISIBLE);
+//                mainMapView.setVisibility(View.INVISIBLE);
                 break;
             case RUNNING:
                 showToast(RUNNING.getName());
-                tripWaitView.setVisibility(View.VISIBLE);
+                //mainMapView.showWati();
+                postMessageShow(1,null);
+            /*    tripWaitView.setVisibility(View.VISIBLE);
+                mainMapView.setVisibility(View.INVISIBLE);*/
+                mainMapView.showWati();
                 break;
         }
     }
 
     public void jumpMianMapView(MainChildView abstractChildView) {
-        abstractChildView.setVisibility(View.GONE);
+        abstractChildView.setVisibility(View.INVISIBLE);
         mainMapView.setVisibility(View.VISIBLE);
     }
 

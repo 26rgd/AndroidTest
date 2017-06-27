@@ -47,7 +47,13 @@
             android:layout_weight="1"
             android:background="@drawable/btn_clickcolor"
             android:text="结束" />
-
     </LinearLayout>
+
+    <Button
+        android:text="补传轨迹"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_clickcolor"
+        android:id="@+id/bt_order_reUp" />
 
 </LinearLayout>

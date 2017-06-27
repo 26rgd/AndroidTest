@@ -62,7 +62,10 @@ public class TripWaitView extends MainChildView {
         {
             addressView.setInfo(activity.webOrderInfo);
             driverView.setInfo(activity.webOrderInfo);
-            activity.mainMapView.setVisibility(View.GONE);
+            try {
+                Thread.sleep(500);
+            }catch (Exception e)
+            {e.printStackTrace();}
         }
         super.setVisibility(visibility);
     }

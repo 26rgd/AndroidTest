@@ -58,6 +58,7 @@ public class HttpRequestParam {
         orderPause("暂停订单",12),
         orderContinue("继续订单",13),
         orderStart("开始订单",14),
+        ReUPGps("上传GPS",15),
         ;
         private String name;
         private int index;

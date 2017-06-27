@@ -166,8 +166,15 @@ public class HttpRequestTask {
 
     public static void upGps(AbstractBasicActivity abstractBasicActivity,String routes) {
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.UPGps);
-        httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
-//        httpRequestParam.paramMap.put("id", String.valueOf(id));
+        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
+        httpRequestParam.paramMap.put("routes", (routes));
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
+        bulidDefaultTask(httpRequestParam);
+    }
+
+    public static void reUpGps(AbstractBasicActivity abstractBasicActivity,String routes) {
+        HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
+        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("routes", (routes));
         httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);

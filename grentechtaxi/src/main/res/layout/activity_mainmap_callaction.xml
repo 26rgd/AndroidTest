@@ -4,7 +4,6 @@
     android:id="@+id/layout_callaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -85,7 +84,6 @@
                         android:textSize="@dimen/textSizeCallCar"
                         android:textColor="@color/textColorOrder1"
                           />
-
                 </LinearLayout>
 
             </FrameLayout>

@@ -67,13 +67,14 @@ public class LoginInfo implements Serializable {
     public static void saveProcessOrder(Context context, Order info) {
         SharedPreferences.Editor editor = context.getApplicationContext().getSharedPreferences("ProcessOrder", MODE_PRIVATE).edit();
         editor.putString("orderdetail", GsonUnit.toJson(info));
+        StringUnit.println(tag,  "saveProcessOrder|"+GsonUnit.toJson(info));
         editor.commit();
     }
 
     public static Order readProcessOrder(Context context) {
         SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences("ProcessOrder", MODE_PRIVATE);
         String data = sharedPreferences.getString("orderdetail", "No Order");
-        StringUnit.println(tag, data);
+        StringUnit.println(tag, "readProcessOrder|"+data);
         try {
             return (Order) GsonUnit.toObject(data, Order.class);
         } catch (Exception e) {

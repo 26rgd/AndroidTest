@@ -32,6 +32,7 @@ public class GpsInfo implements Serializable {
         GpsInfo gi = new GpsInfo(gpsInfo.lat, gpsInfo.lon);
         gi.setSpeed(location.getSpeed());
         gi.setCreateTime(System.currentTimeMillis());
+        gi.setAngle(location.getAltitude());
         return gi;
     }
 }

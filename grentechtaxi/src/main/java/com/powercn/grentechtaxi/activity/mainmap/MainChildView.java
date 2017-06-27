@@ -1,6 +1,7 @@
 package com.powercn.grentechtaxi.activity.mainmap;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.powercn.grentechtaxi.MainActivity;
 
@@ -48,5 +49,19 @@ public abstract class MainChildView extends AbstractChildView implements View.On
     public void setVisibility(int visibility)
     {
         view.setVisibility(visibility);
+    }
+
+    public void showToast(String msg) {
+        try {
+            Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+        }
+    }
+
+    public void showToastLong(String msg) {
+        try {
+            Toast.makeText(activity,msg,Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+        }
     }
 }

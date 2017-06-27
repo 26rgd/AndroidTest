@@ -15,10 +15,10 @@ public class CoordinateSystem {
 
     public static class CoordGpsInfo
     {
-        public Double lat;
-        public Double lon;
+        public double lat;
+        public double lon;
 
-        public CoordGpsInfo(Double lat, Double lon) {
+        public CoordGpsInfo(double lat, double lon) {
             this.lat = lat;
             this.lon = lon;
         }

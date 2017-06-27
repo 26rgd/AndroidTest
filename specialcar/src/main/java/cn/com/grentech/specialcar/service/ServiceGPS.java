@@ -112,7 +112,12 @@ public class ServiceGPS extends AbstractService implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        showLocation(location);
+      try {
+          showLocation(location);
+      }catch (Exception e)
+      {
+          ErrorUnit.println(tag,e);
+      }
     }
 
     @Override
@@ -161,7 +166,6 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             }
             locationManager.removeUpdates(this);
             locationManager = null;
-
         }
     }
 
@@ -176,16 +180,15 @@ public class ServiceGPS extends AbstractService implements LocationListener {
                 locationProvider = LocationManager.NETWORK_PROVIDER;
             } else {
                 showToast("无可用定位源");
+                StringUnit.println(tag,"无可用定位源");
             }
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                 showToastLength("GPS被禁用无法定位");
+                StringUnit.println(tag,"GPS被禁用无法定位");
                 return;
             }
-
             showToast("start "+locationProvider.trim().toUpperCase());
-
-
             locationManager.requestLocationUpdates(locationProvider.trim(), 4000, 0, this);
             Location location = locationManager.getLastKnownLocation(locationProvider);
         }

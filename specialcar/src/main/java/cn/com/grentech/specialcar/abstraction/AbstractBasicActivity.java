@@ -146,11 +146,18 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
 
     public void showToast(String msg) {
         try {
+            if(!StringUnit.isEmpty(msg))
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
         }
     }
-
+    public void showToastLength(String msg) {
+        try {
+            if(!StringUnit.isEmpty(msg))
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+        }
+    }
     public void sendHandleMessage(String key, String content, Object object) {
         try {
             Bundle bundle = new Bundle();

@@ -25,16 +25,16 @@
     <include layout="@layout/activity_datetime"
         android:visibility="gone"></include>
     <include layout="@layout/activity_trip_wait"
-        android:visibility="gone"></include>
+        android:visibility="invisible"></include>
 
     <include layout="@layout/activity_trip_finsh"
-        android:visibility="gone"></include>
+        android:visibility="invisible"></include>
 
     <include layout="@layout/activity_trip_run"
         android:visibility="gone"></include>
 
-    <include layout="@layout/activity_trip_order"
-        android:visibility="gone"></include>
+    <!--<include layout="@layout/activity_trip_order"-->
+        <!--android:visibility="gone"></include>-->
 
 
     <include layout="@layout/activity_userinfo"
@@ -43,13 +43,13 @@
     <include layout="@layout/activity_select_homecompany"
         android:visibility="gone"></include>
 
-    <include layout="@layout/activity_order_detail"
-        android:visibility="gone"></include>
+    <!--<include layout="@layout/activity_order_detail"-->
+        <!--android:visibility="gone"></include>-->
 
     <include layout="@layout/activity_mainmap_callaction"
         android:visibility="gone"></include>
 
 
-    <include layout="@layout/activity_trip_evaluate"
-        android:visibility="gone"></include>
+    <!--<include layout="@layout/activity_trip_evaluate"-->
+        <!--android:visibility="gone"></include>-->
 </FrameLayout>

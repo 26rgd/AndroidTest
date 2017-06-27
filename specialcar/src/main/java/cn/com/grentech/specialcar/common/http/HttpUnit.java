@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +12,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.grentech.specialcar.common.unit.ErrorUnit;
+import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+
+import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
+import static java.net.HttpURLConnection.HTTP_GATEWAY_TIMEOUT;
 
 
 /**
@@ -24,7 +28,7 @@ import cn.com.grentech.specialcar.common.unit.StringUnit;
  */
 
 public class HttpUnit {
-    private  String tag=this.getClass().getName();
+    private String tag = this.getClass().getName();
     private HttpURLConnection httpUrlConnection;
     private UrlParams urlParams = new UrlParams();
     private String urlAddr;
@@ -56,10 +60,10 @@ public class HttpUnit {
 
                 URL url = new URL(urlAddr + this.urlParams.toString());
                 responeInfo.setUrl(url.toString());
-                StringUnit.println(tag,url.toString());
+                StringUnit.println(tag, url.toString());
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
                 httpUrlConnection.setRequestMethod("GET");
-                StringUnit.println(tag,"cookie|"+sessionId);
+                StringUnit.println(tag, "Request cookie|" + sessionId);
                 if (sessionId != null && sessionId.length() != 0) {
                     httpUrlConnection.setRequestProperty("Cookie", sessionId);
                 }
@@ -78,13 +82,16 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag,sessionId);
+                        StringUnit.println(tag, "Respone|" + sessionId);
                     }
+                } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
+                    responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                ErrorUnit.println(tag,e);
+                responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
+                ErrorUnit.println(tag, e);
             }
         } finally {
             return responeInfo;
@@ -114,13 +121,16 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag,sessionId);
+                        StringUnit.println(tag, "Respone|" + sessionId);
                     }
+                } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
+                    responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                ErrorUnit.println(tag,e);
+                responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
+                ErrorUnit.println(tag, e);
             }
         } finally {
             return responeInfo;
@@ -150,13 +160,16 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag,sessionId);
+                        StringUnit.println(tag, "Respone|" + sessionId);
                     }
+                } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
+                    responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                ErrorUnit.println(tag,e);
+                responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
+                ErrorUnit.println(tag, e);
             }
         } finally {
             return responeInfo;
@@ -177,7 +190,7 @@ public class HttpUnit {
                 String LINE_END = "\r\n";
 
                 URL url = new URL(urlAddr);
-                StringUnit.println(tag,url.toString());
+                StringUnit.println(tag, url.toString());
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
                 httpUrlConnection.setDoInput(true);
                 httpUrlConnection.setDoOutput(true);
@@ -194,7 +207,7 @@ public class HttpUnit {
                 OutputStream outputStream = httpUrlConnection.getOutputStream();
                 DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
                 String filepath = this.urlParams.getMap().get("filepath").toString();
-                String filekey=this.urlParams.getMap().get("filekey").toString();
+                String filekey = this.urlParams.getMap().get("filekey").toString();
                 File file = new File(filepath);
                 StringBuffer sb = new StringBuffer();
                 sb.append(PREFIX);
@@ -202,7 +215,7 @@ public class HttpUnit {
                 sb.append(PREFIX);
                 sb.append(BOUNDARY);
                 sb.append(LINE_END);
-                sb.append("Content-Disposition: form-data; name=\""+filekey+"\"; filename=\"" + file.getName() + "\"" + LINE_END);
+                sb.append("Content-Disposition: form-data; name=\"" + filekey + "\"; filename=\"" + file.getName() + "\"" + LINE_END);
                 // sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
                 sb.append("Content-Type: image/jpeg" + LINE_END);
                 sb.append(LINE_END);
@@ -250,14 +263,17 @@ public class HttpUnit {
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag,sessionId);
+                        StringUnit.println(tag, "Respone|" + sessionId);
                     }
+                } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
+                    responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
-                    StringUnit.println(tag,"upload: " + code);
+                    StringUnit.println(tag, "upload: " + code);
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                ErrorUnit.println(tag,e);
+                responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
+                ErrorUnit.println(tag, e);
             }
         } finally {
             return responeInfo;
@@ -275,19 +291,22 @@ public class HttpUnit {
                 if (code == 200) {
                     InputStream input = httpUrlConnection.getInputStream();
                     input.mark(0);
-                   Bitmap bitmap= BitmapFactory.decodeStream(input);
+                    Bitmap bitmap = BitmapFactory.decodeStream(input);
                     responeInfo.setObject(bitmap);
                     responeInfo.setJson("{}");
                     String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
                     if (cookieValue != null) {
                         sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag,sessionId);
+                        StringUnit.println(tag, "Respone|" + sessionId);
                     }
+                } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
+                    responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
                 }
                 responeInfo.setResult(code);
             } catch (Exception e) {
-                ErrorUnit.println(tag,e);
+                responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
+                ErrorUnit.println(tag, e);
             }
         } finally {
             return responeInfo;
@@ -304,15 +323,22 @@ public class HttpUnit {
 
     private void openConnection(String methon) throws Exception {
         URL url = new URL(urlAddr);
-        StringUnit.println(tag,url.toString());
+        StringUnit.println(tag, url.toString());
         httpUrlConnection = (HttpURLConnection) url.openConnection();
         httpUrlConnection.setRequestMethod(methon);
         httpUrlConnection.setRequestProperty("Charset", "UTF-8");
 
-       // httpUrlConnection.setChunkedStreamingMode(0);//据说可以防止超时重发
-        StringUnit.println(tag,"cookie|"+sessionId);
+        // httpUrlConnection.setChunkedStreamingMode(0);//据说可以防止超时重发
+        StringUnit.println(tag, "Request cookie|" + sessionId);
         if (sessionId != null && sessionId.length() != 0) {
             httpUrlConnection.setRequestProperty("Cookie", sessionId);
         }
+    }
+
+    private Map bulidTimeOut() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", false);
+        map.put("msg", "超时或者网络有问题,请检查网络!!");
+        return map;
     }
 }

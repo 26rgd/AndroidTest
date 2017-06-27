@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:hint="密码"
                         android:textColor="#BDBDBD"
-                        android:inputType="number"
+                        android:inputType="textPassword"
                         android:text="Default123"
                         android:maxLines="1"
                         android:theme="@style/TaxiEditText"

@@ -17,11 +17,14 @@ import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.handler.LoginMessageHandler;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
+
+import static cn.com.grentech.specialcar.entity.LoginInfo.readUserLoginInfo;
 
 /**
  * Created by Administrator on 2017/6/14.
@@ -62,6 +65,9 @@ public class LoginActivity extends AbstractBasicActivity {
     @Override
     protected void initData() {
         abstratorHandler=new LoginMessageHandler(this);
+       LoginInfo userinfo= LoginInfo.readUserLoginInfo(this.getApplicationContext());
+        tvPassword.setText(userinfo.password);
+        tvUserName.setText(userinfo.phone);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -70,6 +76,7 @@ public class LoginActivity extends AbstractBasicActivity {
                         0);
             } else {
                     showToast("GPS权限被禁用无法计算位置..请开启此权限");
+                StringUnit.println(tag,"GPS权限被禁用无法计算位置..请开启此权限");
             }
             return;
         }
@@ -83,6 +90,7 @@ public class LoginActivity extends AbstractBasicActivity {
                         0);
             } else {
                 showToast("存储权限被禁用无法准备计算总距离..请开启此权限");
+                StringUnit.println(tag,"存储权限被禁用无法准备计算总距离..请开启此权限");
             }
             return;
         }

@@ -85,7 +85,20 @@ public class OrderDetailMessageHandle extends AbstractHandler {
                             if (success) {
                                 activity.doFinishResult();
                                 activity.showToast("执行成功");
-                                activity.finish();
+
+                            } else {
+                                info = map.get("msg").toString();
+                                activity.showToast(info);
+                            }
+                            break;
+
+                        case ReUPGps:
+                            map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
+                            success = (Boolean) map.get("success");
+                            if (success) {
+                                activity.showToast("补传成功");
+                                StringUnit.println(tag,"补传成功");
+
                             } else {
                                 info = map.get("msg").toString();
                                 activity.showToast(info);
