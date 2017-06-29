@@ -11,6 +11,7 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
@@ -42,6 +44,7 @@ import cn.com.grentech.specialcar.entity.Route;
 import cn.com.grentech.specialcar.entity.RouteGpsInfo;
 import cn.com.grentech.specialcar.other.GpsFilter;
 
+import static android.R.attr.data;
 import static android.R.attr.order;
 import static android.app.Service.START_REDELIVER_INTENT;
 import static cn.com.grentech.specialcar.entity.GpsInfo.bulidGpsInfo;
@@ -122,14 +125,28 @@ public class ServiceGPS extends AbstractService implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        switch (status)
+        {
+            case LocationProvider.AVAILABLE:
+                StringUnit.println(tag,"当前GPS状态为可见状态");
+                break;
+            case LocationProvider.OUT_OF_SERVICE:
+                StringUnit.println(tag,"当前GPS状态为服务区外状态");
+                break;
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                StringUnit.println(tag,"当前GPS状态为可见状态");
+                break;
+        }
     }
 
     @Override
     public void onProviderEnabled(String provider) {
+        StringUnit.println(tag,"GPS开启");
     }
 
     @Override
     public void onProviderDisabled(String provider) {
+        StringUnit.println(tag,"GPS禁用");
     }
 
     @Override
@@ -214,7 +231,8 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         } else {
             gps.add(gi);
             saveLoadLine(info, gi);
-            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", GsonUnit.toJson(gi), Context.MODE_APPEND);
+            String datas=GsonUnit.toJson(gi);
+            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas, Context.MODE_APPEND);
         }
         double dis = GpsFilter.gpsDistance(last, gi);
         double speed = GpsFilter.gpsSpeed(last, gi);
@@ -226,7 +244,9 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         } else {
             gps.add(gi);
             saveLoadLine(info, gi);
-            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", GsonUnit.toJson(gi) + "\r\n", Context.MODE_APPEND);
+            StringUnit.println(tag,gi.toString());
+            String datas=GsonUnit.toJson(gi);
+            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
         }
         HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
         double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
@@ -238,4 +258,8 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     }
 
 
+    @Override
+    public AbstractHandler getAbstratorHandler() {
+        return null;
+    }
 }

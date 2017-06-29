@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
+import cn.com.grentech.specialcar.abstraction.AbstractService;
 
 import static android.R.attr.order;
 
@@ -18,6 +19,7 @@ public class HttpRequestParam {
     public String url;
     public UrlParams urlParams;
     public AbstractBasicActivity abstractBasicActivity;
+    public AbstractService abstractService;
 
     public void addParams(String key, String value) {
         this.urlParams.addParams(key, value);
@@ -59,6 +61,8 @@ public class HttpRequestParam {
         orderContinue("继续订单",13),
         orderStart("开始订单",14),
         ReUPGps("上传GPS",15),
+        GetAddr("获取地址",16),
+        UpDrviceLocation("司机地址",17)
         ;
         private String name;
         private int index;

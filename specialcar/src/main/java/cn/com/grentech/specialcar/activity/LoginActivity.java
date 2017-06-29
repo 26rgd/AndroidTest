@@ -1,6 +1,7 @@
 package cn.com.grentech.specialcar.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Message;
@@ -20,6 +21,7 @@ import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.handler.LoginMessageHandler;
+import cn.com.grentech.specialcar.service.ServiceAddr;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
@@ -78,7 +80,7 @@ public class LoginActivity extends AbstractBasicActivity {
                     showToast("GPS权限被禁用无法计算位置..请开启此权限");
                 StringUnit.println(tag,"GPS权限被禁用无法计算位置..请开启此权限");
             }
-            return;
+
         }
 
 
@@ -92,9 +94,8 @@ public class LoginActivity extends AbstractBasicActivity {
                 showToast("存储权限被禁用无法准备计算总距离..请开启此权限");
                 StringUnit.println(tag,"存储权限被禁用无法准备计算总距离..请开启此权限");
             }
-            return;
-        }
 
+        }
     }
 
     @Override

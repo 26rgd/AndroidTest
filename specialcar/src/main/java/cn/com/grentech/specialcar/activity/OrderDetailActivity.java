@@ -43,7 +43,9 @@ import cn.com.grentech.specialcar.service.ServiceLogin;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
+import static android.R.attr.data;
 import static android.R.attr.order;
+import static android.os.Build.VERSION_CODES.M;
 import static android.view.KeyEvent.KEYCODE_HOME;
 import static cn.com.grentech.specialcar.R.id.contanier_button_orderdetail;
 import static cn.com.grentech.specialcar.activity.EditPasswordActivity.find_password;
@@ -76,7 +78,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_orderdetail);
-      StringUnit.println(tag,"OrderDetailActivity Create Process Id|"+Process.myPid());
+        StringUnit.println(tag, "OrderDetailActivity Create Process Id|" + Process.myPid());
 
     }
 
@@ -116,11 +118,11 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         if (info == null) {
 
             info = loadLocalOrder();
-            StringUnit.println(tag,"loadLocalOrder|"+ GsonUnit.toJson(info));
+            StringUnit.println(tag, "loadLocalOrder|" + GsonUnit.toJson(info));
         }
+        LoadLine loadLine = readLoadLine(info);
         if (info != null && (info.getFlag() == OrderStatus.RunOrder.getValue() || info.getFlag() == OrderStatus.PauseOrder.getValue() || info.getFlag() == OrderStatus.NewOrder.getValue())) {
-            LoadLine loadLine = readLoadLine(info);
-            Double d=loadLine.getTotalDistance();
+            Double d = loadLine.getTotalDistance();
             btReUp.setVisibility(View.INVISIBLE);
             info.setMileage(d);
             contanier.setVisibility(View.VISIBLE);
@@ -143,7 +145,10 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             }
 
         } else {
-            btReUp.setVisibility(View.VISIBLE);
+            if (loadLine.getListGps().size() > 0)
+                btReUp.setVisibility(View.VISIBLE);
+            else
+                btReUp.setVisibility(View.INVISIBLE);
             contanier.setVisibility(View.GONE);
         }
         listView.setAdapter(orderDetailAdapter);
@@ -174,24 +179,22 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                 break;
 
             case R.id.bt_order_finish:
+                StringUnit.println(tag,"click finish!!");
                 LoadLine loadLine = readLoadLine(info);
-                Double d=loadLine.getTotalDistance();
+                Double d = loadLine.getTotalDistance();
                 HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
-                HttpRequestTask.orderFinish(this, info.getId(), d, "", OrderStatus.FinishOrder.getValue());
+                HttpRequestTask.orderFinish(this, info.getId(), d, "Mark V1.0", OrderStatus.FinishOrder.getValue());
                 break;
 
             case R.id.bt_order_reUp:
                 LoadLine reLoadLine = readLoadLine(info);
-                if( reLoadLine.getListGps().size()>0)
-                {
+                if (reLoadLine.getListGps().size() > 0) {
                     showToastLength("正在补传数据.....");
-                    StringUnit.println(tag,"正在补传数据.....");
-                    StringUnit.println(tag,"补传对象|"+GsonUnit.toJson(info));
+                    StringUnit.println(tag, "正在补传数据.....");
+                    StringUnit.println(tag, "补传对象|" + GsonUnit.toJson(info));
                     HttpRequestTask.reUpGps(this, Route.bulidListJson(info, reLoadLine.getListGps()));
-                }
-                else
-                {
-                    StringUnit.println(tag,"补传数据为空");
+                } else {
+                    StringUnit.println(tag, "补传数据为空");
                     showToast("补传数据为空");
                 }
                 break;
@@ -204,10 +207,12 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
     private void pause() {
         if (OrderStatus.PauseOrder.getValue() == this.orderDetailAdapter.getMflag()) {
+            StringUnit.println(tag,"click ReStart!!");
             HttpRequestTask.orderContinue(this, info.getId());
         } else {
 //            LoadLine loadLine = readLoadLine(info);
 //            Double d=loadLine.getTotalDistance();
+            StringUnit.println(tag,"click Pause!!");
             HttpRequestTask.orderPause(this, info.getId(), this.orderDetailAdapter.getMileage());
         }
     }
@@ -272,6 +277,11 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)||intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
+                {
+                    StringUnit.println(tag,intent.getAction());
+                    return;
+                }
                 Double data = intent.getDoubleExtra(MainBroadcastReceiver.action_GPS_key, 0);
                 int orderId = intent.getIntExtra(MainBroadcastReceiver.action_GPS_orderId, 0);
                 StringUnit.println(tag, "broadcastReceiver" + data);
@@ -282,7 +292,13 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             }
         };
         // 注册一个broadCastReceiver
-        registerReceiver(broadcastReceiver, new IntentFilter(MainBroadcastReceiver.action_GPS));
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(MainBroadcastReceiver.action_GPS);
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(broadcastReceiver,intentFilter);
+//        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
+//        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
     }
 
 
@@ -310,8 +326,6 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //  exit = true;
                             //  continousWrite.write("在订单处理过程中退出订单处理界面！");
-
-
                         }
                     });
             dialog.show();

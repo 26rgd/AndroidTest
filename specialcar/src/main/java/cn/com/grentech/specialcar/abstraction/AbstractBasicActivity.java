@@ -73,7 +73,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
 
     @Override
     protected void onStop() {
-         StringUnit.println(tag,"进入后台或者切换activity");
+       //  StringUnit.println(tag,"进入后台或者切换activity");
         super.onStop();
 
     }
@@ -182,6 +182,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, cls);
         stopService(intent);
     }
+
 
 
     public void bindService(Class<?> cls) {

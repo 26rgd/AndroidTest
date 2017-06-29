@@ -35,6 +35,9 @@ public class HttpResponeTask {
         try {
             if (responeInfo.abstractBasicActivity != null)
                 responeInfo.abstractBasicActivity.sendHandleMessage("data", responeInfo.getJson(), responeInfo);
+
+            if (responeInfo.abstractService != null)
+                responeInfo.abstractService.sendHandleMessage("data", responeInfo.getJson(), responeInfo);
         } catch (Exception e) {
             ErrorUnit.println(tag, e);
         }

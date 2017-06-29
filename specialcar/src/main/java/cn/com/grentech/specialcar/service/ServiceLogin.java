@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.os.Process;
 import android.support.annotation.Nullable;
 
+import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
@@ -37,5 +38,9 @@ public class ServiceLogin extends AbstractService {
         }
 
         return super.onStartCommand(intent,START_STICKY,startId);
+    }
+    @Override
+    public AbstractHandler getAbstratorHandler() {
+        return null;
     }
 }

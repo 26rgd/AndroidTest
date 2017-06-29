@@ -1,6 +1,8 @@
 package cn.com.grentech.specialcar.activity;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,7 +32,7 @@ import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
-public class MainActivity extends AbstractBasicActivity {
+public class MainActivity extends AbstractBasicActivity{
     private static AbstractHandler abstratorHandler = null;
     private ListView listView;
     private ImageView ivBack;
@@ -84,6 +86,7 @@ public class MainActivity extends AbstractBasicActivity {
                 finish();
             }
         });
+
     }
 
     @Override
@@ -159,4 +162,6 @@ public class MainActivity extends AbstractBasicActivity {
     public AbstractHandler getAbstratorHandler() {
         return abstratorHandler;
     }
+
+
 }

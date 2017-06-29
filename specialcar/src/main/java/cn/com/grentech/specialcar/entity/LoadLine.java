@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoadLine implements Serializable {
-    private String tag =this.getClass().getName();
+    private transient String tag =this.getClass().getName();
 
     private transient static final long serialVersionUID = -3546403219344404215L;
     private Order orderinfo;

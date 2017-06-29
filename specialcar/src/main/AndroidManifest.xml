@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.com.grentech.specialcar">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
@@ -50,24 +51,22 @@
         <activity android:name=".activity.OrderDetailActivity"></activity>
         <activity android:name=".activity.DriverInfoActivity"></activity>
         <activity android:name=".activity.EditPasswordActivity"></activity>
-        <service android:name=".service.ServiceMoitor"
 
-            ></service>
+        <service android:name=".service.ServiceMoitor"></service>
         <service android:name=".service.ServiceGPS"></service>
-
+        <service android:name=".service.ServiceAddr"></service>
         <receiver
             android:name=".broadcast.MainBroadcastReceiver"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter android:priority="90000">
                 <action android:name="android.intent.action.DATE_CHANGED"></action>
-                <action android:name="android.intent.action.SCREEN_OFF"></action>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
                 <action android:name="android.intent.action.USER_PRESENT"></action>
                 <action android:name="android.intent.action.PACKAGE_CHANGED"></action>
                 <action android:name="android.intent.action.PACKAGE_RESTARTED"></action>
                 <action android:name="action_GPS"></action>
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

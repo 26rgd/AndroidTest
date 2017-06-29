@@ -44,7 +44,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-            StringUnit.println(tag,"RequestProgressDialog show error");
+            StringUnit.println(tag,"ProgressDialog show error");
         }
 
 
@@ -62,7 +62,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-            StringUnit.println(tag,"RequestProgressDialog show error");
+            StringUnit.println(tag,"ProgressDialog show error");
         }
 
 
@@ -91,7 +91,7 @@ public class RequestProgressDialog extends ProgressDialog {
                 long ed = System.currentTimeMillis();
                 try {
                     while (( noTimeOut=((ed - st) < timeOut)) && isRun==true) {
-                        Thread.sleep(40);
+                        Thread.sleep(20);
                         ed = System.currentTimeMillis();
                     }
                 } catch (Exception e) {

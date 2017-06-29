@@ -19,6 +19,7 @@ import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 
+import static cn.com.grentech.specialcar.common.http.HttpRequestTask.url;
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 import static java.net.HttpURLConnection.HTTP_GATEWAY_TIMEOUT;
 
@@ -79,11 +80,12 @@ public class HttpUnit {
                     System.arraycopy(readBuffer, 0, buf, 0, readsize);
                     String json = new String(buf, "UTF8").trim();
                     responeInfo.setJson(json);
-                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
-                    if (cookieValue != null) {
-                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag, "Respone|" + sessionId);
-                    }
+//                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+//                    if (cookieValue != null) {
+//                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+//                        StringUnit.println(tag, "Respone|" + sessionId);
+//                    }
+                    setCookie(url.toString());
                 } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
                     responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
@@ -118,11 +120,12 @@ public class HttpUnit {
                     System.arraycopy(readBuffer, 0, buf, 0, readsize);
                     String json = new String(buf, "UTF8").trim();
                     responeInfo.setJson(json);
-                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
-                    if (cookieValue != null) {
-                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag, "Respone|" + sessionId);
-                    }
+//                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+//                    if (cookieValue != null) {
+//                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+//                        StringUnit.println(tag, "Respone|" + sessionId);
+//                    }
+                    setCookie(url.toString());
                 } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
                     responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
@@ -157,11 +160,12 @@ public class HttpUnit {
                     System.arraycopy(readBuffer, 0, buf, 0, readsize);
                     String json = new String(buf, "UTF8").trim();
                     responeInfo.setJson(json);
-                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
-                    if (cookieValue != null) {
-                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag, "Respone|" + sessionId);
-                    }
+//                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+//                    if (cookieValue != null) {
+//                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+//                        StringUnit.println(tag, "Respone|" + sessionId);
+//                    }
+                    setCookie(url.toString());
                 } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
                     responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
@@ -260,11 +264,12 @@ public class HttpUnit {
                     System.arraycopy(readBuffer, 0, buf, 0, readsize);
                     String json = new String(buf, "UTF8").trim();
                     responeInfo.setJson(json);
-                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
-                    if (cookieValue != null) {
-                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag, "Respone|" + sessionId);
-                    }
+//                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+//                    if (cookieValue != null) {
+//                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+//                        StringUnit.println(tag, "Respone|" + sessionId);
+//                    }
+                    setCookie(url.toString());
                 } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
                     responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
@@ -294,11 +299,12 @@ public class HttpUnit {
                     Bitmap bitmap = BitmapFactory.decodeStream(input);
                     responeInfo.setObject(bitmap);
                     responeInfo.setJson("{}");
-                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
-                    if (cookieValue != null) {
-                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
-                        StringUnit.println(tag, "Respone|" + sessionId);
-                    }
+//                    String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+//                    if (cookieValue != null) {
+//                        sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+//                        StringUnit.println(tag, "Respone|" + sessionId);
+//                    }
+                    setCookie(url.toString());
                 } else if (code == HTTP_CLIENT_TIMEOUT || code == HTTP_GATEWAY_TIMEOUT) {
                     responeInfo.setJson(GsonUnit.toJson(bulidTimeOut()));
                 } else {
@@ -340,5 +346,17 @@ public class HttpUnit {
         map.put("success", false);
         map.put("msg", "超时或者网络有问题,请检查网络!!");
         return map;
+    }
+
+    private void setCookie(String addr)
+    {
+        if(addr.contains(url))
+        {
+            String cookieValue = httpUrlConnection.getHeaderField("Set-Cookie");
+            if (cookieValue != null) {
+                sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+                StringUnit.println(tag, "Respone|" + sessionId);
+            }
+        }
     }
 }

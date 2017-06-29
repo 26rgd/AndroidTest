@@ -10,11 +10,13 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
+import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.entity.OrderStatus;
 
 import static android.R.attr.id;
+import static android.R.attr.path;
 import static cn.com.grentech.specialcar.entity.OrderDetailInfo.flag;
 import static cn.com.grentech.specialcar.entity.OrderDetailInfo.mileage;
 
@@ -180,6 +182,15 @@ public class HttpRequestTask {
         bulidDefaultTask(httpRequestParam);
     }
 
+    public static void upDriverLocation(AbstractBasicActivity abstractBasicActivity,String phone,String location) {
+        HttpRequestParam httpRequestParam = bulidHttpRequestParam("user/updateLocation?", HttpRequestParam.ApiType.UpDrviceLocation);
+        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
+        httpRequestParam.paramMap.put("phone", phone);
+        httpRequestParam.paramMap.put("location", location);
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
+        bulidDefaultTask(httpRequestParam);
+    }
+
     public static void saveUserInfo(String passengerInfo) {
         StringUnit.println(tag,passengerInfo);
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/savePassenger", HttpRequestParam.ApiType.LoadFile);
@@ -204,6 +215,25 @@ public class HttpRequestTask {
         if(StringUnit.isEmpty(filepath))return;
         HttpRequestParam httpRequestParam = bulidHttpRequestParamMedia(filepath, HttpRequestParam.ApiType.LoadFile);
         httpRequestParam.requestType = HttpRequestParam.RequestType.LoadFile;
+        bulidDefaultTask(httpRequestParam);
+    }
+
+//    http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.983424,116.322987&output=json&pois=1&ak=您的ak
+
+    public static void getAddr(AbstractService abstractService, double lat, double lng) {
+        //HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
+        HttpRequestParam httpRequestParam = new HttpRequestParam();
+        httpRequestParam.url = "http://api.map.baidu.com/geocoder/v2/?" ;
+        httpRequestParam.apiType = HttpRequestParam.ApiType.GetAddr;
+        httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
+        httpRequestParam.paramMap.put("coortype", "wgs84ll");
+       // httpRequestParam.paramMap.put("callback", "renderReverse");
+        String location=String.valueOf(lat)+","+String.valueOf(lng);
+        httpRequestParam.paramMap.put("location", location);
+        httpRequestParam.paramMap.put("output", "json");
+     //   httpRequestParam.paramMap.put("pois", "1");
+        httpRequestParam.paramMap.put("ak", "DeIyUODYbDTmChNw4cuzy0sog8qz3DlI");
+        httpRequestParam.abstractService=abstractService;
         bulidDefaultTask(httpRequestParam);
     }
     //*************************************************************************************************************************
@@ -256,6 +286,7 @@ public class HttpRequestTask {
         else responeInfo = httpUnit.executeGet();
         responeInfo.setApiType(param.apiType);
         responeInfo.abstractBasicActivity=param.abstractBasicActivity;
+        responeInfo.abstractService=param.abstractService;
         return responeInfo;
     }
 

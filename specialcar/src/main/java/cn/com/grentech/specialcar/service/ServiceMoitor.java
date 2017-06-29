@@ -18,9 +18,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
+import cn.com.grentech.specialcar.activity.OrderDetailActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.HttpUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
@@ -65,7 +67,7 @@ public class ServiceMoitor extends AbstractService {
 //            LoginInfo loginInfo=LoginInfo.readUserLoginInfo(getApplicationContext());
 //            HttpRequestTask.loginByPassword(null,loginInfo.phone,loginInfo.password);
 //        }
-        Intent notificationIntent = new Intent(this, LoginActivity.class);
+        Intent notificationIntent = new Intent(this, ServiceLogin.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         showNotification(pendingIntent);
         return super.onStartCommand(intent,START_STICKY,startId);
@@ -120,18 +122,29 @@ public class ServiceMoitor extends AbstractService {
         //if(1==1)return;
         Notification notification;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD&&Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) {
-            notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
+          //  notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
+
+            notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
         }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
+           // notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
+
+            notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
         }
         else {
             long when = System.currentTimeMillis();
             notification = new Notification(R.drawable.grentech_logo, getResources().getString(R.string.app_name), when + 1000);
+           // notification = new Notification(R.drawable.grentech_logo, null, when + 1000);
         }
         notification.flags =Notification.FLAG_AUTO_CANCEL;
 
 
         startForeground(Process.myPid(), notification);
+       // startForeground(0, notification);
+    }
+
+    @Override
+    public AbstractHandler getAbstratorHandler() {
+        return null;
     }
 }

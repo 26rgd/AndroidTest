@@ -1,5 +1,6 @@
 package cn.com.grentech.specialcar.handler;
 
+import android.content.Intent;
 import android.os.Message;
 
 
@@ -14,6 +15,7 @@ import cn.com.grentech.specialcar.common.http.ResponeInfo;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
+import cn.com.grentech.specialcar.service.ServiceAddr;
 
 import static cn.com.grentech.specialcar.common.unit.GsonUnit.toObject;
 
@@ -59,6 +61,7 @@ public class LoginMessageHandler extends AbstractHandler {
                                 loginInfo.uuid = LoginInfo.getUuid(activity);
                                 loginInfo.password=activity.getTvPassword().getText().toString().trim();
                                 loginInfo.doLoginSuccess = true;
+                                activity.startService(ServiceAddr.class);
                                 LoginInfo.saveUserLoginInfo(activity, loginInfo);
                                 activity.jumpFinish(MainActivity.class);
                             } else {

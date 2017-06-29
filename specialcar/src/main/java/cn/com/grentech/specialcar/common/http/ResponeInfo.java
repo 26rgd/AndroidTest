@@ -1,6 +1,7 @@
 package cn.com.grentech.specialcar.common.http;
 
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
+import cn.com.grentech.specialcar.abstraction.AbstractService;
 
 /**
  * Created by Administrator on 2017/3/16.
@@ -13,6 +14,7 @@ public class ResponeInfo {
     private Object object;
     private String url;
     public AbstractBasicActivity abstractBasicActivity;
+    public AbstractService abstractService;
 
     public int getResult() {
         return result;

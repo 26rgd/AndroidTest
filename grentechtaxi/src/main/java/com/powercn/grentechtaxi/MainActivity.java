@@ -212,13 +212,11 @@ public class MainActivity extends AbstractBasicActivity {
         try {
             File filedir = new File(headpath);
             if (filedir.exists() == false) {
-
                 filedir.mkdirs();
             }
 
             File file = new File(headpath + path);
             if (file.exists() == false) {
-
                 file.createNewFile();
             }
             OutputStream inputStream = new FileOutputStream(file);
