@@ -7,6 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Process;
@@ -30,6 +34,7 @@ import cn.com.grentech.specialcar.common.http.HttpUnit;
 import cn.com.grentech.specialcar.common.unit.DialogUtils;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
+import cn.com.grentech.specialcar.common.unit.NetworkUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
@@ -282,6 +287,50 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                     StringUnit.println(tag,intent.getAction());
                     return;
                 }
+                if(intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE"))
+                {
+                    ConnectivityManager conn=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo=conn.getActiveNetworkInfo();
+                    if(networkInfo!=null&&networkInfo.isAvailable())
+                    {
+                        String name=networkInfo.getTypeName();
+                        if(networkInfo.getType()==ConnectivityManager.TYPE_WIFI)
+                        {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                   try {
+                                       Thread.sleep(3000);
+                                       NetworkUnit.ping();
+                                   }catch (Exception e){}
+                                }
+                            }).start();
+                            StringUnit.println(tag,"WIFI网络|"+name);
+                            WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+                            WifiInfo wifiInfo=wifi.getConnectionInfo();
+                            StringUnit.println(tag,"WIFI名称|"+wifiInfo.getSSID()+wifi.getWifiState());
+
+                        }else     if(networkInfo.getType()==ConnectivityManager.TYPE_ETHERNET)
+                        {
+
+                            StringUnit.println(tag,"有线网络|"+name);
+                        }else     if(networkInfo.getType()==ConnectivityManager.TYPE_MOBILE)
+                        {
+                            StringUnit.println(tag,"3G或者4G网络|"+name);
+                        }
+                        else
+                        {
+                            StringUnit.println(tag,"其它网络|"+name+":"+networkInfo.getType());
+                        }
+
+
+                    }
+                    else
+                    {
+                        StringUnit.println(tag,"网络已经断开");
+                    }
+                    return;
+                }
                 Double data = intent.getDoubleExtra(MainBroadcastReceiver.action_GPS_key, 0);
                 int orderId = intent.getIntExtra(MainBroadcastReceiver.action_GPS_orderId, 0);
                 StringUnit.println(tag, "broadcastReceiver" + data);
@@ -296,6 +345,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         intentFilter.addAction(MainBroadcastReceiver.action_GPS);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(broadcastReceiver,intentFilter);
 //        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
 //        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));

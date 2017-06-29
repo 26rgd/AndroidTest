@@ -58,7 +58,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private String locationProvider;
 
     public final static int speedLimit = 38;
-    public final static int minDis = 25;
+    public final static int minDis = 21;
     private Boolean isFisrt = true;
     private Order info;
     private LoadLine loadLine;
