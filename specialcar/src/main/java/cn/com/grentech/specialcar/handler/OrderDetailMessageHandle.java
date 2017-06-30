@@ -30,10 +30,7 @@ public class OrderDetailMessageHandle extends AbstractHandler {
         super(activity);
     }
 
-    //    WeakReference<OrderDetailActivity> mActivity;
-//    public OrderDetailMessageHandle(OrderDetailActivity activity) {
-//        mActivity = new WeakReference(activity);
-//    }
+
     @Override
     public void handleMessage(Message msg) {
         try {

@@ -3,6 +3,7 @@ package cn.com.grentech.specialcar.activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -77,7 +78,14 @@ public class DriverInfoActivity extends AbstractBasicActivity {
         String carRow= DriverInfo.carRow.getValue();
         HttpRequestTask.updateDriver(this,phone,name,licenseNo,address,carNo,carType,Integer.valueOf(carRow));
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return false;
+    }
     @Override
     public AbstractHandler getAbstratorHandler() {
         return   abstratorHandler;

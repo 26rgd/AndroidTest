@@ -66,7 +66,6 @@ public class LoadLine implements Serializable {
         for (int i = 0; i <= index; i++) {
             LineInfo lineInfo = lines[i];
             if (lineInfo != null) {
-
                 list.addAll(lineInfo.getGpsList());
             }
         }

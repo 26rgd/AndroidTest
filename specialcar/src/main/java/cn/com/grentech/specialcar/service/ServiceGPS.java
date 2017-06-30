@@ -58,7 +58,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private String locationProvider;
 
     public final static int speedLimit = 38;
-    public final static int minDis = 21;
+    public final static int minDis = 20;
     private Boolean isFisrt = true;
     private Order info;
     private LoadLine loadLine;
@@ -247,8 +247,9 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             StringUnit.println(tag,gi.toString());
             String datas=GsonUnit.toJson(gi);
             FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
+            HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
         }
-        HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
+//        HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
         double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
         Intent intent = new Intent();
         intent.setAction(MainBroadcastReceiver.action_GPS);

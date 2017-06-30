@@ -60,7 +60,7 @@ import static cn.com.grentech.specialcar.activity.EditPasswordActivity.find_pass
  */
 
 public class OrderDetailActivity extends AbstractBasicActivity {
-    public final static int Finish_Order = 88;
+
     public final static int UnFinish_Order = 89;
     private static AbstractHandler abstratorHandler = null;
 

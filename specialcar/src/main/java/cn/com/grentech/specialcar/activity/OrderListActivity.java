@@ -3,6 +3,7 @@ package cn.com.grentech.specialcar.activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,10 +15,13 @@ import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.adapter.OrderListAdapter;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.handler.OrderListMessageHandler;
 import lombok.Getter;
+
+import static android.view.KeyEvent.KEYCODE_HOME;
 
 /**
  * Created by Administrator on 2017/6/15.
@@ -58,7 +62,8 @@ public class OrderListActivity extends AbstractBasicActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Order info=(Order) orderListAdapter.getItem(position);
-                jumpForResult(OrderDetailActivity.class,OrderDetailActivity.Finish_Order,"order",info);
+                jumpForResult(HisOrderDetailActivity.class,HisOrderDetailActivity.Finish_Order,"order",info);
+
             }
         });
     }
@@ -76,6 +81,15 @@ public class OrderListActivity extends AbstractBasicActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return false;
     }
 
 }
