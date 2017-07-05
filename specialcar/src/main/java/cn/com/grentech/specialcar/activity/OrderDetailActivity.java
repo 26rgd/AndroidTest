@@ -18,11 +18,15 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
@@ -31,11 +35,16 @@ import cn.com.grentech.specialcar.adapter.OrderDetailAdapter;
 import cn.com.grentech.specialcar.broadcast.MainBroadcastReceiver;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.HttpUnit;
+import cn.com.grentech.specialcar.common.unit.AlarmUnit;
+import cn.com.grentech.specialcar.common.unit.CoordinateSystem;
 import cn.com.grentech.specialcar.common.unit.DialogUtils;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.NetworkUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
+import cn.com.grentech.specialcar.entity.GpsInfo;
 import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.entity.Order;
@@ -80,6 +89,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_orderdetail);
@@ -110,6 +120,8 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
     @Override
     protected void initData() {
+
+       // getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         registReceiver();
         abstratorHandler = new OrderDetailMessageHandle(this);
         orderDetailAdapter = new OrderDetailAdapter(this, null, R.layout.list_item_orderdetail);
@@ -162,7 +174,9 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
     @Override
     protected void onDestroy() {
+        WakeLockUnit.releaseWakeLock();
         unregisterReceiver(broadcastReceiver);
+        AlarmUnit.cancelAlarm();
         super.onDestroy();
     }
 
@@ -177,6 +191,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
             case R.id.bt_order_start:
                 HttpRequestTask.orderStart(this, info.getId());
+
                 break;
 
             case R.id.bt_order_pause:
@@ -188,7 +203,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                 LoadLine loadLine = readLoadLine(info);
                 Double d = loadLine.getTotalDistance();
                 HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
-                HttpRequestTask.orderFinish(this, info.getId(), d, "Mark V1.0", OrderStatus.FinishOrder.getValue());
+                HttpRequestTask.orderFinish(this, info.getId(), d, "V1", OrderStatus.FinishOrder.getValue());
                 break;
 
             case R.id.bt_order_reUp:
@@ -214,6 +229,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         if (OrderStatus.PauseOrder.getValue() == this.orderDetailAdapter.getMflag()) {
             StringUnit.println(tag,"click ReStart!!");
             HttpRequestTask.orderContinue(this, info.getId());
+
         } else {
 //            LoadLine loadLine = readLoadLine(info);
 //            Double d=loadLine.getTotalDistance();
@@ -282,9 +298,31 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)||intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
+
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
                 {
                     StringUnit.println(tag,intent.getAction());
+                   // AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(),AlarmiInfoActivity.class);
+                    AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(), AlarmiInfoActivity.class,5*60*1000);
+                    return;
+                }
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_ON))
+                {
+                    AlarmUnit.cancelAlarm();
+                    StringUnit.println(tag,intent.getAction());
+                    return;
+                }
+                if(intent.getAction().equals(MainBroadcastReceiver.action_Addr))
+                {
+                    try {
+                        StringUnit.println(tag,intent.getAction());
+                        GpsInfo gpsInfo =(GpsInfo) intent.getExtras().getSerializable(MainBroadcastReceiver.action_Addr_key);
+                        if (gpsInfo != null) {
+                          //  CoordinateSystem.CoordGpsInfo cg=CoordinateSystem.GpsInfoToBaidu(gpsInfo.getLat(), gpsInfo.getLng());
+                            HttpRequestTask.getAddr(OrderDetailActivity.this, gpsInfo.getLat(), gpsInfo.getLng());
+                        }
+                    }catch (Exception e){
+                        ErrorUnit.println(tag,e);}
                     return;
                 }
                 if(intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE"))
@@ -343,6 +381,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         // 注册一个broadCastReceiver
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction(MainBroadcastReceiver.action_GPS);
+        intentFilter.addAction(MainBroadcastReceiver.action_Addr);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");

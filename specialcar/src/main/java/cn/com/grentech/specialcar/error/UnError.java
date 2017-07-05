@@ -2,6 +2,7 @@ package cn.com.grentech.specialcar.error;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -9,7 +10,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import android.os.Process;
 
+import cn.com.grentech.specialcar.common.unit.AlarmUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 
 /**
  * Created by Administrator on 2017/6/23.
@@ -17,9 +20,11 @@ import cn.com.grentech.specialcar.common.unit.StringUnit;
 
 public class UnError implements Thread.UncaughtExceptionHandler {
     private String tag=this.getClass().getName();
+    private Context context;
 
 
-    public UnError() {
+    public UnError(Context context) {
+        this.context=context;
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
@@ -44,7 +49,8 @@ public class UnError implements Thread.UncaughtExceptionHandler {
 //        if (myContext instanceof Activity) {
 //            ((Activity)myContext).finish();
 //        }
-
+        WakeLockUnit.releaseWakeLock();
+        AlarmUnit.cancelAlarm();
         Process.killProcess(Process.myPid());
         System.exit(10);
     }

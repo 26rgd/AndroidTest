@@ -130,7 +130,7 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));// 设置圆形的边框颜色
         myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));// 设置圆形的填充颜色
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker));//显示我的位置的自定义图标
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location));//显示我的位置的自定义图标
 
         aMap.setMyLocationStyle(myLocationStyle);
         uiSettings = aMap.getUiSettings();
@@ -220,18 +220,16 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
                 mLocationClient = new AMapLocationClient(activity);
                 mLocationOption = new AMapLocationClientOption();
                 mLocationClient.setLocationListener(this);
-                mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+                mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
                 mLocationOption.setInterval(30000);
                 mLocationOption.setNeedAddress(true);
                 mLocationClient.setLocationOption(mLocationOption);
                 mLocationClient.startLocation();
                 AMapLocation aMapLocation = mLocationClient.getLastKnownLocation();
-                aMapLocation = new AMapLocation("GPS");
-                aMapLocation.setLatitude(22.543471);
-                aMapLocation.setLongitude(113.941133);
-//
-//                aMapLocation.setLatitude(23.099971);
-//                aMapLocation.setLongitude(113.277233);
+//                aMapLocation = new AMapLocation("GPS");
+//                aMapLocation.setLatitude(22.543471);
+//                aMapLocation.setLongitude(113.941133);
+
                 this.onLocationChanged(aMapLocation);
             }
         } catch (Exception e) {

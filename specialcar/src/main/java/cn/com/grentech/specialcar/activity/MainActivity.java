@@ -3,8 +3,10 @@ package cn.com.grentech.specialcar.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +24,7 @@ import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.adapter.NotFinshAdapter;
 import cn.com.grentech.specialcar.adapter.PopupWindowAdapter;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.common.unit.ViewUnit;
@@ -86,7 +89,7 @@ public class MainActivity extends AbstractBasicActivity{
                 finish();
             }
         });
-
+        whileBook();
     }
 
     @Override
@@ -164,4 +167,14 @@ public class MainActivity extends AbstractBasicActivity{
     }
 
 
+    private void whileBook()
+    {
+        try {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:cn.com.grentech.specialcar"));
+            startActivity(intent);
+        }catch (Exception e){
+            ErrorUnit.println(tag,e);}
+
+    }
 }

@@ -82,7 +82,7 @@ public class ServiceAddr extends AbstractService implements LocationListener {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            locationManager.requestLocationUpdates(locationProvider.trim(), 180000, 500, this);
+            locationManager.requestLocationUpdates(locationProvider.trim(), 180000, 0, this);
             Location location = locationManager.getLastKnownLocation(locationProvider);
             onLocationChanged(location);
         }

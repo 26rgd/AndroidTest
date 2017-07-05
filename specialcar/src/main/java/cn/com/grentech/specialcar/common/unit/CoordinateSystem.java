@@ -1,6 +1,7 @@
 package cn.com.grentech.specialcar.common.unit;
 
 
+import cn.com.grentech.specialcar.entity.GpsInfo;
 
 /**
  * 各地图API坐标系统比较与转换;
@@ -29,6 +30,14 @@ public class CoordinateSystem {
     public static double pi = 3.1415926535897932384626;
     public static double a = 6378245.0;
     public static double ee = 0.00669342162296594323;
+
+
+    public static CoordGpsInfo GpsInfoToBaidu(double lat, double lon)
+    {
+        CoordGpsInfo cg=GpsInfo84_To_Gcj02(lat,lon);
+        CoordGpsInfo result= gcj02_To_Bd09(cg.lat,cg.lon);
+        return result;
+    }
 
     /**
      * 84 to 火星坐标系 (GCJ-02) World Geodetic System ==> Mars Geodetic System
@@ -120,12 +129,7 @@ public class CoordinateSystem {
         return new CoordGpsInfo(gg_lat, gg_lon);
     }
 
-    /**
-     * (BD-09)-->84
-     * @param bd_lat
-     * @param bd_lon
-     * @return
-     */
+
 //    public static CoordGpsInfo bd09_To_GpsInfo84(double bd_lat, double bd_lon) {
 //
 //        CoordGpsInfo gcj02 = PositionUtil.bd09_To_Gcj02(bd_lat, bd_lon);

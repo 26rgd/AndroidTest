@@ -18,6 +18,8 @@ import static android.R.attr.tag;
 
 public class MainBroadcastReceiver extends BroadcastReceiver {
     protected String tag=this.getClass().getName();
+    public static String action_Addr="action_Addr";
+    public static String action_Addr_key="GpsInfo";
     public static String action_GPS="action_GPS";
     public static String action_GPS_key="distance";
     public static String action_GPS_orderId="orderId";
@@ -30,8 +32,9 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
         if(intent.getAction().equals("android.intent.action.USER_PRESENT"))
         {
             StringUnit.println(tag,"锁屏后开启桌面");
+            startService(context, ServiceGPS.class);
         }
-        startService(context, ServiceGPS.class);
+
     }
     public void startService(Context context,Class<?> cls) {
         Intent intent = new Intent(context, cls);

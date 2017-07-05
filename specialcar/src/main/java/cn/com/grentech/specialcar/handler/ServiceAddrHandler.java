@@ -36,12 +36,12 @@ public class ServiceAddrHandler extends AbstractHandler {
                 Boolean success = false;
                 switch (apiType) {
                     case GetAddr:
-                        map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
-                        map= (Map) map.get("result");
-                        String add=map.get("formatted_address").toString()+map.get("sematic_description").toString();
-                        HttpRequestTask.upDriverLocation(null, LoginInfo.loginInfo.phone,add);
-                        break;
-                }
+                    map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
+                    map= (Map) map.get("result");
+                    String add=map.get("formatted_address").toString()+map.get("sematic_description").toString();
+                    HttpRequestTask.upDriverLocation(null, LoginInfo.loginInfo.phone,add);
+                    break;
+            }
             }
 
             super.handleMessage(msg);

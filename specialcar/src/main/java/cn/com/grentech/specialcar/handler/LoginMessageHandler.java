@@ -61,7 +61,7 @@ public class LoginMessageHandler extends AbstractHandler {
                                 loginInfo.uuid = LoginInfo.getUuid(activity);
                                 loginInfo.password=activity.getTvPassword().getText().toString().trim();
                                 loginInfo.doLoginSuccess = true;
-                                activity.startService(ServiceAddr.class);
+                               // activity.startService(ServiceAddr.class);
                                 LoginInfo.saveUserLoginInfo(activity, loginInfo);
                                 activity.jumpFinish(MainActivity.class);
                             } else {

@@ -33,136 +33,137 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:clickable="true"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="25dp"
             android:layout_marginLeft="@dimen/margin10"
             android:layout_marginRight="@dimen/margin10"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/layout_bk">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/LinearHeight">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="@dimen/ImageSizeTrip24px"
-                        android:layout_height="@dimen/ImageSizeTrip24px"
-                        android:layout_marginLeft="@dimen/margin10"
-                        android:layout_gravity="center"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/icon_time"
-                        android:id="@+id/iv_time"
-                          />
-
-                    <TextView
-                        android:text="现在"
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:id="@+id/tv_call_time"
-                        android:textSize="@dimen/textSizeCallCar"
-                        android:textColor="@color/textColorOrder1"
-                          />
-                </LinearLayout>
-
-            </FrameLayout>
-
-
-            <include layout="@layout/activity_divisive_h"></include>
+            android:background="@drawable/layout_bk"
+            android:clickable="true"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/LinearHeight"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/LinearHeight"
-                    android:textSize="@dimen/textSizeCallCar"
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_time"
+                            android:layout_width="@dimen/ImageSizeTrip24px"
+                            android:layout_height="@dimen/ImageSizeTrip24px"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/margin10"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/icon_time" />
+
+                        <TextView
+                            android:id="@+id/tv_call_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="现在"
+                            android:textColor="@color/textColorOrder1"
+                            android:textSize="@dimen/textSizeCallCar" />
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+                <include layout="@layout/activity_divisive_h"></include>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/tv_mileage"
+                    android:orientation="horizontal">
 
-                    android:textColor="@color/textColorOrder1"
-                     />
+                    <TextView
+                        android:id="@+id/tv_mileage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/LinearHeight"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/textColorOrder1"
+
+                        android:textSize="@dimen/textSizeCallCar" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-    <include layout="@layout/activity_divisive"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"></include>
+            <include
+                layout="@layout/activity_divisive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></include>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/margin10"
                 android:layout_marginBottom="@dimen/margin10"
                 android:layout_marginLeft="40dp"
-                android:layout_marginRight="@dimen/margin">
+                android:layout_marginRight="@dimen/margin"
+                android:layout_marginTop="@dimen/margin10"
+                android:orientation="vertical">
+
                 <include
                     layout="@layout/addressinfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></include>
             </LinearLayout>
 
-        <include layout="@layout/activity_divisive"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"></include>
+            <include
+                layout="@layout/activity_divisive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></include>
 
             <TextView
-                android:text="0"
+                android:id="@+id/tv_money"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/LinearHeight"
-                android:textColor="@color/textColorOrder0"
-                android:textSize="@dimen/textSizeCallCar"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/tv_money"
-                android:layout_weight="1" />
+                android:text="0"
+                android:textColor="@color/textColorOrder0"
+                android:textSize="@dimen/textSizeCallCar" />
 
             <TextView
-            android:layout_marginTop="@dimen/margin10"
-            android:text="叫车"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/LinearHeight"
-            android:gravity="center"
-            android:background="@drawable/btn_clickcolor"
-            android:id="@+id/tv_callcar_call_sub" />
+                android:id="@+id/tv_callcar_call_sub"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/LinearHeight"
+                android:layout_marginTop="@dimen/margin10"
+                android:background="@drawable/btn_clickcolor"
+                android:gravity="center"
+                android:text="叫车"
+                android:textColor="@color/WHITE" />
 
-        <TextView
-            android:layout_marginTop="@dimen/margin10"
-            android:text="取消"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/textViewDefaultHeight"
-            android:gravity="center"
-            android:visibility="gone"
-            android:id="@+id/tv_callcar_call_cancel" />
+            <TextView
+                android:id="@+id/tv_callcar_call_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textViewDefaultHeight"
+                android:layout_marginTop="@dimen/margin10"
+                android:gravity="center"
+                android:text="取消"
+                android:visibility="gone" />
         </LinearLayout>
     </FrameLayout>
 

@@ -20,12 +20,15 @@ import java.util.TimerTask;
 import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
+import cn.com.grentech.specialcar.activity.AlarmiInfoActivity;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.activity.MainActivity;
 import cn.com.grentech.specialcar.activity.OrderDetailActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.HttpUnit;
+import cn.com.grentech.specialcar.common.unit.AlarmUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
 
 import static android.content.ContentValues.TAG;
@@ -78,7 +81,7 @@ public class ServiceMoitor extends AbstractService {
         }
         timer = new Timer();
         monitorTask = new MonitorTask(context);
-        timer.scheduleAtFixedRate(monitorTask, 0, 70000);
+        timer.scheduleAtFixedRate(monitorTask, 0, 60000);
     }
 
 
@@ -98,6 +101,8 @@ public class ServiceMoitor extends AbstractService {
 
         @Override
         public void run() {
+           // StringUnit.println(tag,"MonitorTask.......");
+          //  WakeLockUnit.acquireWakeLock(ServiceMoitor.this.getApplicationContext());
             Intent intent1=new Intent(ServiceMoitor.this,ServiceGPS.class);
             startService(intent1);
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

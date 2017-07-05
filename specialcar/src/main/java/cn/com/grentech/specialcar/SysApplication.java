@@ -11,11 +11,14 @@ import android.os.Process;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.grentech.specialcar.common.unit.AlarmUnit;
 import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 import cn.com.grentech.specialcar.error.UnError;
 import cn.com.grentech.specialcar.service.ServiceAddr;
+import cn.com.grentech.specialcar.service.ServiceGPS;
 import lombok.Getter;
 
 import static android.R.attr.x;
@@ -36,7 +39,7 @@ public class SysApplication extends Application {
         super.onCreate();
         context=getApplicationContext();
         FileUnit.iniDir(context);
-        UnError unError=new UnError();
+        UnError unError=new UnError(context);
         StringUnit.println(tag,"SysApplication onCreate ******************************Process Id|"+ Process.myPid());
         try{
             StringUnit.println(tag, "MODEL|"+Build.MODEL);
@@ -90,7 +93,9 @@ public class SysApplication extends Application {
                 }
             }
         }
-        stopService(new Intent(this,ServiceAddr.class));
+        stopService(new Intent(this,ServiceGPS.class));
+        AlarmUnit.cancelAlarm();
+        WakeLockUnit.releaseWakeLock();
         StringUnit.println(tag,"application exit()    用户主动退出");
         System.exit(0);
     }

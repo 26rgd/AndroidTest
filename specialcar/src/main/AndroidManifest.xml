@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:name=".SysApplication"
@@ -52,7 +54,8 @@
         <activity android:name=".activity.HisOrderDetailActivity"></activity>
         <activity android:name=".activity.DriverInfoActivity"></activity>
         <activity android:name=".activity.EditPasswordActivity"></activity>
-
+        <activity android:name=".activity.AlarmiInfoActivity"
+            android:theme="@style/Theme.NoTitleTranslucent"></activity>
         <service android:name=".service.ServiceMoitor"></service>
         <service android:name=".service.ServiceGPS"></service>
         <service android:name=".service.ServiceAddr"></service>

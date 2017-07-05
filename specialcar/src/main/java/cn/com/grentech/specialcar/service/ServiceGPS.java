@@ -35,6 +35,7 @@ import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 import cn.com.grentech.specialcar.entity.GpsInfo;
 import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
@@ -62,8 +63,10 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private Boolean isFisrt = true;
     private Order info;
     private LoadLine loadLine;
-
-    private List<GpsInfo> gps = new ArrayList<GpsInfo>();
+    private GpsInfo lastAddr;
+    private int gpsCount=0;
+    private List<GpsInfo> uPList=new ArrayList<>();
+    private List<GpsInfo> gps = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -175,6 +178,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
 
     private void stopGps() {
         if (locationManager != null) {
+
             StringUnit.println(tag, "stopGps");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -183,6 +187,12 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             }
             locationManager.removeUpdates(this);
             locationManager = null;
+            try {
+                Intent intent = new Intent();
+                intent.setAction(MainBroadcastReceiver.action_Addr);
+                intent.putExtra(MainBroadcastReceiver.action_Addr_key, lastAddr);
+                sendBroadcast(intent);
+            }catch (Exception e){ErrorUnit.println(tag,e);}
         }
     }
 
@@ -239,6 +249,8 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         double angle = GpsFilter.gpsAngle(last, gi);
         gi.setSpeed((float) speed);
         gi.setAngle(angle);
+
+        lastAddr=gi;
         if (dis <= minDis || speed >= speedLimit) {
             // 超138Km 或者小于20米的点丢掉
         } else {
@@ -247,9 +259,13 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             StringUnit.println(tag,gi.toString());
             String datas=GsonUnit.toJson(gi);
             FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
-            HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
+           // HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
+            if(uPList==null)
+                uPList=new ArrayList<>();
+            uPList.add(gi);
+            upGps(info);
         }
-//        HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
+        sendAddr(lastAddr);
         double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
         Intent intent = new Intent();
         intent.setAction(MainBroadcastReceiver.action_GPS);
@@ -258,6 +274,34 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         sendBroadcast(intent);
     }
 
+    private void upGps(final Order o)
+    {
+        try {
+            if(uPList!=null&&uPList.size()>=20)
+            {
+                StringUnit.println(tag,"上报行车轨迹");
+                String data=Route.bulidListJson(o,uPList);
+                HttpRequestTask.upGps(null, data);
+                uPList.clear();
+            }
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+
+    }
+private void sendAddr(final GpsInfo obj)
+{
+    if(gpsCount>=120)
+    {
+        try {
+            StringUnit.println(tag,"开始上报司机位置");
+            gpsCount=0;
+            Intent intent = new Intent();
+            intent.setAction(MainBroadcastReceiver.action_Addr);
+            intent.putExtra(MainBroadcastReceiver.action_Addr_key, obj);
+            sendBroadcast(intent);
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+    }
+    gpsCount=gpsCount+1;
+}
 
     @Override
     public AbstractHandler getAbstratorHandler() {

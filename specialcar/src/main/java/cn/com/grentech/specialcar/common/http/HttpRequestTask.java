@@ -151,7 +151,7 @@ public class HttpRequestTask {
         httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
         httpRequestParam.paramMap.put("id", String.valueOf(id));
         httpRequestParam.paramMap.put("mileage", String.valueOf((int)mileage));
-        httpRequestParam.paramMap.put("bak", "");
+        httpRequestParam.paramMap.put("bak", "p1");
         httpRequestParam.paramMap.put("flag", String.valueOf(OrderStatus.PauseOrder.getValue()));
         httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
@@ -220,18 +220,35 @@ public class HttpRequestTask {
 
 //    http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.983424,116.322987&output=json&pois=1&ak=您的ak
 
+    public static void getAddr(AbstractBasicActivity abstractBasicActivity, double lat, double lng) {
+        //HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
+        HttpRequestParam httpRequestParam = new HttpRequestParam();
+        httpRequestParam.url = "http://api.map.baidu.com/geocoder/v2/?" ;
+        httpRequestParam.apiType = HttpRequestParam.ApiType.GetAddr;
+        httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
+        httpRequestParam.paramMap.put("coordtype", "gcj02ll");
+       // httpRequestParam.paramMap.put("callback", "renderReverse");
+        String location=String.valueOf(lat)+","+String.valueOf(lng);
+        httpRequestParam.paramMap.put("location", location);
+        httpRequestParam.paramMap.put("output", "json");
+     //   httpRequestParam.paramMap.put("pois", "1");
+        httpRequestParam.paramMap.put("ak", "DeIyUODYbDTmChNw4cuzy0sog8qz3DlI");
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
+        bulidDefaultTask(httpRequestParam);
+    }
+
     public static void getAddr(AbstractService abstractService, double lat, double lng) {
         //HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
         HttpRequestParam httpRequestParam = new HttpRequestParam();
         httpRequestParam.url = "http://api.map.baidu.com/geocoder/v2/?" ;
         httpRequestParam.apiType = HttpRequestParam.ApiType.GetAddr;
         httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
-        httpRequestParam.paramMap.put("coortype", "wgs84ll");
-       // httpRequestParam.paramMap.put("callback", "renderReverse");
+        httpRequestParam.paramMap.put("coordtype", "gcj02ll");
+        // httpRequestParam.paramMap.put("callback", "renderReverse");
         String location=String.valueOf(lat)+","+String.valueOf(lng);
         httpRequestParam.paramMap.put("location", location);
         httpRequestParam.paramMap.put("output", "json");
-     //   httpRequestParam.paramMap.put("pois", "1");
+        //   httpRequestParam.paramMap.put("pois", "1");
         httpRequestParam.paramMap.put("ak", "DeIyUODYbDTmChNw4cuzy0sog8qz3DlI");
         httpRequestParam.abstractService=abstractService;
         bulidDefaultTask(httpRequestParam);

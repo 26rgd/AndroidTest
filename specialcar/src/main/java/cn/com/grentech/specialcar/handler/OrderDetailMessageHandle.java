@@ -10,9 +10,11 @@ import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.activity.DriverInfoActivity;
 import cn.com.grentech.specialcar.activity.OrderDetailActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestParam;
+import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.ResponeInfo;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.entity.OrderStatus;
 import cn.com.grentech.specialcar.entity.UserAllMap;
 import cn.com.grentech.specialcar.service.ServiceGPS;
@@ -100,6 +102,13 @@ public class OrderDetailMessageHandle extends AbstractHandler {
                                 info = map.get("msg").toString();
                                 activity.showToast(info);
                             }
+                            break;
+
+                        case GetAddr:
+                            map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
+                            map= (Map) map.get("result");
+                            String add=map.get("formatted_address").toString()+map.get("sematic_description").toString();
+                            HttpRequestTask.upDriverLocation(null, LoginInfo.loginInfo.phone,add);
                             break;
                     }
                 }
