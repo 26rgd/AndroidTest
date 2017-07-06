@@ -121,7 +121,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     @Override
     protected void initData() {
 
-       // getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        // getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         registReceiver();
         abstratorHandler = new OrderDetailMessageHandle(this);
         orderDetailAdapter = new OrderDetailAdapter(this, null, R.layout.list_item_orderdetail);
@@ -199,7 +199,8 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                 break;
 
             case R.id.bt_order_finish:
-                StringUnit.println(tag,"click finish!!");
+                StringUnit.println(tag, "click finish!!");
+                showToastLength("正在结束订单请稍等.....");
                 LoadLine loadLine = readLoadLine(info);
                 Double d = loadLine.getTotalDistance();
                 HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
@@ -227,13 +228,10 @@ public class OrderDetailActivity extends AbstractBasicActivity {
 
     private void pause() {
         if (OrderStatus.PauseOrder.getValue() == this.orderDetailAdapter.getMflag()) {
-            StringUnit.println(tag,"click ReStart!!");
+            StringUnit.println(tag, "click ReStart!!");
             HttpRequestTask.orderContinue(this, info.getId());
-
         } else {
-//            LoadLine loadLine = readLoadLine(info);
-//            Double d=loadLine.getTotalDistance();
-            StringUnit.println(tag,"click Pause!!");
+            StringUnit.println(tag, "click Pause!!");
             HttpRequestTask.orderPause(this, info.getId(), this.orderDetailAdapter.getMileage());
         }
     }
@@ -285,12 +283,16 @@ public class OrderDetailActivity extends AbstractBasicActivity {
     }
 
     private LoadLine readLoadLine(Order o) {
-        LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+        LoadLine loadLine = null;
+        try {
+            loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+        }
         if (loadLine == null) {
             loadLine = new LoadLine(o);
             FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
         }
-
         return loadLine;
     }
 
@@ -299,73 +301,63 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
-                {
-                    StringUnit.println(tag,intent.getAction());
-                   // AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(),AlarmiInfoActivity.class);
-                    AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(), AlarmiInfoActivity.class,5*60*1000);
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    StringUnit.println(tag, intent.getAction());
+                    // AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(),AlarmiInfoActivity.class);
+                    AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(), AlarmiInfoActivity.class, 5 * 60 * 1000);
                     return;
                 }
-                if(intent.getAction().equals(Intent.ACTION_SCREEN_ON))
-                {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                     AlarmUnit.cancelAlarm();
-                    StringUnit.println(tag,intent.getAction());
+                    StringUnit.println(tag, intent.getAction());
                     return;
                 }
-                if(intent.getAction().equals(MainBroadcastReceiver.action_Addr))
-                {
+                if (intent.getAction().equals(MainBroadcastReceiver.action_Addr)) {
                     try {
-                        StringUnit.println(tag,intent.getAction());
-                        GpsInfo gpsInfo =(GpsInfo) intent.getExtras().getSerializable(MainBroadcastReceiver.action_Addr_key);
+                        StringUnit.println(tag, intent.getAction());
+                        GpsInfo gpsInfo = (GpsInfo) intent.getExtras().getSerializable(MainBroadcastReceiver.action_Addr_key);
                         if (gpsInfo != null) {
-                          //  CoordinateSystem.CoordGpsInfo cg=CoordinateSystem.GpsInfoToBaidu(gpsInfo.getLat(), gpsInfo.getLng());
+                            //  CoordinateSystem.CoordGpsInfo cg=CoordinateSystem.GpsInfoToBaidu(gpsInfo.getLat(), gpsInfo.getLng());
                             HttpRequestTask.getAddr(OrderDetailActivity.this, gpsInfo.getLat(), gpsInfo.getLng());
                         }
-                    }catch (Exception e){
-                        ErrorUnit.println(tag,e);}
+                    } catch (Exception e) {
+                        ErrorUnit.println(tag, e);
+                    }
                     return;
                 }
-                if(intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE"))
-                {
-                    ConnectivityManager conn=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo networkInfo=conn.getActiveNetworkInfo();
-                    if(networkInfo!=null&&networkInfo.isAvailable())
-                    {
-                        String name=networkInfo.getTypeName();
-                        if(networkInfo.getType()==ConnectivityManager.TYPE_WIFI)
-                        {
+                if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
+                    ConnectivityManager conn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = conn.getActiveNetworkInfo();
+                    if (networkInfo != null && networkInfo.isAvailable()) {
+                        String name = networkInfo.getTypeName();
+                        if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                   try {
-                                       Thread.sleep(3000);
-                                       NetworkUnit.ping();
-                                   }catch (Exception e){}
+                                    try {
+                                        Thread.sleep(3000);
+                                        NetworkUnit.ping();
+                                    } catch (Exception e) {
+                                    }
                                 }
                             }).start();
-                            StringUnit.println(tag,"WIFI网络|"+name);
-                            WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-                            WifiInfo wifiInfo=wifi.getConnectionInfo();
-                            StringUnit.println(tag,"WIFI名称|"+wifiInfo.getSSID()+wifi.getWifiState());
+                            StringUnit.println(tag, "WIFI网络|" + name);
+                            WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                            WifiInfo wifiInfo = wifi.getConnectionInfo();
+                            StringUnit.println(tag, "WIFI名称|" + wifiInfo.getSSID() + wifi.getWifiState());
 
-                        }else     if(networkInfo.getType()==ConnectivityManager.TYPE_ETHERNET)
-                        {
+                        } else if (networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET) {
 
-                            StringUnit.println(tag,"有线网络|"+name);
-                        }else     if(networkInfo.getType()==ConnectivityManager.TYPE_MOBILE)
-                        {
-                            StringUnit.println(tag,"3G或者4G网络|"+name);
-                        }
-                        else
-                        {
-                            StringUnit.println(tag,"其它网络|"+name+":"+networkInfo.getType());
+                            StringUnit.println(tag, "有线网络|" + name);
+                        } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                            StringUnit.println(tag, "3G或者4G网络|" + name);
+                        } else {
+                            StringUnit.println(tag, "其它网络|" + name + ":" + networkInfo.getType());
                         }
 
 
-                    }
-                    else
-                    {
-                        StringUnit.println(tag,"网络已经断开");
+                    } else {
+                        StringUnit.println(tag, "网络已经断开");
                     }
                     return;
                 }
@@ -379,13 +371,13 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             }
         };
         // 注册一个broadCastReceiver
-        IntentFilter intentFilter=new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MainBroadcastReceiver.action_GPS);
         intentFilter.addAction(MainBroadcastReceiver.action_Addr);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver, intentFilter);
 //        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
 //        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
     }

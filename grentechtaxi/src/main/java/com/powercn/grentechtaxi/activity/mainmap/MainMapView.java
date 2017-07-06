@@ -24,6 +24,7 @@ import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -60,6 +61,7 @@ import com.powercn.grentechtaxi.view.CircleImageView;
 
 import lombok.Getter;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.powercn.grentechtaxi.R.id.civ_mainmap_titlebar_account;
 import static com.powercn.grentechtaxi.common.unit.CoordinateSystem.gcj2wgs84;
 
@@ -221,15 +223,12 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
                 mLocationOption = new AMapLocationClientOption();
                 mLocationClient.setLocationListener(this);
                 mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-                mLocationOption.setInterval(30000);
+               // mLocationOption.setInterval(30000);
+                mLocationOption.setOnceLocation(true);
                 mLocationOption.setNeedAddress(true);
                 mLocationClient.setLocationOption(mLocationOption);
                 mLocationClient.startLocation();
                 AMapLocation aMapLocation = mLocationClient.getLastKnownLocation();
-//                aMapLocation = new AMapLocation("GPS");
-//                aMapLocation.setLatitude(22.543471);
-//                aMapLocation.setLongitude(113.941133);
-
                 this.onLocationChanged(aMapLocation);
             }
         } catch (Exception e) {
@@ -525,5 +524,21 @@ public class MainMapView extends MainChildView implements LocationSource, AMapLo
     public void removeLineRouter() {
         if (drivingRouteOverlay != null)
             drivingRouteOverlay.removeFromMap();
+    }
+
+    public void setMyPostion()
+    {
+        if(myLocation!=null)
+        {
+            try {
+                mListener.onLocationChanged(myLocation);// 显示系统小蓝点
+                LatLng latLng=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng,zoom)));
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }

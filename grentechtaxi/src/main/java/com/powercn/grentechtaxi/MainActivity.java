@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
@@ -98,7 +99,7 @@ public class MainActivity extends AbstractBasicActivity {
     public Bitmap upBitmap;
     public String cityCode = "0755";
     public String cityName = "深圳市";
-
+    public ImageView myPostion;
 
     public final static int otherCode = 0xFFFF;
     public final static int selectTime = 0xFFFE;
@@ -122,10 +123,12 @@ public class MainActivity extends AbstractBasicActivity {
     protected void initView() {
         mapView = (MapView) findViewById(R.id.map_mainmap_gaode);
         ViewUnit.setWindowStatusBarColor(this, R.color.MainMapTitleBackColor);
+        myPostion=(ImageView)findViewById(R.id.iv_mypostion);
     }
 
     @Override
     protected void bindListener() {
+        myPostion.setOnClickListener(this);
     }
 
     @Override
@@ -433,4 +436,13 @@ public class MainActivity extends AbstractBasicActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.iv_mypostion:
+                mainMapView.setMyPostion();
+                break;
+        }
+    }
 }

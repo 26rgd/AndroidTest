@@ -65,11 +65,18 @@ public class CallCarView extends MainChildView {
                 activity.destinationView.getView().setVisibility(View.VISIBLE);
                 break;
             case et_mainmap_taxi_depart:
-                LatLonPoint latLonPoint = new LatLonPoint(activity.mainMapView.myLocation.getLatitude(), activity.mainMapView.myLocation.getLongitude());
-                activity.departView.getEt_depart_search_edit().setText("");
-                activity.departView.getEt_depart_search_edit().clearFocus();
-                activity.departView.onSearchNear(latLonPoint);
-                activity.departView.getView().setVisibility(View.VISIBLE);
+                if(activity.mainMapView.myLocation!=null)
+                {
+                    LatLonPoint latLonPoint = new LatLonPoint(activity.mainMapView.myLocation.getLatitude(), activity.mainMapView.myLocation.getLongitude());
+                    activity.departView.getEt_depart_search_edit().setText("");
+                    activity.departView.getEt_depart_search_edit().clearFocus();
+                    activity.departView.onSearchNear(latLonPoint);
+                    activity.departView.getView().setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    activity.departView.getView().setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }

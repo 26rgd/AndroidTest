@@ -27,7 +27,7 @@ public class OrderListAdapter  extends AbstractAdapter {
         Order object=(Order)getItem(position);
         TextView tvLine1=(TextView)view.findViewById(R.id.tv_line1);
         TextView tvLine2=(TextView)view.findViewById(R.id.tv_line2);
-        tvLine1.setText(object.getFrom()+" -- "+object.getTo());
+        tvLine1.setText("订单"+object.getId()+"["+object.getFrom()+" -- "+object.getTo()+"]");
         tvLine2.setText(DateUnit.formatDate(object.getStartTime(),"yyyy-MM-dd HH:mm:ss"));
         return view;
     }

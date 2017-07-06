@@ -19,6 +19,7 @@ import cn.com.grentech.specialcar.entity.OrderStatus;
 import cn.com.grentech.specialcar.entity.UserAllMap;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 
+import static cn.com.grentech.specialcar.common.http.HttpRequestParam.ApiType.UPGps;
 import static cn.com.grentech.specialcar.common.http.HttpRequestParam.ApiType.orderPause;
 import static cn.com.grentech.specialcar.common.http.HttpRequestParam.ApiType.orderStart;
 import static cn.com.grentech.specialcar.common.unit.GsonUnit.toObject;
@@ -90,7 +91,18 @@ public class OrderDetailMessageHandle extends AbstractHandler {
                                 activity.showToast(info);
                             }
                             break;
+                        case UPGps:
+                            map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
+                            success = (Boolean) map.get("success");
+                            if (success) {
+                                //activity.showToast("补传成功");
+                                StringUnit.println(tag,"结束补传成功");
 
+                            } else {
+                                info = map.get("msg").toString();
+                                activity.showToastLength("补传失败,请去历史订单补传一次");
+                            }
+                            break;
                         case ReUPGps:
                             map = (Map) GsonUnit.toObject(responeInfo.getJson(), Map.class);
                             success = (Boolean) map.get("success");

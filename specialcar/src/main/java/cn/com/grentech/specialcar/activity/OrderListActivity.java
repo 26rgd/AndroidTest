@@ -57,7 +57,7 @@ public class OrderListActivity extends AbstractBasicActivity {
         abstratorHandler=new OrderListMessageHandler(this);
         orderListAdapter=new OrderListAdapter(this,null,R.layout.listview_item_nofinsh);
         listView.setAdapter(orderListAdapter);
-        HttpRequestTask.getOrderList(this, LoginInfo.loginInfo.phone,0,40);
+        HttpRequestTask.getOrderList(this, LoginInfo.loginInfo.phone,0,50);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

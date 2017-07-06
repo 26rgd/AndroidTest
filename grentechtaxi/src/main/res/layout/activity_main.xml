@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,7 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></com.amap.api.maps.MapView>
 
-<include layout="@layout/activity_mainmap"
+    <ImageView
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/icon_homing"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/iv_mypostion" />
+
+    <include layout="@layout/activity_mainmap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></include>
 
