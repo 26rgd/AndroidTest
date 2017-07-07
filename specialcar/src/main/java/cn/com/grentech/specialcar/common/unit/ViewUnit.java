@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
@@ -35,7 +36,7 @@ import cn.com.grentech.specialcar.R;
  */
 
 public class ViewUnit {
-
+    private static String tag = ViewUnit.class.getName();
     public static int getDisplayWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Point point = new Point();
@@ -208,4 +209,14 @@ public class ViewUnit {
         return calendar;
     }
 
+    public static int getVersionCode(Context context)
+    {
+        try {
+            PackageManager packageManager=context.getPackageManager();
+            PackageInfo packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            return packageInfo.versionCode;
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+
+        return Integer.MAX_VALUE;
+    }
 }

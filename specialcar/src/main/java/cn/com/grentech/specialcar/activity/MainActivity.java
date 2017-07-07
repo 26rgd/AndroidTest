@@ -1,12 +1,15 @@
 package cn.com.grentech.specialcar.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,13 +21,18 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.io.File;
+
 import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
+import cn.com.grentech.specialcar.abstraction.AbstractFileProviders;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.adapter.NotFinshAdapter;
 import cn.com.grentech.specialcar.adapter.PopupWindowAdapter;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.http.HttpUnit;
 import cn.com.grentech.specialcar.common.unit.ErrorUnit;
+import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.common.unit.ViewUnit;
@@ -136,6 +144,12 @@ public class MainActivity extends AbstractBasicActivity{
                         HttpRequestTask.logout(MainActivity.this);
                         jumpFinish(LoginActivity.class);
                         break;
+
+                    case Update:
+                        //installApks();
+                       downLoadApk();
+                        //loadApp();
+                        break;
                 }
                 popupWindow.dismiss();
             }
@@ -176,5 +190,68 @@ public class MainActivity extends AbstractBasicActivity{
         }catch (Exception e){
             ErrorUnit.println(tag,e);}
 
+    }
+
+    protected void downLoadApk() {
+        final ProgressDialog pd;    //进度条对话框
+        pd = new  ProgressDialog(this);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMessage("正在下载更新");
+        pd.setOnDismissListener(null);
+
+        pd.show();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    File file = FileUnit.getFileFromServer(HttpRequestTask.apkurl, pd);
+                    sleep(3000);
+                    installApk(file);
+                    pd.dismiss(); //结束掉进度条对话框
+                } catch (Exception e) {
+                    ErrorUnit.println(tag,e);
+                    pd.dismiss(); //结束掉进度条对话框
+                }
+            }}.start();
+    }
+
+    protected void installApk(File file) {
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
+        //Uri uriUpFile=Uri.fromFile(file);
+        //执行的数据类型
+        intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
+       // startActivity(intent);
+        startActivityForResult(intent,12);
+    }
+
+
+    private void loadApp()
+    {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(HttpRequestTask.apkurl);
+        intent.setData(content_url);
+        startActivity(intent);//打开浏览器
+       //System.exit(0);//退出当前APP
+    }
+
+    protected void installApks() {
+        String apksavepath= Environment.getExternalStorageDirectory().getAbsolutePath();
+        File file = new File(apksavepath, "updata.apk");
+        if(!file.exists())
+            StringUnit.println(tag,"file not exists");
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
+        //执行的数据类型
+        intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
+       // startActivity(intent);
+        startActivityForResult(intent,12);
     }
 }

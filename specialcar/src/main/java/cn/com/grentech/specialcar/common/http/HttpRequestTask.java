@@ -32,6 +32,7 @@ public class HttpRequestTask {
   // private static String ip="120.77.243.254";
     private static String ip="taxi.powercn.com";
     public static String url = "http://"+ip+"/grentechZC/";
+    public static String apkurl = "http://"+ip+"/apks/1.apk";
     public static String webSocketurl="ws://"+ip+"/taxi/api/webSocketServer";
 
     public final static Executor executor = Executors.newFixedThreadPool(3);

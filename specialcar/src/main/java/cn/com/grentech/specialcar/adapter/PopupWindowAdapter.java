@@ -28,6 +28,7 @@ public class PopupWindowAdapter extends AbstractAdapter {
        // this.data.add(PopuWindowInfo.PayOff);
        // this.data.add(PopuWindowInfo.Service);
         this.data.add(PopuWindowInfo.Password);
+        this.data.add(PopuWindowInfo.Update);
         this.data.add(PopuWindowInfo.LoginOut);
         this.notifyDataSetChanged();
     }
@@ -51,7 +52,8 @@ public class PopupWindowAdapter extends AbstractAdapter {
         Order("历史行程",R.drawable.icon_trip_mine, 1),
         Service("客服",R.drawable.icon_service_mine,2),
         Password("修改密码",R.drawable.icon_set_mine,3),
-        LoginOut("退出登录",R.drawable.icon_payment_mine,4);
+        LoginOut("退出登录",R.drawable.icon_payment_mine,4),
+        Update("检查更新",R.drawable.icon_payment_mine,5);
         String name;
         int iconRes;
         int index;
