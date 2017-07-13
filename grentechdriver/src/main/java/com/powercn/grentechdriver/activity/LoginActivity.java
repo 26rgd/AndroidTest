@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.powercn.grentechdriver.R;
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
+import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.entity.LoginInfo;
 import com.powercn.grentechdriver.handle.LoginMessageHandler;
@@ -29,7 +31,7 @@ public class LoginActivity extends AbstractBasicActivity {
     private Button bt_login_submit;
 
     public String deviceuuid;
-    private static LoginMessageHandler loginMessageHandler;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState,R.layout.activity_loginnew);
@@ -53,9 +55,14 @@ public class LoginActivity extends AbstractBasicActivity {
 
     @Override
     protected void initData() {
-        loginMessageHandler = new LoginMessageHandler(this);
+
         deviceuuid = LoginInfo.getUuid(this);
 
+    }
+
+    @Override
+    public AbstratorHandler getAbstratorHandler() {
+        return AbstratorHandler.getInstance();
     }
 
     @Override
@@ -76,16 +83,5 @@ public class LoginActivity extends AbstractBasicActivity {
 
     }
 
-    public static void sendHandleMessage(String key, String content, Object object) {
-        try {
-            Bundle bundle = new Bundle();
-            bundle.putString(key, content);
-            Message msg = new Message();
-            msg.what = 0;
-            msg.setData(bundle);
-            msg.obj = object;
-            loginMessageHandler.sendMessage(msg);
-        } catch (Exception e) {
-        }
-    }
+
 }

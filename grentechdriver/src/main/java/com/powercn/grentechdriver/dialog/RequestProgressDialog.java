@@ -3,12 +3,14 @@ package com.powercn.grentechdriver.dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 
 /**
  * Created by Administrator on 2017/4/11.
  */
 public class RequestProgressDialog extends ProgressDialog {
+    private String tag=this.getClass().getName();
     private boolean isRun=false;
     private int timeOut = 15 * 1000;
 
@@ -34,7 +36,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-            StringUnit.println("RequestProgressDialog show error");
+            ErrorUnit.println(tag,e);
         }
 
 
@@ -52,7 +54,7 @@ public class RequestProgressDialog extends ProgressDialog {
             init();
         }catch (Exception e)
         {
-            StringUnit.println("RequestProgressDialog show error");
+            ErrorUnit.println(tag,e);
         }
 
 
@@ -85,7 +87,7 @@ public class RequestProgressDialog extends ProgressDialog {
                 } catch (Exception e) {
                 }finally {
                     hide();
-                    StringUnit.println("dialog thread end hide");
+                    StringUnit.println(tag,"dialog thread end hide");
                 }
 
             }

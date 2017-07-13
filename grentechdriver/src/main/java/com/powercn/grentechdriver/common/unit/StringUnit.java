@@ -1,7 +1,13 @@
 package com.powercn.grentechdriver.common.unit;
 
+import android.content.Context;
+
+import com.powercn.grentechdriver.SysApplication;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -37,10 +43,14 @@ public class StringUnit {
         return result;
     }
 
-    public static void println(String s) {
-        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  " + s);
+    public static void println(String className,String s) {
+        String data=DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+className+" | " + s+"\r\n";
+        System.out.println(data);
+        FileUnit.writeAppLogFile(SysApplication.getInstance().getContext(),"log.txt",data, Context.MODE_APPEND);
     }
-
+//    public static void println(  String s) {
+//        System.out.println(DateUnit.formatDate(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "  "+" | " + s);
+//    }
     /**
      * 字符串补齐
      * <p>
@@ -73,4 +83,15 @@ public class StringUnit {
             return true;
         return false;
     }
+
+
+    public static String getFileName(String urlpath) {
+        String filename = "";
+        if (!StringUnit.isEmpty(urlpath)) {
+            int i = urlpath.lastIndexOf("/") + 1;
+            filename = urlpath.substring(i);
+        }
+        return filename;
+    }
+
 }

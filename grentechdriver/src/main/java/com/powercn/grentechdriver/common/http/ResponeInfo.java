@@ -1,5 +1,9 @@
 package com.powercn.grentechdriver.common.http;
 
+
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
+import com.powercn.grentechdriver.abstration.AbstractService;
+
 /**
  * Created by Administrator on 2017/3/16.
  */
@@ -10,6 +14,8 @@ public class ResponeInfo {
     private String json;
     private Object object;
     private String url;
+    public AbstractBasicActivity abstractBasicActivity;
+    public AbstractService abstractService;
 
     public int getResult() {
         return result;

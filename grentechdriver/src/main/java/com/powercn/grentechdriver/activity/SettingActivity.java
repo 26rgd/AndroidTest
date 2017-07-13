@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.powercn.grentechdriver.R;
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
+import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.adapter.chlid.SettingAdpter;
 import com.powercn.grentechdriver.entity.LoginInfo;
 
@@ -22,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.powercn.grentechdriver.R.id.iv_title_back;
-import static com.powercn.grentechdriver.R.id.tv_title_back_hint;
 
 /**
  * Created by Administrator on 2017/5/31.
@@ -96,5 +97,10 @@ public class SettingActivity extends AbstractBasicActivity {
             finish();
         }
         return false;
+    }
+
+    @Override
+    public AbstratorHandler getAbstratorHandler() {
+        return null;
     }
 }

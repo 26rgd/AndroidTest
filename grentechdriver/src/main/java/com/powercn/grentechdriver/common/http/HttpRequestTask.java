@@ -23,14 +23,6 @@ public class HttpRequestTask {
     //public static String url = "http://192.168.13.41:8080/taxi/app/";
     public final static Executor executor = Executors.newFixedThreadPool(3);
 
-    public static void text(String phone) {
-        HttpRequestParam httpRequestConfig = new HttpRequestParam();
-        httpRequestConfig.url = url + "passenger/getCode";
-        httpRequestConfig.apiType = HttpRequestParam.ApiType.SendSmsCrc;
-        httpRequestConfig.paramMap.put("phone", phone);
-        bulidDefaultTask(httpRequestConfig);
-        StringUnit.println("getDeviceOkList");
-    }
 
     public static void getSmsCrc(String phone) {
         //{"status":"200","token":6AFB3E6A177D4BF145B8B355BAA4B82F"vcode":485721}
@@ -73,7 +65,6 @@ public class HttpRequestTask {
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("order", GsonUnit.toJson(callOrder));
         bulidDefaultTask(httpRequestParam);
-        StringUnit.println( GsonUnit.toJson(callOrder));
         //cancleOrder(callOrder.getPhone());
     }
 
@@ -104,7 +95,6 @@ public class HttpRequestTask {
     }
 
     public static void saveUserInfo(String passengerInfo) {
-        StringUnit.println(passengerInfo);
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/savePassenger", HttpRequestParam.ApiType.SaveUserInfo);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("passengerInfo", passengerInfo);
@@ -170,7 +160,6 @@ public class HttpRequestTask {
     }
 
     public static ResponeInfo executeHttp(HttpRequestParam... params) {
-        StringUnit.println("executeHttp");
         ResponeInfo responeInfo = null;
         HttpRequestParam param = params[0];
         HttpUnit httpUnit = new HttpUnit(param.url, null);

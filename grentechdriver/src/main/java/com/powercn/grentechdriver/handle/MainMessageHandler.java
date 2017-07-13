@@ -4,11 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
-import com.powercn.grentechdriver.MainActivity;
+import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.activity.LoginActivity;
 import com.powercn.grentechdriver.common.http.HttpRequestParam;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.common.http.ResponeInfo;
+import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.GsonUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.entity.LoginInfo;
@@ -28,6 +29,7 @@ import static com.powercn.grentechdriver.common.unit.GsonUnit.toObject;
  */
 
 public class MainMessageHandler extends Handler {
+    private String tag=this.getClass().getName();
     WeakReference<MainActivity> mActivity;
 
     public MainMessageHandler(MainActivity activity) {
@@ -127,7 +129,7 @@ public class MainMessageHandler extends Handler {
             }
             super.handleMessage(msg);
         } catch (Exception e) {
-            StringUnit.println("MainhandleMessage Error");
+            ErrorUnit.println(tag,e);
         }
     }
 

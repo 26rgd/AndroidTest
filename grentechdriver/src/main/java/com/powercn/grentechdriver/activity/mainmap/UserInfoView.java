@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.powercn.grentechdriver.MainActivity;
+import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.adapter.AbstractAdpter;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
@@ -31,10 +31,6 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.powercn.grentechdriver.R.id.iv_userinfo_back;
-import static com.powercn.grentechdriver.R.id.tv_select_camera;
-import static com.powercn.grentechdriver.R.id.tv_select_gallery;
-import static com.powercn.grentechdriver.R.id.tv_userinfo_sub;
 import static com.powercn.grentechdriver.activity.mainmap.UserInfoView.UserInfoItem.INFO_ICON;
 
 /**
@@ -95,7 +91,6 @@ public class UserInfoView extends AbstractChildView {
                 break;
             case R.id.tv_userinfo_sub:
                 for (UserInfoItem infoItem : UserInfoItem.values()) {
-                    StringUnit.println(infoItem.getName() + "|" + infoItem.getValue());
                 }
                 saveUserInfo();
                 activity.jumpMianMapView(this);
@@ -120,7 +115,7 @@ public class UserInfoView extends AbstractChildView {
         responseUerInfo.setSex(sex);
         responseUerInfo.setIndustry(UserInfoItem.INFO_JOB.getValue());
         responseUerInfo.setSign(UserInfoItem.INFO_MARK.getValue());
-        StringUnit.println(GsonUnit.toJson(responseUerInfo));
+
         HttpRequestTask.saveUserInfo(GsonUnit.toJson(responseUerInfo));
 
     }

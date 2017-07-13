@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import com.powercn.grentechdriver.MainActivity;
+import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.common.unit.DateUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
@@ -13,10 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import lombok.Getter;
-
-import static com.powercn.grentechdriver.R.id.numberPicker0;
-import static com.powercn.grentechdriver.R.id.numberPicker1;
-import static com.powercn.grentechdriver.R.id.numberPicker2;
 
 /**
  * Created by Administrator on 2017/5/12.

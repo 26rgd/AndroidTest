@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
@@ -43,7 +44,7 @@ import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
-public class MainActivity extends AbstractBasicActivity{
+public class MainActivity extends AbstractBasicActivity {
     private static AbstractHandler abstratorHandler = null;
     private ListView listView;
     private ImageView ivBack;
@@ -147,7 +148,8 @@ public class MainActivity extends AbstractBasicActivity{
 
                     case Update:
                         //installApks();
-                       downLoadApk();
+                        showToast(ViewUnit.getVersionName(MainActivity.this.getApplicationContext())+"");
+                        downLoadApk();
                         //loadApp();
                         break;
                 }
@@ -181,26 +183,26 @@ public class MainActivity extends AbstractBasicActivity{
     }
 
 
-    private void whileBook()
-    {
+    private void whileBook() {
         try {
             Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
             intent.setData(Uri.parse("package:cn.com.grentech.specialcar"));
             startActivity(intent);
-        }catch (Exception e){
-            ErrorUnit.println(tag,e);}
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+        }
 
     }
 
     protected void downLoadApk() {
         final ProgressDialog pd;    //进度条对话框
-        pd = new  ProgressDialog(this);
+        pd = new ProgressDialog(this);
         pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         pd.setMessage("正在下载更新");
         pd.setOnDismissListener(null);
 
         pd.show();
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -209,41 +211,44 @@ public class MainActivity extends AbstractBasicActivity{
                     installApk(file);
                     pd.dismiss(); //结束掉进度条对话框
                 } catch (Exception e) {
-                    ErrorUnit.println(tag,e);
+                    ErrorUnit.println(tag, e);
                     pd.dismiss(); //结束掉进度条对话框
                 }
-            }}.start();
+            }
+        }.start();
     }
 
     protected void installApk(File file) {
         Intent intent = new Intent();
         //执行动作
         intent.setAction(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        Uri uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
+        Uri uriUpFile;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uriUpFile = Uri.fromFile(file);
+        }
         //Uri uriUpFile=Uri.fromFile(file);
         //执行的数据类型
         intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
-       // startActivity(intent);
-        startActivityForResult(intent,12);
+        startActivityForResult(intent, 12);
     }
 
 
-    private void loadApp()
-    {
+    private void loadApp() {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         Uri content_url = Uri.parse(HttpRequestTask.apkurl);
         intent.setData(content_url);
         startActivity(intent);//打开浏览器
-       //System.exit(0);//退出当前APP
     }
 
     protected void installApks() {
-        String apksavepath= Environment.getExternalStorageDirectory().getAbsolutePath();
+        String apksavepath = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file = new File(apksavepath, "updata.apk");
-        if(!file.exists())
-            StringUnit.println(tag,"file not exists");
+        if (!file.exists())
+            StringUnit.println(tag, "file not exists");
         Intent intent = new Intent();
         //执行动作
         intent.setAction(Intent.ACTION_VIEW);
@@ -251,7 +256,7 @@ public class MainActivity extends AbstractBasicActivity{
         Uri uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
         //执行的数据类型
         intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
-       // startActivity(intent);
-        startActivityForResult(intent,12);
+        // startActivity(intent);
+        startActivityForResult(intent, 12);
     }
 }

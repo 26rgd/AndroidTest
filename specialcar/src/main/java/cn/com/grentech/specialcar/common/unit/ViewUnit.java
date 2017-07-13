@@ -219,4 +219,15 @@ public class ViewUnit {
 
         return Integer.MAX_VALUE;
     }
+
+    public static String getVersionName(Context context)
+    {
+        try {
+            PackageManager packageManager=context.getPackageManager();
+            PackageInfo packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            return packageInfo.versionName;
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+
+        return "1.1";
+    }
 }

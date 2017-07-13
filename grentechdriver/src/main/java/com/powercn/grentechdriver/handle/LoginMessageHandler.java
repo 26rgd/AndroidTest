@@ -3,16 +3,20 @@ package com.powercn.grentechdriver.handle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.powercn.grentechdriver.abstration.AbstratorHandler;
+import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.activity.LoginActivity;
 import com.powercn.grentechdriver.common.http.HttpRequestParam;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.common.http.ResponeInfo;
+import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.entity.LoginInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
+import static android.R.attr.tag;
 import static com.autonavi.ae.search.log.GLog.filename;
 import static com.powercn.grentechdriver.common.unit.GsonUnit.toObject;
 
@@ -21,6 +25,7 @@ import static com.powercn.grentechdriver.common.unit.GsonUnit.toObject;
  */
 
 public class LoginMessageHandler extends Handler {
+    private String tag=this.getClass().getName();
     WeakReference<LoginActivity> mActivity;
     public LoginMessageHandler(LoginActivity activity) {
         mActivity = new WeakReference(activity);
@@ -63,7 +68,7 @@ public class LoginMessageHandler extends Handler {
                                     HttpRequestTask.loadFile(filepath);
                                 }
 
-                                activity.finish();
+                                activity.jumpFinish(MainActivity.class);
                                 HttpRequestTask.getUserInfo(loginInfo.phone);
                             } else {
                                 activity.showToast(info);
@@ -75,7 +80,7 @@ public class LoginMessageHandler extends Handler {
             }
             super.handleMessage(msg);
         } catch (Exception e) {
-            StringUnit.println("LoginhandleMessage Error");
+            ErrorUnit.println(tag,e);
         }
     }
 

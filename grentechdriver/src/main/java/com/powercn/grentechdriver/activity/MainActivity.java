@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver;
+package com.powercn.grentechdriver.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +12,9 @@ import android.view.View;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.powercn.grentechdriver.activity.AbstractBasicActivity;
+import com.powercn.grentechdriver.R;
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
+import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
 import com.powercn.grentechdriver.activity.mainmap.DeteTimeView;
 import com.powercn.grentechdriver.activity.mainmap.UserInfoView;
@@ -23,7 +25,6 @@ import com.powercn.grentechdriver.common.unit.ViewUnit;
 import com.powercn.grentechdriver.common.websocket.WebSocketTask;
 import com.powercn.grentechdriver.entity.AddressInfo;
 import com.powercn.grentechdriver.entity.LoginInfo;
-import com.powercn.grentechdriver.entity.OrderInfo;
 import com.powercn.grentechdriver.entity.ResponseUerInfo;
 import com.powercn.grentechdriver.handle.MainMessageHandler;
 
@@ -120,7 +121,7 @@ public class MainActivity extends AbstractBasicActivity {
         if (!file.exists()) {
             file.mkdirs();
         }
-        StringUnit.println(headpath);
+        StringUnit.println(tag,headpath);
         mainMessageHandler = new MainMessageHandler(this);
         deviceuuid = LoginInfo.getUuid(this);
         home = AddressInfo.readHome(this);
@@ -157,7 +158,7 @@ public class MainActivity extends AbstractBasicActivity {
                     break;
                 case otherCode:
                     loginInfo = LoginInfo.readUserLoginInfo(this);
-                    StringUnit.println(GsonUnit.toJson(loginInfo));
+                    StringUnit.println(tag,GsonUnit.toJson(loginInfo));
                     break;
             }
         } catch (Exception e) {
@@ -215,17 +216,9 @@ public class MainActivity extends AbstractBasicActivity {
     }
 
 
-    public static void sendHandleMessage(String key, String content, Object object) {
-        try {
-            Bundle bundle = new Bundle();
-            bundle.putString(key, content);
-            Message msg = new Message();
-            msg.what = 0;
-            msg.setData(bundle);
-            msg.obj = object;
-            mainMessageHandler.sendMessage(msg);
-        } catch (Exception e) {
-        }
+    @Override
+    public AbstratorHandler getAbstratorHandler() {
+        return AbstratorHandler.getInstance();
     }
 
 

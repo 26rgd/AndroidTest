@@ -2,7 +2,7 @@ package com.powercn.grentechdriver.activity.mainmap;
 
 import android.view.View;
 
-import com.powercn.grentechdriver.MainActivity;
+import com.powercn.grentechdriver.activity.MainActivity;
 
 /**
  * Created by Administrator on 2017/5/9.

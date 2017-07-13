@@ -1,5 +1,6 @@
 package com.powercn.grentechdriver.common.websocket;
 
+import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 
 import org.java_websocket.client.WebSocketClient;
@@ -14,6 +15,7 @@ import java.net.URI;
  */
 
 public class WebSocketTask extends WebSocketClient {
+    private String tag =this.getClass().getName();
 
 
     public WebSocketTask(URI serverUri , Draft draft ) {
@@ -22,23 +24,23 @@ public class WebSocketTask extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        StringUnit.println( "开流--opened connection" );
+        StringUnit.println( tag,"开流--opened connection" );
 
     }
 
     @Override
     public void onMessage(String s) {
-        StringUnit.println(s);
+        StringUnit.println(tag,s);
     }
 
     @Override
     public void onClose(int i, String s, boolean b) {
 
-        StringUnit.println( "关流--Connection closed by "  );
+        StringUnit.println( tag,"关流--Connection closed by "  );
     }
 
     @Override
     public void onError(Exception e) {
-        e.printStackTrace();
+        ErrorUnit.println(tag,e);
     }
 }
