@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
-    <com.amap.api.maps.MapView
-        android:id="@+id/map_mainmap_gaode"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.amap.api.maps.MapView>
+    android:focusableInTouchMode="true"
+    android:background="@color/WHITE">
 
-
-
-<!--    <include layout="@layout/activity_loginnew"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></include>-->
-
-
-    <include layout="@layout/activity_datetime"
-         ></include>
-
-
-
-
-
-    <include layout="@layout/activity_userinfo"
-        android:visibility="gone"></include>
-
-
-
-
-
-
-
+<FrameLayout
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WHITE">
+<include layout="@layout/main_titlebar"></include>
 </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="start"
+        android:gravity="center"
+        android:background="@color/MainMapTitleBackColor">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+            <com.powercn.grentechdriver.view.CircleImageView
+                android:id="@+id/popuwindow_icon"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@drawable/head33"/>
+            <TextView
+                android:text="13800138000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop"
+                android:gravity="center"
+                android:textSize="@dimen/textSizeCallCar"
+                android:textColor="@color/WHITE"
+                android:id="@+id/tv_mainmap_popupwindows_name" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lv_leftmenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"/>
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>

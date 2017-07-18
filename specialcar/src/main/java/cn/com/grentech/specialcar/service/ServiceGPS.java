@@ -231,7 +231,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             return;
         }
 
-        StringUnit.println(tag,location.getLatitude() + "|" + location.getLongitude()+"|" + DateUnit.formatDate(location.getTime(),"yyyy-MM-dd HH:mm:ss"));
+        StringUnit.println(tag,location.getLatitude() + "|" + location.getLongitude()+"|" +location.getAccuracy()+"|"+ DateUnit.formatDate(location.getTime(),"yyyy-MM-dd HH:mm:ss"));
 
         GpsInfo last = null;
         GpsInfo gi = bulidGpsInfo(location);
@@ -249,19 +249,20 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         double angle = GpsFilter.gpsAngle(last, gi);
         gi.setSpeed((float) speed);
         gi.setAngle(angle);
-
         lastAddr=gi;
+        if(uPList==null)
+            uPList=new ArrayList<>();
         if (dis <= minDis || speed >= speedLimit) {
-            // 超138Km 或者小于20米的点丢掉
+            // 超138Km 或者小于20米的点丢掉,以下代码表示是否上传点.但实际是不参与距离计算的.主要是想后期进行精度过滤
+//            String datas=GsonUnit.toJson(gi);
+//            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
+//            uPList.add(gi);
         } else {
             gps.add(gi);
             saveLoadLine(info, gi);
             StringUnit.println(tag,gi.toString());
             String datas=GsonUnit.toJson(gi);
             FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
-           // HttpRequestTask.upGps(null, Route.bulidListJson(RouteGpsInfo.bulid( info.getId(), gi)));
-            if(uPList==null)
-                uPList=new ArrayList<>();
             uPList.add(gi);
             upGps(info);
         }
@@ -277,7 +278,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private void upGps(final Order o)
     {
         try {
-            if(uPList!=null&&uPList.size()>=20)
+            if(uPList!=null&&uPList.size()>=10)
             {
                 StringUnit.println(tag,"上报行车轨迹");
                 String data=Route.bulidListJson(o,uPList);

@@ -17,30 +17,24 @@ import java.util.Map;
 public class AbstratorHandler extends Handler {
 
     protected String tag = this.getClass().getName();
-    private static AbstratorHandler handler;
+
     private Map<String, WeakReference<Object>> map;
 
-    private AbstratorHandler() {
+    protected AbstratorHandler() {
         map = new HashMap<>();
     }
 
-    public static AbstratorHandler getInstance() {
-        if (handler == null)
-            handler = new AbstratorHandler();
-        return handler;
-    }
+
 
     public void addObejct(String key, Object object) {
         WeakReference<Object> mObject = new WeakReference(object);
         map.put(key, mObject);
     }
 
-    @Override
-    public void handleMessage(Message msg) {
-        if (msg.obj != null && msg.obj instanceof ResponeInfo)
-        {
-            ResponeInfo responeInfo = (ResponeInfo) msg.obj;
-            HttpRequestParam.ApiType apiType = responeInfo.getApiType();
-        }
+    public Object getByKey(String key)
+    {
+        return map.get(key);
     }
+
+
 }

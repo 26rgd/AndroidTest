@@ -1,5 +1,7 @@
 package com.powercn.grentechdriver.common.http;
 
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ public class HttpRequestParam {
     public Map<String,String> paramMap=new HashMap<>();
     public String url;
     public UrlParams urlParams;
+    public AbstractBasicActivity abstractBasicActivity;
 
     public void addParams(String key, String value) {
         this.urlParams.addParams(key, value);

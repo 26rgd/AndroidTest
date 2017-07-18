@@ -9,4 +9,6 @@
 
     <string name="setmyhome">设置我的家的地址</string>
     <string name="setmycompany">设置我的公司地址</string>
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
 </resources>

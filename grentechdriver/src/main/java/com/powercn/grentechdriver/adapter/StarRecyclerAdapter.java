@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver.adapter.chlid;
+package com.powercn.grentechdriver.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.powercn.grentechdriver.R;
-import com.powercn.grentechdriver.adapter.AbstractRecyclerAdapter;
+import com.powercn.grentechdriver.abstration.AbstractRecyclerAdapter;
 
 import java.util.List;
 

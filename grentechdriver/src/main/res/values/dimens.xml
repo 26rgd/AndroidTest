@@ -34,15 +34,16 @@
     <dimen name="ImageSizeTrip24px">24dp</dimen>
     <dimen name="ImageSizeTrip36px">36dp</dimen>
     <dimen name="ImageSizeTrip40px">40dp</dimen>
-    <dimen name="ImageHeadLarge">90dp</dimen>
+    <dimen name="ImageHeadLarge">80dp</dimen>
     <dimen name="ImageHeadMidle">60dp</dimen>
     <dimen name="ImageHeadSmall">43dp</dimen>
     <dimen name="ItemHeight">45dp</dimen>
     <dimen name="shapeRadius">10dp</dimen>
-    <dimen name="shapeStroke">1dp</dimen>
+    <dimen name="shapeStroke">1px</dimen>
 
     <dimen name="textViewDefaultHeight">45dp</dimen>
+    <dimen name="editHeight">55dp</dimen>
     <dimen name="searchTextHeight">40dp</dimen>
     <dimen name="listVewItemHeight">45dp</dimen>
-
+    <dimen name="LinearHeight">55dp</dimen>
 </resources>

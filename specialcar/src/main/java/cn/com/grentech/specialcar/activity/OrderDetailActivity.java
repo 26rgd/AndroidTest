@@ -304,7 +304,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                 if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                     StringUnit.println(tag, intent.getAction());
                     // AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(),AlarmiInfoActivity.class);
-                    AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(), AlarmiInfoActivity.class, 5 * 60 * 1000);
+                    AlarmUnit.startAlarm(OrderDetailActivity.this.getApplicationContext(), AlarmiInfoActivity.class, 4 * 60 * 1000);
                     return;
                 }
                 if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {

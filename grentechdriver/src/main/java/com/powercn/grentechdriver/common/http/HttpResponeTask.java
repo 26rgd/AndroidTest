@@ -18,18 +18,9 @@ public class HttpResponeTask {
 
     public static ResponeInfo onPostHttp(ResponeInfo responeInfo) {
         StringUnit.println(tag, responeInfo.getJson());
-        if (   (responeInfo.getJson().contains("登录") && responeInfo.getJson().contains("false") ) || responeInfo.getJson().contains("sessionout") ) {
-            try {
-//                StringUnit.println(tag, "启动LoginService");
-//                Context context = SysApplication.getInstance().getContext();
-//                HttpUnit.sessionId = null;
-//                Intent intent = new Intent(context, ServiceLogin.class);
-//                context.startService(intent);
-            } catch (Exception e) {
-                ErrorUnit.println(tag, e);
-            }
-            return responeInfo;
-        }
+//        if (   (responeInfo.getJson().contains("登录") && responeInfo.getJson().contains("false") ) || responeInfo.getJson().contains("sessionout") ) {
+//            return responeInfo;
+//        }
         try {
             if (responeInfo.abstractBasicActivity != null)
                 responeInfo.abstractBasicActivity.sendHandleMessage("data", responeInfo.getJson(), responeInfo);

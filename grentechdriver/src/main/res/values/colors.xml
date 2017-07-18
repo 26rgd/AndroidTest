@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainbackcolor">#FFFFFF</color>
+    <color name="mainbackcolor">#F3F3F3</color>
     <color name="maintitlebackcolor">#D9D9D9</color>
 
     <color name="MainMapTitleBackColor">#68B0F1</color>
@@ -39,7 +39,7 @@
 
 
     <color name="listViewSeparatorColor">#cccccc</color>
-    <color name="BLACK">#FF000000</color>
+    <color name="BLACK">#000000</color>
     <color name="DKGRAY">#FF444444</color>
     <color name="GRAY">#FF888888</color>
     <color name="LTGRAY">#FFCCCCCC</color>

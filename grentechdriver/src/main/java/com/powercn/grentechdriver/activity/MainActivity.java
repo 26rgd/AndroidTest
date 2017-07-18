@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ListView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
@@ -18,7 +23,9 @@ import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
 import com.powercn.grentechdriver.activity.mainmap.DeteTimeView;
 import com.powercn.grentechdriver.activity.mainmap.UserInfoView;
+import com.powercn.grentechdriver.adapter.PopupWindowAdapter;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
+import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.GsonUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.common.unit.ViewUnit;
@@ -26,7 +33,9 @@ import com.powercn.grentechdriver.common.websocket.WebSocketTask;
 import com.powercn.grentechdriver.entity.AddressInfo;
 import com.powercn.grentechdriver.entity.LoginInfo;
 import com.powercn.grentechdriver.entity.ResponseUerInfo;
+import com.powercn.grentechdriver.handle.GlobalHandler;
 import com.powercn.grentechdriver.handle.MainMessageHandler;
+import com.powercn.grentechdriver.view.CircleImageView;
 
 import org.java_websocket.drafts.Draft_17;
 
@@ -34,6 +43,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.List;
 
 
 /**
@@ -41,95 +51,68 @@ import java.net.URI;
  */
 
 public class MainActivity extends AbstractBasicActivity {
-    private MapView mapView = null;
-    private AMap aMap = null;
-
-    public DeteTimeView deteTimeView;
 
     public UserInfoView userInfoView;
 
-
+    private DrawerLayout drawerLayout;
 
     public String deviceuuid;
     public LoginInfo loginInfo;
-    public AddressInfo home;
-    public AddressInfo company;
+
     public ResponseUerInfo responseUerInfo = new ResponseUerInfo();
-    public static MainMessageHandler mainMessageHandler = null;
-
-    public static String phone = "13800138000";
-
     public String headpath = "";
     public String tempfile = "temp.jpg";
     public String tempShootfile = "tempshoot.jpg";
     public String upfile = "tempup.jpg";
     public Bitmap upBitmap;
-    public String cityCode = "0755";
-    public String cityName = "深圳市";
+    private CircleImageView circleImageView;
+    private ListView leftMenu;
+    private PopupWindowAdapter leftAdapter;
 
-    public final static int otherCode = 0xFFFF;
     WebSocketTask c = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_main);
-        onOpen();
-        sendWebSocket("");
         autoLogin();
-
-
-    }
-    private void onOpen() {
-        try {
-            // WebSocketTask c = new WebSocketTask( new URI( "ws://192.168.5.42:8080/grentechdriverWx/webSocketServer" ), new Draft_17() );
-            c = new WebSocketTask(new URI("ws://192.168.5.25/grentechTaxiWx/webSocketServer"), new Draft_17());
-            c.connectBlocking();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    private void sendWebSocket(String msg) {
-        try {
-            c.send("13510197040");
-            c.send("测试--handshake");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     private void autoLogin() {
         loginInfo = LoginInfo.readUserLoginInfo(this);
         if (loginInfo.doLoginSuccess) {
-            HttpRequestTask.loginByUuid(loginInfo.phone, deviceuuid);
+            HttpRequestTask.loginByUuid(this,loginInfo.phone, deviceuuid);
         }
     }
 
     @Override
     protected void initView() {
-        mapView = (MapView) findViewById(R.id.map_mainmap_gaode);
         ViewUnit.setWindowStatusBarColor(this, R.color.MainMapTitleBackColor);
+        circleImageView = (CircleImageView) findViewById(R.id.civ_mainmap_titlebar_account);
+        leftMenu=(ListView)findViewById(R.id.lv_leftmenu);
     }
 
     @Override
     protected void bindListener() {
+        circleImageView.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
+        initDrawer();
+        leftAdapter=new PopupWindowAdapter(this,null,R.layout.mainside_popupwindow_item);
+        leftMenu.setAdapter(leftAdapter);
+    }
 
-        headpath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + ViewUnit.getResString(this, R.string.filedir)+"/";
-        File file = new File(headpath);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        StringUnit.println(tag,headpath);
-        mainMessageHandler = new MainMessageHandler(this);
-        deviceuuid = LoginInfo.getUuid(this);
-        home = AddressInfo.readHome(this);
-        company = AddressInfo.readCompany(this);
-        deteTimeView = new DeteTimeView(this, R.id.layout_datetime);
-
-        userInfoView = new UserInfoView(this, R.id.layout_userinfo);
-
+    /**
+     * 初始化DrawerLayout
+     */
+    private void initDrawer() {
+        drawerLayout = ((DrawerLayout) findViewById(R.id.drawer_main));
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R
+                .string.drawer_open, R.string.drawer_close);
+        drawerToggle.syncState();
+        drawerLayout.addDrawerListener(drawerToggle);
 
     }
 
@@ -150,24 +133,24 @@ public class MainActivity extends AbstractBasicActivity {
                         Bitmap head = null;// 头像Bitmap
                         head = BitmapFactory.decodeStream(getContentResolver().openInputStream(this.userInfoView.getUritempFile()));
                         if (head != null) {
-                            savefileup(head,upfile);
+                            savefileup(head, upfile);
                             HttpRequestTask.headUplod(loginInfo.phone, headpath + upfile);
                             upBitmap = head;
                         }
                     }
                     break;
-                case otherCode:
-                    loginInfo = LoginInfo.readUserLoginInfo(this);
-                    StringUnit.println(tag,GsonUnit.toJson(loginInfo));
-                    break;
+//                case otherCode:
+//                    loginInfo = LoginInfo.readUserLoginInfo(this);
+//                    StringUnit.println(tag,GsonUnit.toJson(loginInfo));
+//                    break;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag, e);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void savefileup(Bitmap bitmap,String path) {
+    public void savefileup(Bitmap bitmap, String path) {
         try {
             File file = new File(headpath + path);
             if (file.exists() == false) {
@@ -179,12 +162,12 @@ public class MainActivity extends AbstractBasicActivity {
             inputStream.flush();
             inputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag, e);
         }
 
     }
 
-    public void savefile(Bitmap bitmap,String path) {
+    public void savefile(Bitmap bitmap, String path) {
         try {
             File file = new File(headpath + path);
             if (file.exists() == false) {
@@ -196,32 +179,26 @@ public class MainActivity extends AbstractBasicActivity {
             inputStream.flush();
             inputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag, e);
         }
 
     }
 
 
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.civ_mainmap_titlebar_account:
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
         }
     }
 
 
     @Override
     public AbstratorHandler getAbstratorHandler() {
-        return AbstratorHandler.getInstance();
+        return GlobalHandler.getInstance();
     }
-
-
 
 
     public void jumpMianMapView(AbstractChildView abstractChildView) {
@@ -230,15 +207,14 @@ public class MainActivity extends AbstractBasicActivity {
     }
 
     public Bitmap readHeadImage() {
-        String filename=loginInfo.bitmapPath;
-        Bitmap bitmap=null;
+        String filename = loginInfo.bitmapPath;
+        Bitmap bitmap = null;
         try {
-             bitmap = BitmapFactory.decodeFile(headpath + filename);
+            bitmap = BitmapFactory.decodeFile(headpath + filename);
             if (bitmap == null) {
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head33);
         }
 

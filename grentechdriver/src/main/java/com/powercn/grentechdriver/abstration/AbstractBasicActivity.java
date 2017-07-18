@@ -19,6 +19,7 @@ import com.powercn.grentechdriver.SysApplication;
 import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
 import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
+import com.powercn.grentechdriver.handle.GlobalHandler;
 
 import java.io.Serializable;
 import java.util.Timer;
@@ -27,7 +28,6 @@ import java.util.TimerTask;
 
 
 import static android.view.KeyEvent.KEYCODE_HOME;
-import static com.powercn.grentechdriver.adapter.chlid.PopupWindowAdapter.PopuWindowInfo.Order;
 
 /**
  * Created by Administrator on 2017/4/20.
@@ -56,7 +56,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
         initView();
         bindListener();
         initData();
-        AbstratorHandler.getInstance().addObejct(tag,this);
+        GlobalHandler.getInstance().addObejct(tag,this);
     }
 
     @Override

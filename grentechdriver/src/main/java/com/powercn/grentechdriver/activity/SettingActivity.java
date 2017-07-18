@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
 import com.powercn.grentechdriver.abstration.AbstratorHandler;
-import com.powercn.grentechdriver.adapter.chlid.SettingAdpter;
+import com.powercn.grentechdriver.adapter.SettingAdpter;
 import com.powercn.grentechdriver.entity.LoginInfo;
 
 import org.xutils.view.annotation.ContentView;

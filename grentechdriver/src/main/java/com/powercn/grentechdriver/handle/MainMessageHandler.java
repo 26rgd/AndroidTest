@@ -67,7 +67,7 @@ public class MainMessageHandler extends Handler {
                                 }
                             } else {
                                 activity.showToast(info);
-                                activity.jumpForResult(LoginActivity.class, MainActivity.otherCode);
+                               // activity.jumpForResult(LoginActivity.class, MainActivity.otherCode);
                                 LoginInfo.currentLoginSuccess = false;
                             }
                             break;

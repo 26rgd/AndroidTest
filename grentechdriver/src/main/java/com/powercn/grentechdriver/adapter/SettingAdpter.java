@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver.adapter.chlid;
+package com.powercn.grentechdriver.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.powercn.grentechdriver.R;
-import com.powercn.grentechdriver.adapter.AbstractAdpter;
+import com.powercn.grentechdriver.abstration.AbstractAdpter;
 
 import java.util.List;
 

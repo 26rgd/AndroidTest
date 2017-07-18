@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver.adapter;
+package com.powercn.grentechdriver.abstration;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

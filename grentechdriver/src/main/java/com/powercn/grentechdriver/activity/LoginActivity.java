@@ -13,6 +13,7 @@ import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
 import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.entity.LoginInfo;
+import com.powercn.grentechdriver.handle.GlobalHandler;
 import com.powercn.grentechdriver.handle.LoginMessageHandler;
 
 import lombok.Getter;
@@ -62,7 +63,7 @@ public class LoginActivity extends AbstractBasicActivity {
 
     @Override
     public AbstratorHandler getAbstratorHandler() {
-        return AbstratorHandler.getInstance();
+        return GlobalHandler.getInstance();
     }
 
     @Override
@@ -74,10 +75,10 @@ public class LoginActivity extends AbstractBasicActivity {
                 break;
             case R.id.bt_login_crc_send:
 
-                HttpRequestTask.getSmsCrc(tv_login_phone.getText().toString());
+                HttpRequestTask.getSmsCrc(this,tv_login_phone.getText().toString());
                 break;
             case R.id.bt_login_submit:
-                HttpRequestTask.loginBySms(tv_login_phone.getText().toString(),tv_login_crc.getText().toString(),deviceuuid);
+                HttpRequestTask.loginBySms(this,tv_login_phone.getText().toString(),tv_login_crc.getText().toString(),deviceuuid);
                 break;
         }
 

@@ -17,10 +17,9 @@ import android.widget.TextView;
 
 import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.R;
-import com.powercn.grentechdriver.adapter.AbstractAdpter;
+import com.powercn.grentechdriver.abstration.AbstractAdpter;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.common.unit.GsonUnit;
-import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.entity.ResponseUerInfo;
 import com.powercn.grentechdriver.view.CircleImageView;
 

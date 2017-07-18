@@ -20,6 +20,23 @@
         <item name="android:textColor">@color/BLACK</item>
     </style>
 
+    <style name="Theme.NoTitleTranslucent" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowAnimationStyle">@style/activityAnimation</item>-->
+        <item name="android:textColorHint">@color/GRAY</item>
+        <item name="android:textColor">@color/BLACK</item>
+        <!--<item name="windowBackground">@color/transparent</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Note that we use the base animation style here (that is no
+             animations) because we really have no idea how this kind of
+             activity will be used. -->
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+
+    </style>
+
     <!-- animation 样式 -->
     <!--<style name="activityAnimation" parent="@android:style/Animation">-->
         <!--<item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>-->
@@ -31,9 +48,9 @@
     <style name="editTextSeachStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/edit_border</item>
+
         <item name="android:drawablePadding">5dp</item>
-        <item name="android:drawableStart">@drawable/search_icon</item>
+
         <item name="android:gravity">center_vertical</item>
         <item name="android:imeOptions">actionSearch</item>
         <item name="android:padding">5dp</item>

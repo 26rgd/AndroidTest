@@ -2,6 +2,7 @@ package com.powercn.grentechdriver.common.http;
 
 import android.os.AsyncTask;
 
+import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
 import com.powercn.grentechdriver.common.unit.GsonUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.entity.CallOrder;
@@ -24,39 +25,43 @@ public class HttpRequestTask {
     public final static Executor executor = Executors.newFixedThreadPool(3);
 
 
-    public static void getSmsCrc(String phone) {
+    public static void getSmsCrc(AbstractBasicActivity abstractBasicActivity,String phone) {
         //{"status":"200","token":6AFB3E6A177D4BF145B8B355BAA4B82F"vcode":485721}
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/getCode", HttpRequestParam.ApiType.SendSmsCrc);
         httpRequestParam.paramMap.put("phone", phone);
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
     }
 
-    public static void loginByPassword(String username, String password) {
+    public static void loginByPassword(AbstractBasicActivity abstractBasicActivity,String username, String password) {
         //{"status":"200","token":17285A189F2E6958BA25FBB8D991671C"info":"用户已经注册登录成功"}
         HttpRequestParam httpRequestParam = bulidHttpRequestParamApp("login?", HttpRequestParam.ApiType.LoginBySmsCrc);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("username", username);
         password="21232f297a57a5a743894a0e4a801fc3";
         httpRequestParam.paramMap.put("password", password);
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
     }
 
-    public static void loginBySms(String phone, String smsCrc, String uuid) {
+    public static void loginBySms(AbstractBasicActivity abstractBasicActivity,String phone, String smsCrc, String uuid) {
         //{"status":"200","token":17285A189F2E6958BA25FBB8D991671C"info":"用户已经注册登录成功"}
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/codeLogin", HttpRequestParam.ApiType.LoginBySmsCrc);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("phone", phone);
         httpRequestParam.paramMap.put("vcode", smsCrc);
         httpRequestParam.paramMap.put("uuid", uuid);
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
     }
 
-    public static void loginByUuid(String phone, String uuid) {
+    public static void loginByUuid(AbstractBasicActivity abstractBasicActivity, String phone, String uuid) {
         //{"status":"200","token":6AFB3E6A177D4BF145B8B355BAA4B82F"vcode":485721}
         HttpRequestParam httpRequestParam = bulidHttpRequestParam("passenger/uuidLogin", HttpRequestParam.ApiType.LoginByUuid);
         httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
         httpRequestParam.paramMap.put("phone", phone);
         httpRequestParam.paramMap.put("uuid", uuid);
+        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
     }
 
@@ -178,6 +183,7 @@ public class HttpRequestTask {
             responeInfo = httpUnit.executeLoadFile();
         else responeInfo = httpUnit.executeGet();
         responeInfo.setApiType(param.apiType);
+        responeInfo.abstractBasicActivity=param.abstractBasicActivity;
         return responeInfo;
     }
 

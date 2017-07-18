@@ -5,6 +5,7 @@ import android.location.Location;
 import java.io.Serializable;
 
 import cn.com.grentech.specialcar.common.unit.CoordinateSystem;
+import cn.com.grentech.specialcar.common.unit.DateUnit;
 import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class GpsInfo implements Serializable {
     private float speed;
     private double angle;
     private long createTime;
+    private float accuracy;
     private transient Boolean useable=false;
 
     public GpsInfo(double lat, double lng) {
@@ -36,13 +38,14 @@ public class GpsInfo implements Serializable {
         gi.setSpeed(location.getSpeed());
         gi.setCreateTime(location.getTime());
         gi.setAngle(location.getAltitude());
+        gi.setAccuracy(location.getAccuracy());
         return gi;
     }
 
     public String toString()
     {
         try {
-            return  "|"+lat+"|"+lng+"|"+angle+"|"+speed+"|"+createTime;
+            return  "Usable:"+lat+"|"+lng+"|"+accuracy+"|"+angle+"|"+speed+"|"+createTime+":"+ DateUnit.formatDate(createTime,"yyyy-MM-dd HH:mm:ss");
         }catch (Exception e)
         {
             ErrorUnit.println(tag,e);
