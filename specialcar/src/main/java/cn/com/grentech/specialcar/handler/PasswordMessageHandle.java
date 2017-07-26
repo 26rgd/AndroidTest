@@ -11,6 +11,7 @@ import cn.com.grentech.specialcar.activity.DriverInfoActivity;
 import cn.com.grentech.specialcar.activity.EditPasswordActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestParam;
 import cn.com.grentech.specialcar.common.http.ResponeInfo;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.UserAllMap;
@@ -60,6 +61,7 @@ public class PasswordMessageHandle extends AbstractHandler {
             }
             super.handleMessage(msg);
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
             StringUnit.println(tag,"LoginhandleMessage Error");
         }
     }

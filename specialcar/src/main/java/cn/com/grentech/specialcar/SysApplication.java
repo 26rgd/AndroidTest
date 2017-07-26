@@ -19,6 +19,7 @@ import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 import cn.com.grentech.specialcar.error.UnError;
 import cn.com.grentech.specialcar.service.ServiceAddr;
 import cn.com.grentech.specialcar.service.ServiceGPS;
+import cn.com.grentech.specialcar.sqllite.SQLiteHelper;
 import lombok.Getter;
 
 import static android.R.attr.x;
@@ -33,7 +34,8 @@ public class SysApplication extends Application {
     @Getter
     private Context context;
     private static SysApplication instance;
-
+    @Getter
+    private SQLiteHelper sqLiteHelper;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -46,7 +48,7 @@ public class SysApplication extends Application {
             StringUnit.println(tag, "SDK_INI|"+Build.VERSION.SDK_INT);
             StringUnit.println(tag, "RELEASE|"+Build.VERSION.RELEASE);
             StringUnit.println(tag, "BRAND|"+Build.BRAND);
-
+            sqLiteHelper=new SQLiteHelper(this.getApplicationContext());
         }catch (Exception e)
         {
             ErrorUnit.println(tag,e);
@@ -89,6 +91,7 @@ public class SysApplication extends Application {
                 try {
                     line.finish();
                 } catch (Exception e) {
+                    ErrorUnit.println(tag,e);
                 }finally {
                 }
             }

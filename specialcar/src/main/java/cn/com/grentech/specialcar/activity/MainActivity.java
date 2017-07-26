@@ -68,6 +68,7 @@ public class MainActivity extends AbstractBasicActivity {
         tvTopLine = (TextView) findViewById(R.id.tv_top_line);
         ivBack.setImageResource(R.drawable.icon_menu);
         refresh = (SwipeRefreshLayout) findViewById(R.id.contanier_mainrefres);
+        if(LoginInfo.loginInfo ==null)LoginInfo.loginInfo=LoginInfo.readUserLoginInfo(this.getApplicationContext());
 
     }
 

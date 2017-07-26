@@ -20,18 +20,8 @@ import java.util.TimerTask;
 import cn.com.grentech.specialcar.R;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
-import cn.com.grentech.specialcar.activity.AlarmiInfoActivity;
-import cn.com.grentech.specialcar.activity.LoginActivity;
-import cn.com.grentech.specialcar.activity.MainActivity;
-import cn.com.grentech.specialcar.activity.OrderDetailActivity;
-import cn.com.grentech.specialcar.common.http.HttpRequestTask;
-import cn.com.grentech.specialcar.common.http.HttpUnit;
-import cn.com.grentech.specialcar.common.unit.AlarmUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
-import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
-import cn.com.grentech.specialcar.entity.LoginInfo;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Administrator on 2017/6/14.
@@ -41,10 +31,11 @@ public class ServiceMoitor extends AbstractService {
 
     private TimerTask monitorTask;
     private Timer timer;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        StringUnit.println(tag,"serviceMonitor on Bind");
+        StringUnit.println(tag, "serviceMonitor on Bind");
         return null;
     }
 
@@ -63,25 +54,20 @@ public class ServiceMoitor extends AbstractService {
     @Override
     @SuppressWarnings("WrongConstant")
     public int onStartCommand(Intent intent, int flags, int startId) {
-        StringUnit.println(tag,"ServiceMoitor |" + Process.myPid());
-//        if(StringUnit.isEmpty(HttpUnit.sessionId))
-//        {
-//            StringUnit.println(tag,"ServiceMoitor |" + HttpUnit.sessionId);
-//            LoginInfo loginInfo=LoginInfo.readUserLoginInfo(getApplicationContext());
-//            HttpRequestTask.loginByPassword(null,loginInfo.phone,loginInfo.password);
-//        }
+        StringUnit.println(tag, "ServiceMoitor |" + Process.myPid());
         Intent notificationIntent = new Intent(this, ServiceLogin.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         showNotification(pendingIntent);
-        return super.onStartCommand(intent,START_STICKY,startId);
+        return super.onStartCommand(intent, START_STICKY, startId);
     }
+
     private void start(Context context) {
-        if(monitorTask != null) {
+        if (monitorTask != null) {
             monitorTask.cancel();
         }
         timer = new Timer();
         monitorTask = new MonitorTask(context);
-        timer.scheduleAtFixedRate(monitorTask, 0, 60000);
+        timer.scheduleAtFixedRate(monitorTask, 0, 5 * 60 * 1000);
     }
 
 
@@ -90,6 +76,7 @@ public class ServiceMoitor extends AbstractService {
         monitorTask.cancel();
         timer.cancel();
     }
+
     class MonitorTask extends TimerTask {
         private Context context;
         private String packageName;
@@ -101,51 +88,40 @@ public class ServiceMoitor extends AbstractService {
 
         @Override
         public void run() {
-           // StringUnit.println(tag,"MonitorTask.......");
-          //  WakeLockUnit.acquireWakeLock(ServiceMoitor.this.getApplicationContext());
-            Intent intent1=new Intent(ServiceMoitor.this,ServiceGPS.class);
+            Intent intent1 = new Intent(ServiceMoitor.this, ServiceGPS.class);
             startService(intent1);
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> appInfos = am.getRunningAppProcesses();
-            boolean  flag = false;
-            for(ActivityManager.RunningAppProcessInfo appInfo : appInfos) {
-                if(appInfo.processName.equals(packageName)) {
+            boolean flag = false;
+            for (ActivityManager.RunningAppProcessInfo appInfo : appInfos) {
+                if (appInfo.processName.equals(packageName)) {
                     flag = true;
                     break;
                 }
             }
-             if(!flag)
-            StringUnit.println(tag,"进后入台中.......");
+            if (!flag)
+                StringUnit.println(tag, "进后入台中.......");
         }
     }
-
 
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @SuppressWarnings("deprecation")
     public void showNotification(PendingIntent pendingIntent) {
-        //if(1==1)return;
         Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD&&Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN) {
-          //  notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            //  notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
             notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).getNotification();
-        }
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-           // notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
-
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setContentText("运行中").setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
             notification = new Notification.Builder(this).setContentTitle(getResources().getString(R.string.app_name)).setSmallIcon(R.drawable.grentech_logo).setContentIntent(pendingIntent).setAutoCancel(true).build();
-        }
-        else {
+        } else {
             long when = System.currentTimeMillis();
             notification = new Notification(R.drawable.grentech_logo, getResources().getString(R.string.app_name), when + 1000);
-           // notification = new Notification(R.drawable.grentech_logo, null, when + 1000);
+            // notification = new Notification(R.drawable.grentech_logo, null, when + 1000);
         }
-        notification.flags =Notification.FLAG_AUTO_CANCEL;
-
-
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         startForeground(Process.myPid(), notification);
-       // startForeground(0, notification);
     }
 
     @Override

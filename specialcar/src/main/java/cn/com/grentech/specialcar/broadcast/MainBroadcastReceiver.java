@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 import cn.com.grentech.specialcar.activity.OrderDetailActivity;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 
@@ -28,11 +29,12 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        StringUnit.println(tag,intent.getAction());
+        //StringUnit.println(tag,intent.getAction());
         if(intent.getAction().equals("android.intent.action.USER_PRESENT"))
         {
+            StringUnit.println(tag,intent.getAction());
             StringUnit.println(tag,"锁屏后开启桌面");
-            startService(context, ServiceGPS.class);
+            //startService(context, ServiceGPS.class);
         }
 
     }
@@ -46,6 +48,7 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
         try {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
         }
     }
 }

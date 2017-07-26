@@ -25,6 +25,8 @@ public class GpsInfo implements Serializable {
     private double angle;
     private long createTime;
     private float accuracy;
+    private transient double distance;
+    private transient double predistance;
     private transient Boolean useable=false;
 
     public GpsInfo(double lat, double lng) {
@@ -39,13 +41,14 @@ public class GpsInfo implements Serializable {
         gi.setCreateTime(location.getTime());
         gi.setAngle(location.getAltitude());
         gi.setAccuracy(location.getAccuracy());
+
         return gi;
     }
 
     public String toString()
     {
         try {
-            return  "Usable:"+lat+"|"+lng+"|"+accuracy+"|"+angle+"|"+speed+"|"+createTime+":"+ DateUnit.formatDate(createTime,"yyyy-MM-dd HH:mm:ss");
+            return  "Usable:"+lat+"|"+lng+"|"+accuracy+"|"+speed+"|"+createTime+":"+ DateUnit.formatDate(createTime,"yyyy-MM-dd HH:mm:ss");
         }catch (Exception e)
         {
             ErrorUnit.println(tag,e);

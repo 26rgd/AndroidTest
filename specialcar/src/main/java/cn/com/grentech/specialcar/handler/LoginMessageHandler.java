@@ -12,6 +12,7 @@ import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.activity.LoginActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestParam;
 import cn.com.grentech.specialcar.common.http.ResponeInfo;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
@@ -74,6 +75,7 @@ public class LoginMessageHandler extends AbstractHandler {
             }
             super.handleMessage(msg);
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
             StringUnit.println(tag, "LoginhandleMessage Error");
         }
     }

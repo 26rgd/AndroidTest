@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 import java.io.Serializable;
 
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 
@@ -78,6 +79,7 @@ public class LoginInfo implements Serializable {
         try {
             return (Order) GsonUnit.toObject(data, Order.class);
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
             return null;
         }
     }
@@ -97,6 +99,7 @@ public class LoginInfo implements Serializable {
             StringUnit.println(tag, data);
             return (LoadLine) GsonUnit.toObject(data, LoadLine.class);
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
             return null;
         }
     }

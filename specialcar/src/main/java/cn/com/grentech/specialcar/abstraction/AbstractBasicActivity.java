@@ -149,6 +149,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
             if(!StringUnit.isEmpty(msg))
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
         }
     }
     public void showToastLength(String msg) {
@@ -156,6 +157,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
             if(!StringUnit.isEmpty(msg))
                 Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
         }
     }
     public void sendHandleMessage(String key, String content, Object object) {

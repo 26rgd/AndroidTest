@@ -21,7 +21,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -37,6 +36,7 @@ import cn.com.grentech.specialcar.R;
 
 public class ViewUnit {
     private static String tag = ViewUnit.class.getName();
+
     public static int getDisplayWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Point point = new Point();
@@ -67,7 +67,7 @@ public class ViewUnit {
                 window.setStatusBarColor(getColor(activity, colorResId));
             }
         } catch (Exception e) {
-
+            ErrorUnit.println(tag,e);
         }
     }
 
@@ -108,6 +108,7 @@ public class ViewUnit {
 //            Drawable drawable = BitmapDrawable.createFromPath(bitMapPaht);
             return drawable;
         } catch (Exception e) {
+            ErrorUnit.println(tag, e);
             return getDrawable(context, R.drawable.btn_back);
         }
 
@@ -128,7 +129,7 @@ public class ViewUnit {
         try {
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag, e);
         }
     }
 
@@ -141,7 +142,7 @@ public class ViewUnit {
             // intent.putExtra("sms_body","number");
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag,e);
         }
     }
 
@@ -154,7 +155,7 @@ public class ViewUnit {
             intent.putExtra("sms_body", msg);
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag,e);
         }
     }
 
@@ -189,44 +190,44 @@ public class ViewUnit {
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(shareIntent);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorUnit.println(tag, e);
             // TODO: handle exception
         }
     }
 
 
-    public static Bundle getIntent(Activity activity)
-    {
-        Intent intent=activity.getIntent();
-        Bundle bundle =intent.getExtras();
-        return  bundle;
+    public static Bundle getIntent(Activity activity) {
+        Intent intent = activity.getIntent();
+        Bundle bundle = intent.getExtras();
+        return bundle;
     }
 
-    public static Calendar getCalendar(Date date)
-    {
-        Calendar calendar=Calendar.getInstance();
+    public static Calendar getCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
     }
 
-    public static int getVersionCode(Context context)
-    {
+    public static int getVersionCode(Context context) {
         try {
-            PackageManager packageManager=context.getPackageManager();
-            PackageInfo packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;
-        }catch (Exception e){ErrorUnit.println(tag,e);}
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+        }
 
         return Integer.MAX_VALUE;
     }
 
-    public static String getVersionName(Context context)
-    {
+    public static String getVersionName(Context context) {
         try {
-            PackageManager packageManager=context.getPackageManager();
-            PackageInfo packageInfo=packageManager.getPackageInfo(context.getPackageName(),0);
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionName;
-        }catch (Exception e){ErrorUnit.println(tag,e);}
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+        }
 
         return "1.1";
     }

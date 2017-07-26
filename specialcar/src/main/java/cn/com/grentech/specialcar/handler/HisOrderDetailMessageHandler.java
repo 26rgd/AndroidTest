@@ -10,6 +10,7 @@ import cn.com.grentech.specialcar.activity.HisOrderDetailActivity;
 import cn.com.grentech.specialcar.activity.OrderDetailActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestParam;
 import cn.com.grentech.specialcar.common.http.ResponeInfo;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 
@@ -52,7 +53,8 @@ public class HisOrderDetailMessageHandler extends AbstractHandler {
             }
             super.handleMessage(msg);
         } catch (Exception e) {
-            StringUnit.println(tag, e.toString());
+            ErrorUnit.println(tag,e);
+
         }
     }
 }

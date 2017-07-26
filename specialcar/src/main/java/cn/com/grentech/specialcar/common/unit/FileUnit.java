@@ -16,16 +16,31 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import static android.R.attr.path;
+import static android.R.id.list;
 
 /**
  * Created by Administrator on 2017/5/9.
  */
 
 public class FileUnit {
-   private static String tag=FileUnit.class.getName();
-    private static String fileTemps = null;
+    private static String tag = FileUnit.class.getName();
+    private  static String fileTemps = null;
     private static String fileFiles = null;
+
+    public static String getTempPath()
+    {
+        return fileTemps;
+    }
+
+    public static String getFilePath()
+    {
+        return fileFiles;
+    }
 
     public static void iniDir(Context context) {
         File fileTemp = context.getExternalCacheDir();
@@ -49,7 +64,7 @@ public class FileUnit {
             fileOutputStream.write(bytes);
             fileOutputStream.close();
         } catch (Exception e) {
-            ErrorUnit.println(tag,e);
+            ErrorUnit.println(tag, e);
         }
     }
 
@@ -63,7 +78,7 @@ public class FileUnit {
             fileOutputStream.write(bytes);
             fileOutputStream.close();
         } catch (Exception e) {
-            ErrorUnit.println(tag,e);
+            ErrorUnit.println(tag, e);
         }
     }
 
@@ -79,7 +94,7 @@ public class FileUnit {
             fileOutputStream.write(bytes);
             fileOutputStream.close();
         } catch (Exception e) {
-            ErrorUnit.println(tag,e);
+            ErrorUnit.println(tag, e);
         }
     }
 
@@ -92,7 +107,7 @@ public class FileUnit {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(s);
         } catch (Exception e) {
-            ErrorUnit.println(tag,e);
+            ErrorUnit.println(tag, e);
         }
     }
 
@@ -107,29 +122,31 @@ public class FileUnit {
             return result;
         } catch (Exception e) {
 
-            ErrorUnit.println(tag,e);
+            ErrorUnit.println(tag, e);
             return null;
         }
     }
 
-    public static File getFileFromServer(String path, ProgressDialog pd) throws Exception{
+    public static File getFileFromServer(String path, ProgressDialog pd) throws Exception {
+
         //如果相等的话表示当前的sdcard挂载在手机上并且是可用的
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             URL url = new URL(path);
-            HttpURLConnection conn =  (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(10000);
             //获取到文件的大小
             pd.setMax(conn.getContentLength());
+            pd.setOnDismissListener(null);
             InputStream is = conn.getInputStream();
             File file = new File(Environment.getExternalStorageDirectory(), "updata.apk");
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
             byte[] buffer = new byte[1024];
-            int len ;
-            int total=0;
-            while((len =bis.read(buffer))!=-1){
+            int len;
+            int total = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
-                total+= len;
+                total += len;
                 //获取当前下载量
                 pd.setProgress(total);
             }
@@ -137,9 +154,27 @@ public class FileUnit {
             bis.close();
             is.close();
             return file;
-        }
-        else{
+        } else {
             return null;
         }
+    }
+
+    public static List<String> searchFiles(String path) {
+        List<String> list = new ArrayList<>();
+        File file = new File(path);
+        File[] files = file.listFiles();
+        for (File line : files) {
+            if (line.isDirectory()) {
+            } else {
+                list.add(line.getAbsolutePath());
+            }
+        }
+        return list;
+    }
+
+    public static List<String> searchLogFiles() {
+        String path=fileTemps;
+        List<String> list =searchFiles(fileTemps);
+        return list;
     }
 }

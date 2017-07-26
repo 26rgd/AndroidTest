@@ -17,7 +17,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
+
+import static android.R.attr.tag;
+
 public class UploadImage {
+    private static String  tag=UploadImage.class.getName();
     private static final String TAG = "uploadFile";
     private static final int TIME_OUT = 10*10000000; //超时时间
     private static final String CHARSET = "utf-8"; //设置编码
@@ -83,9 +88,9 @@ public class UploadImage {
                 }
             }
         } catch (MalformedURLException e)
-        { e.printStackTrace(); }
+        {   ErrorUnit.println(tag,e); }
         catch (IOException e)
-        { e.printStackTrace(); }
+        {   ErrorUnit.println(tag,e); }
         return FAILURE;
     }
 

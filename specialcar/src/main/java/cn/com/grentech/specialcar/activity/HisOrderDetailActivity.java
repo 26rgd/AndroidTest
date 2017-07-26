@@ -116,7 +116,7 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
         LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
         if (loadLine == null) {
             loadLine = new LoadLine(o);
-            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+           // FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
         }
 
         return loadLine;

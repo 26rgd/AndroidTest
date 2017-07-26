@@ -70,6 +70,7 @@
         <service android:name=".service.ServiceMoitor"></service>
         <service android:name=".service.ServiceGPS"></service>
         <service android:name=".service.ServiceAddr"></service>
+        <service android:name=".service.ServiceUpfile"></service>
         <receiver
             android:name=".broadcast.MainBroadcastReceiver"
             android:enabled="true"

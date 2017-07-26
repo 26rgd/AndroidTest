@@ -43,6 +43,7 @@ import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.NetworkUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.ViewUnit;
 import cn.com.grentech.specialcar.common.unit.WakeLockUnit;
 import cn.com.grentech.specialcar.entity.GpsInfo;
 import cn.com.grentech.specialcar.entity.LoadLine;
@@ -138,6 +139,11 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             StringUnit.println(tag, "loadLocalOrder|" + GsonUnit.toJson(info));
         }
         LoadLine loadLine = readLoadLine(info);
+        if (loadLine == null) {
+            loadLine = new LoadLine(info);
+            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine);
+        }
         if (info != null && (info.getFlag() == OrderStatus.RunOrder.getValue() || info.getFlag() == OrderStatus.PauseOrder.getValue() || info.getFlag() == OrderStatus.NewOrder.getValue())) {
             Double d = loadLine.getTotalDistance();
             btReUp.setVisibility(View.INVISIBLE);
@@ -202,23 +208,15 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                 StringUnit.println(tag, "click finish!!");
                 showToastLength("正在结束订单请稍等.....");
                 LoadLine loadLine = readLoadLine(info);
-                Double d = loadLine.getTotalDistance();
-                HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
-                HttpRequestTask.orderFinish(this, info.getId(), d, "V1", OrderStatus.FinishOrder.getValue());
+                Double d;
+                if (loadLine != null) {
+                    d = loadLine.getTotalDistance();
+                    HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
+                } else
+                    d = this.getOrderDetailAdapter().getMileage();
+                HttpRequestTask.orderFinish(this, info.getId(), d, "F" + ViewUnit.getVersionCode(this.getApplicationContext()), OrderStatus.FinishOrder.getValue());
                 break;
 
-            case R.id.bt_order_reUp:
-                LoadLine reLoadLine = readLoadLine(info);
-                if (reLoadLine.getListGps().size() > 0) {
-                    showToastLength("正在补传数据.....");
-                    StringUnit.println(tag, "正在补传数据.....");
-                    StringUnit.println(tag, "补传对象|" + GsonUnit.toJson(info));
-                    HttpRequestTask.reUpGps(this, Route.bulidListJson(info, reLoadLine.getListGps()));
-                } else {
-                    StringUnit.println(tag, "补传数据为空");
-                    showToast("补传数据为空");
-                }
-                break;
         }
     }
 
@@ -287,12 +285,17 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         try {
             loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
         } catch (Exception e) {
+            try {
+                loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName());
+                if (loadLine.getOrderinfo().getId() != o.getId()) {
+                    return null;
+                }
+            } catch (Exception e1) {
+                ErrorUnit.println(tag, e1);
+            }
             ErrorUnit.println(tag, e);
         }
-        if (loadLine == null) {
-            loadLine = new LoadLine(o);
-            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
-        }
+
         return loadLine;
     }
 
@@ -335,9 +338,10 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                                 @Override
                                 public void run() {
                                     try {
-                                        Thread.sleep(3000);
+                                        Thread.sleep(1000);
                                         NetworkUnit.ping();
                                     } catch (Exception e) {
+                                        ErrorUnit.println(tag,e);
                                     }
                                 }
                             }).start();

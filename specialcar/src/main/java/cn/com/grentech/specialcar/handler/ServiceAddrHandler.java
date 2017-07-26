@@ -10,6 +10,7 @@ import cn.com.grentech.specialcar.activity.EditPasswordActivity;
 import cn.com.grentech.specialcar.common.http.HttpRequestParam;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
 import cn.com.grentech.specialcar.common.http.ResponeInfo;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
 import cn.com.grentech.specialcar.entity.LoginInfo;
@@ -47,6 +48,7 @@ public class ServiceAddrHandler extends AbstractHandler {
 
             super.handleMessage(msg);
         } catch (Exception e) {
+            ErrorUnit.println(tag,e);
             StringUnit.println(tag, "ServiceAddrHandler Error");
         }
     }

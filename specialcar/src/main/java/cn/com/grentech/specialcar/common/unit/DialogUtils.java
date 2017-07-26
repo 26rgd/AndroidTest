@@ -23,7 +23,7 @@ import cn.com.grentech.specialcar.R;
  *
  */
 public class DialogUtils {
-	
+	private static String tag=DialogUtils.class.getName();
 	private DialogUtils() {
 		
 	}
@@ -34,7 +34,7 @@ public class DialogUtils {
 			field.setAccessible(true);
 			field.set(dialog, showing);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorUnit.println(tag,e);
 		}
 	}
 

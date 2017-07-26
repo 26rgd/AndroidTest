@@ -7,6 +7,7 @@ import android.content.Intent;
 import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.entity.LoginInfo;
 import cn.com.grentech.specialcar.service.ServiceLogin;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
 
@@ -26,6 +27,8 @@ public class HttpResponeTask {
                 Context context = SysApplication.getInstance().getContext();
                 HttpUnit.sessionId = null;
                 Intent intent = new Intent(context, ServiceLogin.class);
+                LoginInfo loginInfo=LoginInfo.readUserLoginInfo(context);
+                HttpRequestTask.loginByPassword(null,loginInfo.phone,loginInfo.password);
                 context.startService(intent);
             } catch (Exception e) {
                 ErrorUnit.println(tag, e);

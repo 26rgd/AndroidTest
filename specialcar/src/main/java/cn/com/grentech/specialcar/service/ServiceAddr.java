@@ -51,7 +51,9 @@ public class ServiceAddr extends AbstractService implements LocationListener {
         if (abstratorHandler == null) abstratorHandler = new ServiceAddrHandler(null);
         try {
             starGPS();
-        }catch (Exception e){}
+        }catch (Exception e){
+            ErrorUnit.println(tag,e);
+        }
 
         return super.onStartCommand(intent, START_STICKY, startId);
 
@@ -62,7 +64,9 @@ public class ServiceAddr extends AbstractService implements LocationListener {
     public void onDestroy() {
         try {
             stopGps();
-        }catch (Exception e){}
+        }catch (Exception e){
+            ErrorUnit.println(tag,e);
+        }
 
         StringUnit.println(tag, "STOP ServiceAddr method...........");
         super.onDestroy();

@@ -3,6 +3,7 @@ package cn.com.grentech.specialcar.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -14,16 +15,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.common.http.HttpRequestTask;
+import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.entity.GpsInfo;
+import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.LoginInfo;
+import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.handler.LoginMessageHandler;
 import cn.com.grentech.specialcar.service.ServiceAddr;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.service.ServiceMoitor;
+import cn.com.grentech.specialcar.service.ServiceUpfile;
+import cn.com.grentech.specialcar.sqllite.SQLiteHelper;
 import lombok.Getter;
 
 import static cn.com.grentech.specialcar.entity.LoginInfo.readUserLoginInfo;
@@ -46,6 +56,7 @@ public class LoginActivity extends AbstractBasicActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_loginnew);
+        startService(ServiceUpfile.class);
     }
 
     @Override
@@ -62,8 +73,15 @@ public class LoginActivity extends AbstractBasicActivity {
     protected void bindListener() {
         tvFindPassword.setOnClickListener(this);
         btLogin.setOnClickListener(this);
+        SysApplication.getInstance().getSqLiteHelper().deleteTenDaysAgo();
+        StringUnit.println(tag,SysApplication.getInstance().getSqLiteHelper().getCount()+"");
+
     }
 
+    private LoadLine readLoadLine(int id) {
+        LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + id);
+        return loadLine;
+    }
     @Override
     protected void initData() {
         abstratorHandler=new LoginMessageHandler(this);

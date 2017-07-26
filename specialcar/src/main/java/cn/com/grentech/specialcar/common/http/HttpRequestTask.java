@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
+import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.common.unit.ViewUnit;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.entity.OrderStatus;
 
@@ -31,9 +33,10 @@ public class HttpRequestTask {
  //  private static String ip="210.75.20.140";
   // private static String ip="120.77.243.254";
     private static String ip="taxi.powercn.com";
-    public static String url = "http://"+ip+"/grentechZC/";
-    public static String apkurl = "http://"+ip+"/apks/specialcar-debug.apk";
-    public static String webSocketurl="ws://"+ip+"/taxi/api/webSocketServer";
+    public final static String upLogrul="http://"+ip+"/qxf/app/fileUpload";
+    public final static String url = "http://"+ip+"/grentechZC/";
+    public final static String apkurl = "http://"+ip+"/apks/specialcar-debug.apk";
+    public final static String webSocketurl="ws://"+ip+"/taxi/api/webSocketServer";
 
     public final static Executor executor = Executors.newFixedThreadPool(3);
 
@@ -152,7 +155,7 @@ public class HttpRequestTask {
         httpRequestParam.requestType = HttpRequestParam.RequestType.Get;
         httpRequestParam.paramMap.put("id", String.valueOf(id));
         httpRequestParam.paramMap.put("mileage", String.valueOf((int)mileage));
-        httpRequestParam.paramMap.put("bak", "p1");
+        httpRequestParam.paramMap.put("bak", "P"+ViewUnit.getVersionCode(abstractBasicActivity.getApplicationContext()));
         httpRequestParam.paramMap.put("flag", String.valueOf(OrderStatus.PauseOrder.getValue()));
         httpRequestParam.abstractBasicActivity=abstractBasicActivity;
         bulidDefaultTask(httpRequestParam);
@@ -168,19 +171,27 @@ public class HttpRequestTask {
     }
 
     public static void upGps(AbstractBasicActivity abstractBasicActivity,String routes) {
-        HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.UPGps);
-        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
-        httpRequestParam.paramMap.put("routes", (routes));
-        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
-        bulidDefaultTask(httpRequestParam);
+        try{
+            HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.UPGps);
+            httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
+            httpRequestParam.paramMap.put("routes", (routes));
+            httpRequestParam.abstractBasicActivity=abstractBasicActivity;
+            bulidDefaultTask(httpRequestParam);
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+
+
     }
 
     public static void reUpGps(AbstractBasicActivity abstractBasicActivity,String routes) {
-        HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
-        httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
-        httpRequestParam.paramMap.put("routes", (routes));
-        httpRequestParam.abstractBasicActivity=abstractBasicActivity;
-        bulidDefaultTask(httpRequestParam);
+        try{
+            HttpRequestParam httpRequestParam = bulidHttpRequestParam("route/uploadData?", HttpRequestParam.ApiType.ReUPGps);
+            httpRequestParam.requestType = HttpRequestParam.RequestType.PostText;
+            httpRequestParam.paramMap.put("routes", (routes));
+            httpRequestParam.abstractBasicActivity=abstractBasicActivity;
+            bulidDefaultTask(httpRequestParam);
+        }catch (Exception e){ErrorUnit.println(tag,e);}
+
+
     }
 
     public static void upDriverLocation(AbstractBasicActivity abstractBasicActivity,String phone,String location) {
@@ -272,7 +283,7 @@ public class HttpRequestTask {
         try {
            // StringUnit.println(tag,requestConfig.abstractBasicActivity.getLocalClassName());
             StringUnit.println(tag,requestConfig.abstractBasicActivity.getAbstratorHandler().getClass().getName());
-        }catch (Exception e){}
+        }catch (Exception e){  ErrorUnit.println(tag,e);}
         MainBackGroundTask mAuthTask = new MainBackGroundTask();
         mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestConfig);
     }
@@ -283,7 +294,7 @@ public class HttpRequestTask {
     }
 
     public static ResponeInfo executeHttp(HttpRequestParam... params) {
-        StringUnit.println(tag,"executeHttp");
+       // StringUnit.println(tag,"executeHttp");
         ResponeInfo responeInfo = null;
         HttpRequestParam param = params[0];
         HttpUnit httpUnit = new HttpUnit(param.url, null);

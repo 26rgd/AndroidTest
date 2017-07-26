@@ -8,6 +8,7 @@ import java.util.Date;
  */
 
 public class DateUnit {
+    private static String tag=DateUnit.class.getName();
     public static String formatDate(long i, String format) {
         String time = "";
         SimpleDateFormat sf = new SimpleDateFormat(format);
@@ -22,6 +23,7 @@ public class DateUnit {
             return d;
         } catch (Exception e) {
             // TODO Auto-generated catch block
+            ErrorUnit.println(tag,e);
             e.printStackTrace();
             return new Date();
         }
