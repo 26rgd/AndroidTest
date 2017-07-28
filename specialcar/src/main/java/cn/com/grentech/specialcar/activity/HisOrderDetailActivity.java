@@ -11,7 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.adapter.OrderDetailAdapter;
@@ -20,6 +24,7 @@ import cn.com.grentech.specialcar.common.unit.ErrorUnit;
 import cn.com.grentech.specialcar.common.unit.FileUnit;
 import cn.com.grentech.specialcar.common.unit.GsonUnit;
 import cn.com.grentech.specialcar.common.unit.StringUnit;
+import cn.com.grentech.specialcar.entity.GpsInfo;
 import cn.com.grentech.specialcar.entity.LoadLine;
 import cn.com.grentech.specialcar.entity.Order;
 import cn.com.grentech.specialcar.entity.Route;
@@ -47,6 +52,8 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
     @Getter
     private Order info;
 
+    private List<GpsInfo> hisList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_orderdetail);
@@ -70,6 +77,7 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
 
     @Override
     protected void initData() {
+
         abstratorHandler = new HisOrderDetailMessageHandler(this);
         orderDetailAdapter = new OrderDetailAdapter(this, null, R.layout.list_item_orderdetail);
         Intent intent = getIntent();
@@ -80,8 +88,8 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
         listView.setAdapter(orderDetailAdapter);
         orderDetailAdapter.update(info);
         try {
-            LoadLine loadLine = readLoadLine(info);
-            if (loadLine.getListGps().size() > 0)
+            hisList=getListGps();
+            if (hisList.size() > 0)
                 btReUp.setVisibility(View.VISIBLE);
             else
                 btReUp.setVisibility(View.INVISIBLE);
@@ -89,7 +97,14 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
             ErrorUnit.println(tag, e);
         }
     }
+    private List<GpsInfo> getListGps()
+    {
+        if(info!=null)
+            return SysApplication.getInstance().getSqLiteHelper().getGpsInfoList(info.getId());
+        else
+            return new ArrayList<>();
 
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -97,13 +112,13 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
                 finish();
                 break;
             case R.id.bt_order_reUp:
-                LoadLine reLoadLine = readLoadLine(info);
-                if (reLoadLine.getListGps().size() > 0) {
+
+                if (hisList!=null&&hisList.size() > 0) {
                     showToastLength("正在补传数据.....");
                     StringUnit.println(tag, "正在补传数据.....");
                     StringUnit.println(tag, "补传对象|" + GsonUnit.toJson(info));
                     this.getBtReUp().setEnabled(false);
-                    HttpRequestTask.reUpGps(this, Route.bulidListJson(info, reLoadLine.getListGps()));
+                    HttpRequestTask.reUpGps(this, Route.bulidListJson(info, hisList));
                 } else {
                     StringUnit.println(tag, "补传数据为空");
                     showToast("补传数据为空");
@@ -112,15 +127,15 @@ public class HisOrderDetailActivity extends AbstractBasicActivity {
         }
     }
 
-    private LoadLine readLoadLine(Order o) {
-        LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
-        if (loadLine == null) {
-            loadLine = new LoadLine(o);
-           // FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
-        }
-
-        return loadLine;
-    }
+//    private LoadLine readLoadLine(Order o) {
+//        LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+//        if (loadLine == null) {
+//            loadLine = new LoadLine(o);
+//           // FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+//        }
+//
+//        return loadLine;
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

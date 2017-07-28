@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.abstraction.AbstractBasicActivity;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.adapter.OrderDetailAdapter;
@@ -59,6 +60,7 @@ import cn.com.grentech.specialcar.service.ServiceMoitor;
 import lombok.Getter;
 
 import static android.R.attr.data;
+import static android.R.attr.max;
 import static android.R.attr.order;
 import static android.os.Build.VERSION_CODES.M;
 import static android.view.KeyEvent.KEYCODE_HOME;
@@ -138,14 +140,9 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             info = loadLocalOrder();
             StringUnit.println(tag, "loadLocalOrder|" + GsonUnit.toJson(info));
         }
-        LoadLine loadLine = readLoadLine(info);
-        if (loadLine == null) {
-            loadLine = new LoadLine(info);
-            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
-            FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine);
-        }
+
         if (info != null && (info.getFlag() == OrderStatus.RunOrder.getValue() || info.getFlag() == OrderStatus.PauseOrder.getValue() || info.getFlag() == OrderStatus.NewOrder.getValue())) {
-            Double d = loadLine.getTotalDistance();
+            Double d = queryDistanceTotal();
             btReUp.setVisibility(View.INVISIBLE);
             info.setMileage(d);
             contanier.setVisibility(View.VISIBLE);
@@ -168,11 +165,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             }
 
         } else {
-            if (loadLine.getListGps().size() > 0)
-                btReUp.setVisibility(View.VISIBLE);
-            else
-                btReUp.setVisibility(View.INVISIBLE);
-            contanier.setVisibility(View.GONE);
+
         }
         listView.setAdapter(orderDetailAdapter);
         orderDetailAdapter.update(info);
@@ -184,6 +177,22 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         unregisterReceiver(broadcastReceiver);
         AlarmUnit.cancelAlarm();
         super.onDestroy();
+    }
+
+    private double queryDistanceTotal() {
+        double i = 0;
+        try {
+
+            GpsInfo gpsInfo = SysApplication.getInstance().getSqLiteHelper().getMaxCreateTimeGPSInfo(info.getId());
+            if (gpsInfo != null)
+                i = gpsInfo.getDistance();
+
+            return Math.max(i, info.getMileage());
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+            return i;
+        }
+
     }
 
     @Override
@@ -207,17 +216,21 @@ public class OrderDetailActivity extends AbstractBasicActivity {
             case R.id.bt_order_finish:
                 StringUnit.println(tag, "click finish!!");
                 showToastLength("正在结束订单请稍等.....");
-                LoadLine loadLine = readLoadLine(info);
-                Double d;
-                if (loadLine != null) {
-                    d = loadLine.getTotalDistance();
-                    HttpRequestTask.upGps(this, Route.bulidListJson(info, loadLine.getListGps()));
-                } else
-                    d = this.getOrderDetailAdapter().getMileage();
+
+                HttpRequestTask.upGps(this, Route.bulidListJson(info, getListGps()));
+                Double d = this.getOrderDetailAdapter().getMileage();
                 HttpRequestTask.orderFinish(this, info.getId(), d, "F" + ViewUnit.getVersionCode(this.getApplicationContext()), OrderStatus.FinishOrder.getValue());
                 break;
 
         }
+    }
+
+    private List<GpsInfo> getListGps() {
+        if (info != null)
+            return SysApplication.getInstance().getSqLiteHelper().getGpsInfoList(info.getId());
+        else
+            return new ArrayList<>();
+
     }
 
     private Order loadLocalOrder() {
@@ -280,24 +293,24 @@ public class OrderDetailActivity extends AbstractBasicActivity {
         stopService(ServiceLogin.class);
     }
 
-    private LoadLine readLoadLine(Order o) {
-        LoadLine loadLine = null;
-        try {
-            loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
-        } catch (Exception e) {
-            try {
-                loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName());
-                if (loadLine.getOrderinfo().getId() != o.getId()) {
-                    return null;
-                }
-            } catch (Exception e1) {
-                ErrorUnit.println(tag, e1);
-            }
-            ErrorUnit.println(tag, e);
-        }
-
-        return loadLine;
-    }
+//    private LoadLine readLoadLine(Order o) {
+//        LoadLine loadLine = null;
+//        try {
+//            loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+//        } catch (Exception e) {
+//            try {
+//                loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName());
+//                if (loadLine.getOrderinfo().getId() != o.getId()) {
+//                    return null;
+//                }
+//            } catch (Exception e1) {
+//                ErrorUnit.println(tag, e1);
+//            }
+//            ErrorUnit.println(tag, e);
+//        }
+//
+//        return loadLine;
+//    }
 
     private void registReceiver() {
         broadcastReceiver = new BroadcastReceiver() {
@@ -341,7 +354,7 @@ public class OrderDetailActivity extends AbstractBasicActivity {
                                         Thread.sleep(1000);
                                         NetworkUnit.ping();
                                     } catch (Exception e) {
-                                        ErrorUnit.println(tag,e);
+                                        ErrorUnit.println(tag, e);
                                     }
                                 }
                             }).start();

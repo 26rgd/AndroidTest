@@ -85,22 +85,22 @@ public class LoginInfo implements Serializable {
     }
 
 
-    public static void saveLoadLine(Context context, LoadLine info) {
-        SharedPreferences.Editor editor = context.getApplicationContext().getSharedPreferences(LoadLine.class.getSimpleName(), MODE_PRIVATE).edit();
-        editor.putString(info.getOrderinfo().getId()+"", GsonUnit.toJson(info));
-        editor.commit();
-    }
-
-    public static LoadLine readLoadLine(Context context, Order info) {
-
-        SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences(LoadLine.class.getSimpleName(), MODE_PRIVATE);
-        String data = sharedPreferences.getString(info.getId()+"", "No LoadLine");
-        try {
-            StringUnit.println(tag, data);
-            return (LoadLine) GsonUnit.toObject(data, LoadLine.class);
-        } catch (Exception e) {
-            ErrorUnit.println(tag,e);
-            return null;
-        }
-    }
+//    public static void saveLoadLine(Context context, LoadLine info) {
+//        SharedPreferences.Editor editor = context.getApplicationContext().getSharedPreferences(LoadLine.class.getSimpleName(), MODE_PRIVATE).edit();
+//        editor.putString(info.getOrderinfo().getId()+"", GsonUnit.toJson(info));
+//        editor.commit();
+//    }
+//
+//    public static LoadLine readLoadLine(Context context, Order info) {
+//
+//        SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences(LoadLine.class.getSimpleName(), MODE_PRIVATE);
+//        String data = sharedPreferences.getString(info.getId()+"", "No LoadLine");
+//        try {
+//            StringUnit.println(tag, data);
+//            return (LoadLine) GsonUnit.toObject(data, LoadLine.class);
+//        } catch (Exception e) {
+//            ErrorUnit.println(tag,e);
+//            return null;
+//        }
+//    }
 }

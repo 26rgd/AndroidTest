@@ -48,7 +48,7 @@ public class GpsInfo implements Serializable {
     public String toString()
     {
         try {
-            return  "Usable:"+lat+"|"+lng+"|"+accuracy+"|"+speed+"|"+createTime+":"+ DateUnit.formatDate(createTime,"yyyy-MM-dd HH:mm:ss");
+            return  "Usable:"+lat+"|"+lng+"|"+accuracy+"|"+distance+"|"+createTime+":"+ DateUnit.formatDate(createTime,"yyyy-MM-dd HH:mm:ss");
         }catch (Exception e)
         {
             ErrorUnit.println(tag,e);

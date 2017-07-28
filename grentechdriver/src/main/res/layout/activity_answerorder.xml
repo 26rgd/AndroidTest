@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bk_answerorder">
+
+    <ImageView
+        android:layout_width="@dimen/ImageHeadMidle"
+        android:layout_height="@dimen/ImageHeadMidle"
+        app:srcCompat="@android:drawable/ic_delete"
+        android:layout_margin="@dimen/margin"
+        android:layout_gravity="right"
+        android:scaleType="fitXY"
+        android:id="@+id/imageView4" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <include layout="@layout/answerorder_item"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ></include>
+        </LinearLayout>
+        <TextView
+            android:text=""
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#727983"
+            android:id="@+id/textView20" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <include layout="@layout/answerorder_item"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ></include>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/custtexture"
+            android:id="@+id/imageView5"
+            android:scaleType="fitXY"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_weight="1">
+            <include layout="@layout/answerorder_item"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ></include>
+
+            <include layout="@layout/answerorder_item"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ></include>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_login_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_clickcolor_radius"
+        android:text="抢单"
+        android:textColor="@color/textColorDefautl"
+        android:textSize="@dimen/textSize"
+        android:textStyle="bold" />
+
+</LinearLayout>

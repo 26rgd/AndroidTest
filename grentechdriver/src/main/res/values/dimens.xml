@@ -20,9 +20,12 @@
     <dimen name="marginBottom5">5dp</dimen>
     <dimen name="margin5">5dp</dimen>
 
+    <dimen name="heighRegisterLine">50dp</dimen>
+
     <dimen name="textSizeCallCar">14sp</dimen>
     <dimen name="textSize">18sp</dimen>
     <dimen name="textSizeTitle">20sp</dimen>
+    <dimen name="textSizeAnswer">25sp</dimen>
 
     <dimen name="TitleImageSize">24dp</dimen>
     <dimen name="TitleBackImageSize">36dp</dimen>

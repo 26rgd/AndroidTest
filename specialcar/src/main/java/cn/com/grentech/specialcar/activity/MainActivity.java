@@ -208,7 +208,7 @@ public class MainActivity extends AbstractBasicActivity {
             public void run() {
                 try {
                     File file = FileUnit.getFileFromServer(HttpRequestTask.apkurl, pd);
-                    sleep(3000);
+                    sleep(1000);
                     installApk(file);
                     pd.dismiss(); //结束掉进度条对话框
                 } catch (Exception e) {
@@ -226,14 +226,15 @@ public class MainActivity extends AbstractBasicActivity {
         Uri uriUpFile;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uriUpFile, this.getContentResolver().getType(uriUpFile));
         } else {
             uriUpFile = Uri.fromFile(file);
+            intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        //Uri uriUpFile=Uri.fromFile(file);
-        //执行的数据类型
-        intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
-        startActivityForResult(intent, 12);
+        startActivity(intent);
     }
 
 
@@ -250,14 +251,16 @@ public class MainActivity extends AbstractBasicActivity {
         File file = new File(apksavepath, "updata.apk");
         if (!file.exists())
             StringUnit.println(tag, "file not exists");
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         //执行动作
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      //  intent.setAction(Intent.ACTION_VIEW);
+       // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri uriUpFile = AbstractFileProviders.getUriForFile(this.getApplicationContext(), "cn.com.grentech.specialcar.abstraction.AbstractFileProviders", file);
         //执行的数据类型
         intent.setDataAndType(uriUpFile, "application/vnd.android.package-archive");
-        // startActivity(intent);
-        startActivityForResult(intent, 12);
+        startActivity(intent);
+      //  startActivityForResult(intent, 12);
     }
 }

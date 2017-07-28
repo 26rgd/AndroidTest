@@ -17,8 +17,8 @@ import java.util.List;
  * Created by Administrator on 2017/5/9.
  */
 
-public class PopupWindowAdapter extends AbstractAdpter {
-    public PopupWindowAdapter(Context context, List data, int itemres) {
+public class MineAdapter extends AbstractAdpter {
+    public MineAdapter(Context context, List data, int itemres) {
 
         super(context, data, itemres);
        // this.data.add(PopuWindowInfo.UserInfo);
@@ -45,10 +45,10 @@ public class PopupWindowAdapter extends AbstractAdpter {
     }
     public enum PopuWindowInfo {
         UserInfo("资料", R.drawable.icon_head_mine, 0),
-        Order("行程",R.drawable.icon_trip_mine, 1),
-        Service("客服",R.drawable.icon_service_mine,2),
+        Order("订单",R.drawable.icon_trip_mine, 1),
+        Service("客服中心",R.drawable.icon_service_mine,2),
         Setting("设置",R.drawable.icon_set_mine,3),
-        PayOff("支付",R.drawable.icon_payment_mine,4);
+        PayOff("我的车辆",R.drawable.icon_payment_mine,4);
         String name;
         int iconRes;
         int index;

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WHITE"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@android:drawable/progress_indeterminate_horizontal"
+            android:id="@+id/imageView3" />
+
+        <ImageView
+            android:layout_width="@dimen/TitleBackImageSize"
+            android:layout_height="@dimen/TitleBackImageSize"
+            android:src="@drawable/btn_back"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_title_back" />
+
+        <com.powercn.grentechdriver.view.CircleImageView
+            android:layout_width="@dimen/ImageHeadLarge"
+            android:layout_height="@dimen/ImageHeadLarge"
+            android:src="@drawable/icon_head_mine"
+            android:layout_gravity="center"
+
+            android:id="@+id/iv_head" />
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/lv_mine"
+        android:background="@color/maintitlebackcolor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

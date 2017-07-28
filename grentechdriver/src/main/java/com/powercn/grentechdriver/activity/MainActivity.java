@@ -5,45 +5,31 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
 import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
-import com.powercn.grentechdriver.activity.mainmap.DeteTimeView;
 import com.powercn.grentechdriver.activity.mainmap.UserInfoView;
-import com.powercn.grentechdriver.adapter.PopupWindowAdapter;
+import com.powercn.grentechdriver.adapter.MineAdapter;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.common.unit.ErrorUnit;
-import com.powercn.grentechdriver.common.unit.GsonUnit;
-import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.common.unit.ViewUnit;
 import com.powercn.grentechdriver.common.websocket.WebSocketTask;
-import com.powercn.grentechdriver.entity.AddressInfo;
 import com.powercn.grentechdriver.entity.LoginInfo;
 import com.powercn.grentechdriver.entity.ResponseUerInfo;
 import com.powercn.grentechdriver.handle.GlobalHandler;
-import com.powercn.grentechdriver.handle.MainMessageHandler;
 import com.powercn.grentechdriver.view.CircleImageView;
-
-import org.java_websocket.drafts.Draft_17;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.net.URI;
-import java.util.List;
 
 
 /**
@@ -67,7 +53,7 @@ public class MainActivity extends AbstractBasicActivity {
     public Bitmap upBitmap;
     private CircleImageView circleImageView;
     private ListView leftMenu;
-    private PopupWindowAdapter leftAdapter;
+    private MineAdapter leftAdapter;
 
     WebSocketTask c = null;
 
@@ -100,7 +86,7 @@ public class MainActivity extends AbstractBasicActivity {
     @Override
     protected void initData() {
         initDrawer();
-        leftAdapter=new PopupWindowAdapter(this,null,R.layout.mainside_popupwindow_item);
+        leftAdapter=new MineAdapter(this,null,R.layout.mainside_popupwindow_item);
         leftMenu.setAdapter(leftAdapter);
     }
 

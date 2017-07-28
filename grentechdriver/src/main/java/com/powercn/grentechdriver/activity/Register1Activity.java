@@ -1,10 +1,8 @@
 package com.powercn.grentechdriver.activity;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,29 +14,26 @@ import com.powercn.grentechdriver.abstration.AbstratorHandler;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.entity.LoginInfo;
 import com.powercn.grentechdriver.handle.GlobalHandler;
-import com.powercn.grentechdriver.handle.LoginMessageHandler;
-
-import lombok.Getter;
 
 /**
- * Created by Administrator on 2017/6/1.
+ * Created by Administrator on 2017/7/27.
  */
 
-
-@Getter
-public class LoginActivity extends AbstractBasicActivity {
+public class Register1Activity extends AbstractBasicActivity {
     private ImageView iv_title_back;
     private EditText tv_login_phone;
     private EditText tv_login_crc;
     private TextView bt_login_crc_send;
-    private Button bt_login_submit;
+    private TextView tv_title_back_hint;
     private TextView tv_login_register;
+    private Button bt_login_submit;
+
 
     public String deviceuuid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState,R.layout.activity_loginnew);
+        super.onCreate(savedInstanceState, R.layout.activity_loginnew);
     }
 
     @Override
@@ -47,6 +42,7 @@ public class LoginActivity extends AbstractBasicActivity {
         tv_login_phone = (EditText) findViewById(R.id.tv_login_phone);
         tv_login_crc = (EditText) findViewById(R.id.tv_login_crc);
         bt_login_crc_send = (TextView) findViewById(R.id.bt_login_crc_send);
+        tv_title_back_hint = (TextView) findViewById(R.id.tv_title_back_hint);
         tv_login_register = (TextView) findViewById(R.id.tv_login_register);
         bt_login_submit = (Button) findViewById(R.id.bt_login_submit);
     }
@@ -56,13 +52,14 @@ public class LoginActivity extends AbstractBasicActivity {
         iv_title_back.setOnClickListener(this);
         bt_login_crc_send.setOnClickListener(this);
         bt_login_submit.setOnClickListener(this);
-        tv_login_register.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-
         deviceuuid = LoginInfo.getUuid(this);
+        tv_title_back_hint.setText("注册");
+        bt_login_submit.setText("下一步");
+        tv_login_register.setVisibility(View.INVISIBLE);
 
     }
 
@@ -83,15 +80,10 @@ public class LoginActivity extends AbstractBasicActivity {
                 HttpRequestTask.getSmsCrc(this,tv_login_phone.getText().toString());
                 break;
             case R.id.bt_login_submit:
-                HttpRequestTask.loginBySms(this,tv_login_phone.getText().toString(),tv_login_crc.getText().toString(),deviceuuid);
-                break;
-
-            case R.id.tv_login_register:
-                jumpForResult(Register1Activity.class,1);
+                jumpForResult(Register2Activity.class,11);
+               // HttpRequestTask.loginBySms(this,tv_login_phone.getText().toString(),tv_login_crc.getText().toString(),deviceuuid);
                 break;
         }
 
     }
-
-
 }

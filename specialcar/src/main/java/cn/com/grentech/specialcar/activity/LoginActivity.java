@@ -74,14 +74,16 @@ public class LoginActivity extends AbstractBasicActivity {
         tvFindPassword.setOnClickListener(this);
         btLogin.setOnClickListener(this);
         SysApplication.getInstance().getSqLiteHelper().deleteTenDaysAgo();
-        StringUnit.println(tag,SysApplication.getInstance().getSqLiteHelper().getCount()+"");
+        StringUnit.println(tag,"GPS纪录"+SysApplication.getInstance().getSqLiteHelper().getCount()+"条");
+        List<GpsInfo> list=SysApplication.getInstance().getSqLiteHelper().getGpsInfoList(715);
+        for(GpsInfo gpsInfo:list)
+        {
+            StringUnit.println(tag,gpsInfo.toString());
+        }
 
     }
 
-    private LoadLine readLoadLine(int id) {
-        LoadLine loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + id);
-        return loadLine;
-    }
+
     @Override
     protected void initData() {
         abstratorHandler=new LoginMessageHandler(this);

@@ -140,7 +140,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public GpsInfo getMaxCreateTimeGPSInfo(int orderid) {
         GpsInfo gpsInfo = null;
-        Cursor cursor = this.queryMaxCreateTimeByOrderid(609);
+        Cursor cursor = this.queryMaxCreateTimeByOrderid(orderid);
         while (cursor.moveToNext()) {
             gpsInfo = this.getGpsInfo(cursor);
             break;

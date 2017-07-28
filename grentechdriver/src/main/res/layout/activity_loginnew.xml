@@ -16,83 +16,115 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/TitleHeight"></include>
 
-    <ScrollView
-        android:id="@+id/sv_login_form1"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+    <LinearLayout
+        android:id="@+id/la_login_form1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/WHITE">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="@dimen/margin5"
+        android:layout_marginRight="@dimen/margin5"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/la_login_form1"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin5">
 
-            <android.support.design.widget.TextInputLayout
+            <ImageView
+                android:layout_width="@dimen/ImageHeadLarge"
+                android:layout_height="@dimen/ImageHeadLarge"
+                app:srcCompat="@drawable/icon_phone_dengdai"
+                android:id="@+id/imageView"
+                android:layout_weight="1" />
+
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#BDBDBD">
-                <AutoCompleteTextView
-                    android:id="@+id/tv_login_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_usmane"
-                    android:text="13800138000"
-                    android:textColor="#BDBDBD"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:theme="@style/TaxiEditText"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:ems="10"
+                android:background="@null"
+                android:textColor="@color/BLACK"
+                android:hint="请输入手机号"
+                android:id="@+id/tv_login_phone"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+        <include layout="@layout/activity_divisive"></include>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin5"
+            android:layout_marginBottom="@dimen/margin5">
+
+            <ImageView
+                android:layout_width="@dimen/ImageHeadLarge"
+                android:layout_height="@dimen/ImageHeadLarge"
+                app:srcCompat="@drawable/icon_message"
+                android:id="@+id/imageView2"
+                android:layout_weight="1" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/form_login_form2">
+                android:layout_weight="1">
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#BDBDBD"
-                    >
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:background="@null"
+                    android:hint="请输入验证码"
+                    android:textColor="@color/BLACK"
+                    android:id="@+id/tv_login_crc" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/tv_login_crc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_crc"
-                        android:textColor="#BDBDBD"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:theme="@style/TaxiEditText"
-                        android:layout_weight="1" />
-                </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:text="发送"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bt_login_crc_send"
-                    android:background="@drawable/btn_clickcolor"
-                    android:textColor="@color/textColorDefautl"
-                    android:layout_marginEnd="3dp"
-                    android:layout_gravity="end"/>
+                    android:layout_height="match_parent">
 
+                    <include layout="@layout/activity_divisive_h"
+                         ></include>
+
+                    <TextView
+                        android:text="获取验证码"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize"
+                        android:textColor="@color/textColorRegedit"
+                        android:id="@+id/bt_login_crc_send"
+                        android:layout_weight="1" />
+                </LinearLayout>
             </FrameLayout>
-
-            <Button
-                android:id="@+id/bt_login_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/action_sign_in"
-                android:textColor="@color/textColorDefautl"
-                android:background="@drawable/btn_clickcolor"
-                android:textStyle="bold" />
         </LinearLayout>
-    </ScrollView>
+        <include layout="@layout/activity_divisive"></include>
+        <TextView
+            android:text="司机注册"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:textSize="@dimen/textSizeTitle"
+            android:textColor="@color/textColorRegedit"
+            android:id="@+id/tv_login_register" />
+
+        <Button
+            android:id="@+id/bt_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/action_sign_in"
+            android:textSize="@dimen/textSize"
+            android:textColor="@color/textColorDefautl"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.grentech.specialcar.R;
+import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.activity.LoginActivity;
@@ -46,6 +47,7 @@ import cn.com.grentech.specialcar.entity.RouteGpsInfo;
 import cn.com.grentech.specialcar.other.GpsFilter;
 
 import static android.R.attr.data;
+import static android.R.attr.id;
 import static android.R.attr.order;
 import static android.app.Service.START_REDELIVER_INTENT;
 import static cn.com.grentech.specialcar.entity.GpsInfo.bulidGpsInfo;
@@ -62,14 +64,14 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     public final static int minDis = 18;
     private Boolean isFisrt = true;
     private Order info;
-    private LoadLine loadLine;
+    //    private LoadLine loadLine;
     private GpsInfo lastAddr;
     private int gpsCount = 0;
     private int saveLoadLineCount = 0;
     private int saveLoadLineCountBak = 0;
     private List<GpsInfo> uPList = new ArrayList<>();
     private List<GpsInfo> gps = new ArrayList<>();
-    private double  distanceTotal=0.0;
+    private double distanceTotal = 0.0;
 
     @Override
     public void onCreate() {
@@ -157,10 +159,8 @@ public class ServiceGPS extends AbstractService implements LocationListener {
 
     private void stopGps() {
         if (locationManager != null) {
-
             StringUnit.println(tag, "stopGps");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
                 Toast.makeText(this, "", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -180,7 +180,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
     private void starGPS() {
         if (locationManager == null) {
             StringUnit.println(tag, "starGPS");
-            readLoadLine(info);
+            distanceTotal = queryDistanceTotal();
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             List<String> providers = locationManager.getProviders(true);
             if (providers.contains(LocationManager.GPS_PROVIDER)) {
@@ -192,47 +192,65 @@ public class ServiceGPS extends AbstractService implements LocationListener {
                 StringUnit.println(tag, "无可用定位源");
             }
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
                 showToastLength("GPS被禁用无法定位");
                 StringUnit.println(tag, "GPS被禁用无法定位");
                 return;
             }
             showToast("start " + locationProvider.trim().toUpperCase());
-            locationManager.requestLocationUpdates(locationProvider.trim(), 6500, 0, this);
-            Location location = locationManager.getLastKnownLocation(locationProvider);
+            locationManager.requestLocationUpdates(locationProvider.trim(), 4000, 0, this);
         }
     }
 
-    private LoadLine readLoadLine(Order o) {
-        if (loadLine == null) {
-            loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
-            if (loadLine == null) {
-                loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName());
-                if (loadLine != null && loadLine.getOrderinfo().getId() != o.getId())
-                    loadLine = null;
-            }
-            if (loadLine == null) {
-                loadLine = new LoadLine(o);
-                FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
-                FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine);
-            }
+//    private double queryDistanceTotal() {
+//        GpsInfo gpsInfo = SysApplication.getInstance().getSqLiteHelper().getMaxCreateTimeGPSInfo(info.getId());
+//        if (gpsInfo == null)
+//            return 0;
+//        else
+//            return gpsInfo.getDistance();
+//    }
+
+    private double queryDistanceTotal() {
+        double i = 0;
+        try {
+            GpsInfo gpsInfo = SysApplication.getInstance().getSqLiteHelper().getMaxCreateTimeGPSInfo(info.getId());
+            if (gpsInfo != null)
+                i = gpsInfo.getDistance();
+            return Math.max(i, info.getMileage());
+        } catch (Exception e) {
+            ErrorUnit.println(tag, e);
+            return i;
         }
-
-
-        return loadLine;
     }
+//    private LoadLine readLoadLine(Order o) {
+//        if (loadLine == null) {
+//            loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName() + info.getId());
+//            if (loadLine == null) {
+//                loadLine = (LoadLine) FileUnit.readSeriallizable(LoadLine.class.getSimpleName());
+//                if (loadLine != null && loadLine.getOrderinfo().getId() != o.getId())
+//                    loadLine = null;
+//            }
+//            if (loadLine == null) {
+//                loadLine = new LoadLine(o);
+//                FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine);
+//                FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine);
+//            }
+//        }
+//
+//
+//        return loadLine;
+//    }
 
-    private void saveLoadLine(Order o, GpsInfo g, LoadLine loadLine1) {
-        if (loadLine1 == null) return;
-        loadLine1.addGps(g);
-        FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine1);
-    }
-
-    private void saveLoadLinebak(Order o, GpsInfo g, LoadLine loadLine1) {
-        if (loadLine1 == null) return;
-        loadLine1.addGps(g);
-        FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine1);
-    }
+//    private void saveLoadLine(Order o, GpsInfo g, LoadLine loadLine1) {
+//        if (loadLine1 == null) return;
+//        loadLine1.addGps(g);
+//        FileUnit.saveSeriallizable(LoadLine.class.getSimpleName() + info.getId(), loadLine1);
+//    }
+//
+//    private void saveLoadLinebak(Order o, GpsInfo g, LoadLine loadLine1) {
+//        if (loadLine1 == null) return;
+//        loadLine1.addGps(g);
+//        FileUnit.saveSeriallizable(LoadLine.class.getSimpleName(), loadLine1);
+//    }
 
 
     private void showLocation(Location location) {
@@ -244,8 +262,7 @@ public class ServiceGPS extends AbstractService implements LocationListener {
         }
         if (isFisrt) {//丢弃第一包
             isFisrt = false;
-            StringUnit.println(tag, "GPS启动一次 | " + (loadLine.getIndex() + 1));
-            loadLine.setIndex(loadLine.getIndex() + 1);
+            StringUnit.println(tag, "GPS启动一次 ");
             return;
         }
 
@@ -256,52 +273,44 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             last = gps.get(size - 1);
         } else {
             gps.add(gi);
-           // saveLoadLine(info, gi, loadLine);
-            //  String datas=GsonUnit.toJson(gi);
-            // FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas, Context.MODE_APPEND);
+            gi.setPredistance(0);
+            gi.setDistance(distanceTotal);
+            insertGpsInfo(info.getId(), gi);
+            String datas = GsonUnit.toJson(gi);
+            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas, Context.MODE_APPEND);
         }
         double dis = GpsFilter.gpsDistance(last, gi);
         double speed = GpsFilter.gpsSpeed(last, gi);
-        // double angle = GpsFilter.gpsAngle(last, gi);//angle会生成 NaN
         gi.setSpeed((float) speed);
         gi.setPredistance(dis);
-        // gi.setAngle(angle);
         lastAddr = gi;
         if (uPList == null)
             uPList = new ArrayList<>();
         if (dis <= minDis || speed >= speedLimit) {
             // 超138Km 或者小于20米的点丢掉,以下代码表示是否上传点.但实际是不参与距离计算的.主要是想后期进行精度过滤
-//            StringUnit.println(tag,gi.toString());
-//            String datas=GsonUnit.toJson(gi);
-//            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
-//            uPList.add(gi);
         } else {
             gps.add(gi);
-            saveLoadLineCount = saveLoadLineCount + 1;
-            if (saveLoadLineCount >= 3) {//saveLoadLinebak 和 saveLoadLine 同时只能进行一个
-                saveLoadLine(info, gi, loadLine);
-                saveLoadLineCount = 0;
-            } else {
-                saveLoadLineCountBak = saveLoadLineCountBak + 1;
-                if (saveLoadLineCountBak >= 3) {
-                    saveLoadLinebak(info, gi, loadLine);
-                    saveLoadLineCountBak = 0;
-                }
-            }
+            distanceTotal = distanceTotal + dis;
+            gi.setDistance(distanceTotal);
+            insertGpsInfo(info.getId(), gi);
             StringUnit.println(tag, gi.toString());
-            // String datas=GsonUnit.toJson(gi);
-            //  FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
+            String datas = GsonUnit.toJson(gi);
+            FileUnit.writeAppDataFile(this.getApplicationContext(), info.getId() + ".dat", datas + "\r\n", Context.MODE_APPEND);
             uPList.add(gi);
             upGps(info);
         }
         sendAddr(lastAddr);
-        double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
+        sendDistance(distanceTotal);
+        StringUnit.println(tag, "ShowLocationEnd");
+    }
+
+    private void sendDistance(double distance) {
+        // double distance = loadLine == null ? 0.0 : loadLine.getTotalDistance();
         Intent intent = new Intent();
         intent.setAction(MainBroadcastReceiver.action_GPS);
         intent.putExtra(MainBroadcastReceiver.action_GPS_key, distance);
         intent.putExtra(MainBroadcastReceiver.action_GPS_orderId, info.getId());
         sendBroadcast(intent);
-        StringUnit.println(tag, "ShowLocationEnd");
     }
 
     private void upGps(final Order o) {
@@ -332,6 +341,10 @@ public class ServiceGPS extends AbstractService implements LocationListener {
             }
         }
         gpsCount = gpsCount + 1;
+    }
+
+    private void insertGpsInfo(int orderId, GpsInfo gpsInfo) {
+        SysApplication.getInstance().getSqLiteHelper().insert(orderId, gpsInfo);
     }
 
     @Override

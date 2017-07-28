@@ -283,7 +283,7 @@ public class HttpRequestTask {
         try {
            // StringUnit.println(tag,requestConfig.abstractBasicActivity.getLocalClassName());
             StringUnit.println(tag,requestConfig.abstractBasicActivity.getAbstratorHandler().getClass().getName());
-        }catch (Exception e){  ErrorUnit.println(tag,e);}
+        }catch (Exception e){  }
         MainBackGroundTask mAuthTask = new MainBackGroundTask();
         mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestConfig);
     }
