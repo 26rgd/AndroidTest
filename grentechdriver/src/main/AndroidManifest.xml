@@ -36,38 +36,20 @@
             android:name="com.amap.api.v2.apikey"
             android:value="8dcaa91885b639adc83a28858e5187f0"></meta-data>
 
-        <activity android:name=".activity.MainActivity">
-        </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.NoTitle">
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.SettingActivity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
-
-        <activity
-            android:name=".activity.Register1Activity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
-        <activity
-            android:name=".activity.Register2Activity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
-        <activity
-            android:name=".activity.MineActivity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
-        <activity
-            android:name=".activity.AnswerOrderActivity"
-            android:theme="@style/Theme.NoTitle">
-        </activity>
+        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.Register1Activity"></activity>
+        <activity android:name=".activity.Register2Activity"></activity>
+        <activity android:name=".activity.MineActivity"></activity>
+        <activity android:name=".activity.AnswerOrderActivity"></activity>
+        <activity android:name=".activity.OrderListActivity"></activity>
     </application>
 
 </manifest>

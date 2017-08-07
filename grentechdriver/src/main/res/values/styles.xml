@@ -18,6 +18,7 @@
         <!--<item name="android:windowAnimationStyle">@style/activityAnimation</item>-->
         <item name="android:textColorHint">@color/GRAY</item>
         <item name="android:textColor">@color/BLACK</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
     </style>
 
     <style name="Theme.NoTitleTranslucent" parent="AppTheme">
@@ -116,7 +117,7 @@
         <item name="android:layout_marginBottom">@dimen/marginBottom</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:textColor">@color/textColorRegisterLabel</item>
-        <item name="android:textSize">@dimen/textSize</item>
+        <item name="android:textSize">@dimen/textMainSize0</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -126,8 +127,8 @@
         <item name="android:layout_marginLeft">@dimen/marginBottom</item>
         <item name="android:layout_marginRight">@dimen/marginBottom</item>
         <item name="android:textColor">@color/textColorRegisterLabel</item>
-        <item name="android:textSize">@dimen/textSize</item>
-        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/textMainSize0</item>
+        <item name="android:gravity">left|center_vertical</item>
         <item name="android:background">@null</item>
     </style>
 

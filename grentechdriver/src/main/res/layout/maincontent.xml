@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin10"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin10">
+
+        <com.powercn.grentechdriver.view.CircleImageView
+            android:id="@+id/lv_main_head"
+            android:layout_width="@dimen/ImageMainIconSize"
+            android:layout_height="@dimen/ImageMainIconSize"
+            android:layout_marginLeft="1dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_head_siji1" />
+
+        <TextView
+            android:id="@+id/tv_main_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="8月2日 星期三"
+            android:textColor="@color/textColorMain1"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:background="@drawable/layout_cir"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <include layout="@layout/up_textview"
+            android:id="@+id/uv_main1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_main_mid"
+                android:layout_width="1dp"
+                android:layout_height="63dp"
+                android:background="#727983"
+                android:layout_centerInParent="true"
+
+                android:text="" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/tv_main_mid"
+                android:gravity="center">
+
+                <include layout="@layout/up_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/uv_main2"></include>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/tv_main_mid"
+                android:gravity="center">
+
+                <include layout="@layout/up_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/uv_main3"></include>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_cir"
+        android:layout_marginTop="@dimen/margin"
+        android:orientation="horizontal">
+
+        <include layout="@layout/item_view1"
+            android:id="@+id/item_view1"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_cir"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <include layout="@layout/item_view1"
+            android:id="@+id/item_view2"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"></include>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bt_main_listen"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/textColorMain1"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:text="出车" />
+
+        <TextView
+            android:text="听单中"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_main_listen"
+            android:layout_above="@+id/bt_main_listen"
+            android:layout_marginBottom="@dimen/margin10"
+            android:textColor="@color/textColorMain1"
+            android:textSize="@dimen/textMainSize0"
+            android:gravity="center"
+             />
+    </RelativeLayout>
+
+</LinearLayout>

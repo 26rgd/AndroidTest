@@ -2,6 +2,8 @@ package com.powercn.grentechdriver.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.powercn.grentechdriver.R;
@@ -28,7 +30,12 @@ public class MineActivity extends AbstractBasicActivity {
 
     @Override
     protected void bindListener() {
-
+  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+          finish();
+      }
+  });
     }
 
     @Override

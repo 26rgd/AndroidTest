@@ -20,6 +20,7 @@ import cn.com.grentech.specialcar.error.UnError;
 import cn.com.grentech.specialcar.service.ServiceAddr;
 import cn.com.grentech.specialcar.service.ServiceGPS;
 import cn.com.grentech.specialcar.sqllite.SQLiteHelper;
+import cn.jpush.android.api.JPushInterface;
 import lombok.Getter;
 
 import static android.R.attr.x;
@@ -30,6 +31,7 @@ import static android.R.attr.x;
 
 public class SysApplication extends Application {
     private String tag=this.getClass().getName();
+    @Getter
     private List<Activity> list = new ArrayList<>();
     @Getter
     private Context context;
@@ -49,6 +51,8 @@ public class SysApplication extends Application {
             StringUnit.println(tag, "RELEASE|"+Build.VERSION.RELEASE);
             StringUnit.println(tag, "BRAND|"+Build.BRAND);
             sqLiteHelper=new SQLiteHelper(this.getApplicationContext());
+            JPushInterface.setDebugMode(true);
+            JPushInterface.init(this);
         }catch (Exception e)
         {
             ErrorUnit.println(tag,e);

@@ -1,6 +1,7 @@
 package com.powercn.grentechdriver.common.unit;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -25,6 +26,35 @@ public class DateUnit {
             e.printStackTrace();
             return new Date();
         }
+
+    }
+
+    public static String getDisplayNow()
+    {
+        Calendar calendar=Calendar.getInstance();
+        int month=calendar.get(Calendar.MONTH)+1;
+        int day=calendar.get(Calendar.DAY_OF_MONTH);
+        int week=calendar.get(Calendar.DAY_OF_WEEK);
+        String mWay="";
+        if(1==week){
+            mWay ="天";
+        }else if(2==week){
+            mWay ="一";
+        }else if(3==week){
+            mWay ="二";
+        }else if(4==week){
+            mWay ="三";
+        }else if(5==week){
+            mWay ="四";
+        }else if(6==week){
+            mWay ="五";
+        }else if(7==week){
+            mWay ="六";
+        }
+
+
+            return StringUnit.supplement(true,month+"","0",2)+"月"+StringUnit.supplement(true,day+"","0",2)+"日  星期"+mWay;
+
 
     }
 }

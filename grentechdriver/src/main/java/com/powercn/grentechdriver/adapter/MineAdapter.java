@@ -22,8 +22,8 @@ public class MineAdapter extends AbstractAdpter {
 
         super(context, data, itemres);
        // this.data.add(PopuWindowInfo.UserInfo);
-        this.data.add(PopuWindowInfo.Order);
         this.data.add(PopuWindowInfo.PayOff);
+        this.data.add(PopuWindowInfo.MyCar);
         this.data.add(PopuWindowInfo.Service);
         this.data.add(PopuWindowInfo.Setting);
         this.notifyDataSetChanged();
@@ -46,9 +46,11 @@ public class MineAdapter extends AbstractAdpter {
     public enum PopuWindowInfo {
         UserInfo("资料", R.drawable.icon_head_mine, 0),
         Order("订单",R.drawable.icon_trip_mine, 1),
-        Service("客服中心",R.drawable.icon_service_mine,2),
+        Service("客服中心",R.drawable.icon_kefu_mine,2),
         Setting("设置",R.drawable.icon_set_mine,3),
-        PayOff("我的车辆",R.drawable.icon_payment_mine,4);
+        PayOff("我的钱包",R.drawable.icon_payment_mine,4),
+        MyCar("我的车辆",R.drawable.icon_mycar_mine,5),
+       ;
         String name;
         int iconRes;
         int index;

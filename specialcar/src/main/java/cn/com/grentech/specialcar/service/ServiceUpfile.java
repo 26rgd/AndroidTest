@@ -20,6 +20,7 @@ import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import cn.com.grentech.specialcar.SysApplication;
 import cn.com.grentech.specialcar.abstraction.AbstractHandler;
 import cn.com.grentech.specialcar.abstraction.AbstractService;
 import cn.com.grentech.specialcar.common.http.HttpFileUnit;
@@ -144,8 +145,10 @@ public class ServiceUpfile extends AbstractService {
                 ErrorUnit.println(tag, e);
             }
         }
-        Iterator it = upFileList.getFiles().iterator();
-        while (it.hasNext()) {
+
+       Iterator it = upFileList.getFiles().iterator();
+        while (it.hasNext())
+           {
             boolean isExist = false;
             FileUploadInfo fileUploadInfo = (FileUploadInfo) it.next();
             for (final FileUploadInfo line : list) {
@@ -153,12 +156,18 @@ public class ServiceUpfile extends AbstractService {
                     isExist = true;
             }
             try {
-                if (!isExist) upFileList.getFiles().remove(fileUploadInfo);
+               // if (!isExist) upFileList.getFiles().remove(fileUploadInfo);
+                if (!isExist)
+                {
+                    it.remove();
+                  //  upFileList.getFiles().remove(fileUploadInfo);
+                }
             } catch (Exception e) {
                 ErrorUnit.println(tag, e);
             }
         }
 
+//        Iterator it = upFileList.getFiles().iterator();
         it = upFileList.getFiles().iterator();
         if (LoginInfo.loginInfo == null) LoginInfo.loginInfo = LoginInfo.readUserLoginInfo(this);
 

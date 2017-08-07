@@ -11,8 +11,10 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/WHITE">
-<include layout="@layout/main_titlebar"></include>
+    android:background="@drawable/bg_homepage"
+    >
+
+    <include layout="@layout/maincontent"></include>
 </FrameLayout>
 
 
@@ -23,35 +25,45 @@
         android:orientation="vertical"
         android:layout_gravity="start"
         android:gravity="center"
-        android:background="@color/MainMapTitleBackColor">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="40dp">
-            <com.powercn.grentechdriver.view.CircleImageView
-                android:id="@+id/popuwindow_icon"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                android:src="@drawable/head33"/>
-            <TextView
-                android:text="13800138000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/marginTop"
-                android:gravity="center"
-                android:textSize="@dimen/textSizeCallCar"
-                android:textColor="@color/WHITE"
-                android:id="@+id/tv_mainmap_popupwindows_name" />
-        </LinearLayout>
+        android:background="@color/WHITE">
+
+
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/bg_mine"
+               >
+                <com.powercn.grentechdriver.view.CircleImageView
+                    android:id="@+id/popuwindow_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_head_siji1"/>
+                <TextView
+                    android:id="@+id/tv_mainmap_popupwindows_name"
+                    android:text="13800138000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin5"
+                    android:gravity="center"
+                    android:layout_below="@+id/popuwindow_icon"
+                    android:textSize="@dimen/textSizeCallCar"
+                    android:textColor="@color/WHITE"
+                  />
+            </RelativeLayout>
+
+
         <ListView
             android:id="@+id/lv_leftmenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="5dp"/>
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

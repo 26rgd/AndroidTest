@@ -12,7 +12,7 @@
         android:gravity="center"
         android:layout_margin="@dimen/margin"
         android:id="@+id/textView14" />
-    <include layout="@layout/activity_divisive"></include>
+    <include layout="@layout/divisive"></include>
 
     <TextView
         android:text="确认取消订单?"
@@ -24,7 +24,7 @@
         android:textColor="@color/textColorSelectCarNoFocus"
         android:id="@+id/textView17" />
 
-    <include layout="@layout/activity_divisive"></include>
+    <include layout="@layout/divisive"></include>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -40,7 +40,7 @@
             android:layout_margin="@dimen/margin"
             android:textColor="@color/MainMapTitleBackColor"
             android:layout_weight="1" />
-<include layout="@layout/activity_divisive_h"></include>
+<include layout="@layout/divisive_h"></include>
         <TextView
             android:text="取消行程"
             android:layout_width="wrap_content"

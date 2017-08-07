@@ -71,6 +71,19 @@ public class ViewUnit {
         return color;
     }
 
+    public static int getSizeInt(Context context, int deminResId) {
+        Resources resources = context.getResources();
+        int color = 0;
+         color = resources.getDimensionPixelSize(deminResId);
+        return color;
+    }
+    public static float getSizeFloat(Context context, int deminResId) {
+        Resources resources = context.getResources();
+        float color = 0.0f;
+        color = resources.getDimension(deminResId);
+        return color;
+    }
+
     public static Drawable getDrawableId(Context context, int drawableId) {
         Resources resources = context.getResources();
         Drawable drawable = null;
@@ -129,5 +142,15 @@ public class ViewUnit {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        int statusBarHeight = 0;
+        Resources res = context.getResources();
+        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = res.getDimensionPixelSize(resourceId);
+        }
+        return statusBarHeight;
     }
 }

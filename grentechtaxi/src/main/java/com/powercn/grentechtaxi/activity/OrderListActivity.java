@@ -70,7 +70,7 @@ public class OrderListActivity  extends AbstractBasicActivity  {
 
         public MyOrderAdpter(Context context, List data, int itemres) {
             super(context, data, itemres);
-          //  HttpRequestTask.getAllOrderByMobile(activity.loginInfo.phone, 1, 200);
+            //  HttpRequestTask.getAllOrderByMobile(activity.loginInfo.phone, 1, 200);
         }
 
         @Override

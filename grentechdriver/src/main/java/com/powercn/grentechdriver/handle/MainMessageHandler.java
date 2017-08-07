@@ -86,22 +86,7 @@ public class MainMessageHandler extends Handler {
                            }
                             break;
                         case UpFile:
-                            //{"success":true,"headImage":"c:\\1234VVTT.png","message":"上传成功"}
-                            map = (Map) toObject(responeInfo.getJson(), Map.class);
-                            success = (Boolean) map.get("success");
-                            info = map.get("message").toString();
-                            if (success == true) {
-                                activity.responseUerInfo.setHeadImage(map.get("headImage").toString());
-                                 filename= getFileName(map.get("headImage").toString());
-                                activity.savefile(activity.upBitmap,filename);
-                                activity.loginInfo.bitmapPath=filename;
-                                LoginInfo.saveUserLoginInfo(activity,activity.loginInfo);
-                                activity.userInfoView.getUserAdpter().getHead().setImageBitmap(activity.upBitmap);
 
-                            } else {
-                                activity.upBitmap = null;
-                            }
-                            activity.showToast(info);
                             break;
                         case SaveUserInfo:
                             map = (Map) toObject(responeInfo.getJson(), Map.class);
@@ -111,17 +96,7 @@ public class MainMessageHandler extends Handler {
                             break;
 
                         case LoadFile:
-                            try {
-                                Bitmap bitmap=(Bitmap)responeInfo.getObject();
 
-                                filename= getFileName(responeInfo.getUrl());
-                                activity.savefile(bitmap,filename);
-                                activity.loginInfo.bitmapPath=filename;
-                                LoginInfo.saveUserLoginInfo(activity,activity.loginInfo);
-                            }catch (Exception e)
-                        {
-
-                        }
 
                             break;
                     }

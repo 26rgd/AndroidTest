@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heighRegisterLine"
+        android:layout_marginBottom="@dimen/margin5"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_registeritem1_title"
+            style="@style/registerLabel"
+            android:gravity="center"
+            android:text="车架号码" />
+        <EditText
+            android:id="@+id/tv_registeritem1_content"
+            style="@style/registerEdit"
+            android:ems="10"
+            android:hint="请输入车架号码"
+            android:inputType="number" />
+    </LinearLayout>
+    <include layout="@layout/divisive"></include>
+</LinearLayout>
