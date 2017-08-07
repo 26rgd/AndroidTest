@@ -40,6 +40,7 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
         }
         if(intent.getAction().equals("cn.jpush.android.intent.NOTIFICATION_OPENED"))
         {
+            //使用推送
             StringUnit.println(tag,"打开极光推送通知");
            if( SysApplication.getInstance().getList()==null||SysApplication.getInstance().getList().size()==0)
            {
