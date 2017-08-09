@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bill"
+        layout="@layout/common_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bt_bill_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/margin10"
+            android:layout_marginRight="@dimen/margin10"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:text="完成收款"
+            android:textColor="@color/textColorDefautl"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/text32px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/margin10"
+            android:layout_marginLeft="@dimen/margin10"
+            android:paddingTop="50dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/margin"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/uv_bill_amount"
+                    layout="@layout/up_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></include>
+            </LinearLayout>
+
+            <include layout="@layout/divisive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></include>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="行驶里程"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView7"
+                    style="@style/textLabelNoFocus"
+                    />
+
+
+
+                <TextView
+                    android:text="43.95km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView9"
+                    style="@style/textLabelFocus"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="行驶时间"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textLabelNoFocus"
+                    android:id="@+id/textView10"
+                    />
+
+
+                <TextView
+                    android:text="68min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    style="@style/textLabelFocus"
+                     />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

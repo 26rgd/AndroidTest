@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.abstration.AbstractChlidView;
+import com.powercn.grentechdriver.common.unit.ViewUnit;
 
 /**
  * Created by Administrator on 2017/8/4.
@@ -35,5 +36,9 @@ public class AddrItem1 extends AbstractChlidView {
     public void init(String titleContent, int resid) {
         addr.setText(titleContent);
         icon.setImageResource(resid);
+    }
+    public void initAddrTextColor(int colorId)
+    {
+        addr.setTextColor(ViewUnit.getColor(activity.getApplicationContext(),colorId));
     }
 }

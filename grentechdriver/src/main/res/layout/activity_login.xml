@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud">
+
+    <include
+        android:id="@+id/title_login"
+        layout="@layout/common_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"></include>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginTop="@dimen/margin">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <include layout="@layout/item_select"
+                android:id="@+id/loginpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></include>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <include layout="@layout/item_select"
+                android:id="@+id/logincrc"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></include>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/item_phone"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"></include>
+        <include layout="@layout/divisive"></include>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/item_password"
+            android:id="@+id/include_login_password"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+        <include layout="@layout/item_phonecrc"
+            android:id="@+id/include_login_crc"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"></include>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/divisive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+
+        <TextView
+            android:text="忘记密码"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:paddingRight="@dimen/margin"
+            android:gravity="right"
+            android:textColor="@color/textColorRegedit"
+            android:textSize="@dimen/text24px"
+            android:id="@+id/tv_login_findpassword" />
+
+        <TextView
+            android:id="@+id/tv_login_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:text="司机注册"
+            android:textColor="@color/textColorRegedit"
+            android:textSize="@dimen/text28px" />
+
+        <Button
+            android:id="@+id/bt_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/margin10"
+            android:layout_marginRight="@dimen/margin10"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:text="@string/action_sign_in"
+            android:textColor="@color/textColorDefautl"
+            android:textSize="@dimen/text32px" />
+    </LinearLayout>
+
+</LinearLayout>

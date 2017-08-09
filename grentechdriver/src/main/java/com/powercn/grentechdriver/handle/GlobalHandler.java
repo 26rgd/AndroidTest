@@ -68,7 +68,7 @@ public class GlobalHandler extends AbstratorHandler {
                         case SendSmsCrc:
                             map = (Map) toObject(responeInfo.getJson(), Map.class);
                             Double d = (Double) map.get("code");
-                            activity.getTv_login_crc().setText(String.valueOf(d.intValue()));
+                            activity.getPhonceCrcItem().getEtCrc().setText(String.valueOf(d.intValue()));
                             break;
                         case LoginBySmsCrc:
                             // {"success":true,"nickName":null,"headImage":null,"message":"登录成功","token":"3C5D207F7DF8C6261209A3BFF9CE3F2F"}
@@ -79,7 +79,7 @@ public class GlobalHandler extends AbstratorHandler {
                                 activity.showToast(info);
                                 LoginInfo loginInfo = new LoginInfo();
                                 loginInfo.doLoginSuccess = true;
-                                loginInfo.phone = activity.getTv_login_phone().getText().toString();
+                                loginInfo.phone = activity.getPhoneItem().getPhone().getText().toString();
                                 loginInfo.uuid = activity.deviceuuid;
                                 LoginInfo.saveUserLoginInfo(activity, loginInfo);
                                 LoginInfo.currentLoginSuccess = true;

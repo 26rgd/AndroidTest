@@ -1,7 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/WHITE">
+
     <include layout="@layout/common_titlebar"
-        android:id="@+id/title_orderdetail"></include>
+        android:id="@+id/title_orderdetail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"></include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
+
+        <include layout="@layout/item_iconhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="35dp">
+
+        <include layout="@layout/item_orderdetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
+
+        <TextView
+            android:text="27.50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/textColorMain3"
+            android:textSize="@dimen/textMainSize7"
+            android:layout_marginTop="50dp"
+            android:id="@+id/textView2" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <include layout="@layout/divisive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></include>
+        </LinearLayout>
+
+        <TextView
+            android:text="共支付车费（元）"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textMainSize6"
+            android:textColor="@color/textColorMain4"
+            android:gravity="center"
+            android:background="@color/WHITE"
+            android:id="@+id/textView4" />
+    </FrameLayout>
+
 </LinearLayout>

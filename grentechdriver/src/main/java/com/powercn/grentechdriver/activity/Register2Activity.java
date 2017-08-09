@@ -18,9 +18,7 @@ import com.powercn.grentechdriver.view.RegisterItem1;
 import com.powercn.grentechdriver.view.RegisterItem2;
 import com.powercn.grentechdriver.view.RegisterItem3;
 
-import static com.powercn.grentechdriver.R.id.bt_login_crc_send;
-import static com.powercn.grentechdriver.R.id.tv_login_phone;
-import static com.powercn.grentechdriver.R.id.tv_login_register;
+
 
 /**
  * Created by Administrator on 2017/7/27.
@@ -107,10 +105,7 @@ public class Register2Activity extends AbstractBasicActivity {
 
                 finish();
                 break;
-            case bt_login_crc_send:
 
-
-                break;
             case R.id.bt_login_submit:
                 jumpFinish(MineActivity.class);
                 // HttpRequestTask.loginBySms(this,tv_login_phone.getText().toString(),tv_login_crc.getText().toString(),deviceuuid);

@@ -3,6 +3,7 @@ package com.powercn.grentechdriver.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.powercn.grentechdriver.R;
@@ -52,6 +53,12 @@ public class OrderListActivity extends AbstractBasicActivity {
 
         orderListAdapter = new OrderListAdapter(this, list, R.layout.item_orderlist);
         listView.setAdapter(orderListAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                jumpForResult(OrderDetailactivity.class,22);
+            }
+        });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver.activity.mainmap;
+package com.powercn.grentechdriver.view;
 
 import android.view.View;
 import android.widget.Button;
@@ -6,6 +6,7 @@ import android.widget.NumberPicker;
 
 import com.powercn.grentechdriver.activity.MainActivity;
 import com.powercn.grentechdriver.R;
+import com.powercn.grentechdriver.abstration.AbstractDialogView;
 import com.powercn.grentechdriver.common.unit.DateUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 
@@ -18,7 +19,7 @@ import lombok.Getter;
  * Created by Administrator on 2017/5/12.
  */
 @Getter
-public class DeteTimeView extends AbstractChildView implements NumberPicker.Formatter, NumberPicker.OnValueChangeListener {
+public class DeteTimeView extends AbstractDialogView implements NumberPicker.Formatter, NumberPicker.OnValueChangeListener {
     private Button bt_selecttitme_sub;
     Button bt_selecttitme_cancle;
     NumberPicker numberPicker0;

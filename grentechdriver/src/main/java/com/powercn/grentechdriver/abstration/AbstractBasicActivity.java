@@ -16,7 +16,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.powercn.grentechdriver.SysApplication;
-import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
+
+
 import com.powercn.grentechdriver.common.unit.ErrorUnit;
 import com.powercn.grentechdriver.common.unit.StringUnit;
 import com.powercn.grentechdriver.handle.GlobalHandler;
@@ -38,7 +39,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity implements
     private Boolean isExit = false;
     private ImageView homePage;
     protected ConnectionService connectionService;
-    protected AbstractChildView self;
+
 
 
     @Override

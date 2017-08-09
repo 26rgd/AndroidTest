@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WHITE"
+    android:clickable="true"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/common_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/TitleHeight"></include>
+
+    <LinearLayout
+        android:id="@+id/la_login_form1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin5"
+        android:layout_marginRight="@dimen/margin5"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <include layout="@layout/item_phone" android:id="@+id/register1_phone"></include>
+
+        <include layout="@layout/divisive"></include>
+
+        <include layout="@layout/item_phonecrc" android:id="@+id/register1_phonecrc"></include>
+
+        <include layout="@layout/divisive"></include>
+
+        <include layout="@layout/item_password" android:id="@+id/register1_password"></include>
+
+        <include layout="@layout/divisive"></include>
+
+        <TextView
+            android:id="@+id/tv_login_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="司机注册"
+            android:textColor="@color/textColorRegedit"
+            android:textSize="@dimen/textSizeTitle" />
+
+        <Button
+            android:id="@+id/bt_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_clickcolor_radius"
+            android:text="@string/action_sign_in"
+            android:textColor="@color/textColorDefautl"
+            android:textSize="@dimen/textSize" />
+    </LinearLayout>
+
+
+</LinearLayout>

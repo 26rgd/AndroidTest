@@ -1,4 +1,4 @@
-package com.powercn.grentechdriver.activity.mainmap;
+package com.powercn.grentechdriver.abstration;
 
 import android.view.View;
 
@@ -8,11 +8,11 @@ import com.powercn.grentechdriver.activity.MainActivity;
  * Created by Administrator on 2017/5/9.
  */
 
-public abstract class AbstractChildView implements View.OnClickListener {
+public abstract class AbstractDialogView implements View.OnClickListener {
     protected MainActivity activity;
     protected View view;
 
-    public AbstractChildView(MainActivity activity, int resId) {
+    public AbstractDialogView(MainActivity activity, int resId) {
         this.activity = activity;
         this.view = findViewById(resId);
         initView();

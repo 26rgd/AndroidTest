@@ -50,6 +50,11 @@
         <activity android:name=".activity.MineActivity"></activity>
         <activity android:name=".activity.AnswerOrderActivity"></activity>
         <activity android:name=".activity.OrderListActivity"></activity>
+        <activity android:name=".activity.OrderDetailactivity"></activity>
+        <activity android:name=".activity.FindPassword1Activity"></activity>
+        <activity android:name=".activity.FindPassword2Activity"></activity>
+        <activity android:name=".activity.FindPassword3Activity"></activity>
+        <activity android:name=".activity.BillActivity"></activity>
     </application>
 
 </manifest>

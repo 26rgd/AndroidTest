@@ -34,6 +34,16 @@
     <dimen name="textMainSize2">24sp</dimen>
     <dimen name="textMainSize3">26sp</dimen>
     <dimen name="textMainSize4">28sp</dimen>
+    <dimen name="textMainSize5">15sp</dimen>
+    <dimen name="textMainSize6">17sp</dimen>
+    <dimen name="textMainSize7">56sp</dimen>
+    <dimen name="textMainSize8">22sp</dimen>
+
+    <dimen name="text24px">14sp</dimen>
+    <dimen name="text28px">16sp</dimen>
+    <dimen name="text30px">18sp</dimen>
+    <dimen name="text32px">19sp</dimen>
+    <dimen name="text35px">20sp</dimen>
 
     <dimen name="TitleImageSize">24dp</dimen>
     <dimen name="TitleBackImageSize">36dp</dimen>
@@ -52,6 +62,8 @@
     <dimen name="ImageMainIconSize">30dp</dimen>
 
     <dimen name="ItemHeight">45dp</dimen>
+    <dimen name="ItemHeightLogin">80dp</dimen>
+
     <dimen name="shapeRadius">4dp</dimen>
     <dimen name="shapeStroke">0px</dimen>
 

@@ -80,4 +80,6 @@ public abstract class AbstractAdpter<T> extends BaseAdapter implements View.OnCl
     public void onClick(View v) {
 
     }
+
+
 }

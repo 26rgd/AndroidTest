@@ -88,7 +88,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <!-- 这里是修改顶部标题背景颜色，具体颜色自己定，可以是图片 -->
-        <item name="android:textSize">@dimen/textSizeTitle</item>
+        <item name="android:textSize">@dimen/text35px</item>
         <!-- 这里是修改内容区域背景颜色 -->
         <item name="android:textColor">@color/WHITE</item>
     </style>
@@ -109,6 +109,30 @@
         <item name="android:layout_marginBottom">@dimen/marginBottom</item>
     </style>
 
+    <style name="textLabelFocus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/heighRegisterLine</item>
+        <item name="android:layout_marginLeft">@dimen/marginLeft10</item>
+        <item name="android:layout_marginRight">@dimen/marginRight</item>
+        <item name="android:layout_marginBottom">@dimen/marginBottom</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:textColor">@color/textColorMain3</item>
+        <item name="android:textSize">@dimen/text30px</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="textLabelNoFocus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/heighRegisterLine</item>
+        <item name="android:layout_marginLeft">@dimen/marginLeft10</item>
+        <item name="android:layout_marginRight">@dimen/marginRight</item>
+        <item name="android:layout_marginBottom">@dimen/marginBottom</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:textColor">@color/textColorMain4</item>
+        <item name="android:textSize">@dimen/text30px</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="registerLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/heighRegisterLine</item>
@@ -117,7 +141,7 @@
         <item name="android:layout_marginBottom">@dimen/marginBottom</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:textColor">@color/textColorRegisterLabel</item>
-        <item name="android:textSize">@dimen/textMainSize0</item>
+        <item name="android:textSize">@dimen/text30px</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -127,7 +151,7 @@
         <item name="android:layout_marginLeft">@dimen/marginBottom</item>
         <item name="android:layout_marginRight">@dimen/marginBottom</item>
         <item name="android:textColor">@color/textColorRegisterLabel</item>
-        <item name="android:textSize">@dimen/textMainSize0</item>
+        <item name="android:textSize">@dimen/text30px</item>
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:background">@null</item>
     </style>

@@ -17,6 +17,7 @@ public class MainItemView extends AbstractChlidView {
     private ImageView ivIcon;
     @Getter
     private ImageView ivDetail;
+    @Getter
     private TextView tvTitle;
     public MainItemView(Activity activity, int res) {
         super(activity, res);

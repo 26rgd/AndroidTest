@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/WHITE">
+
+
+
+    <include
+        android:id="@+id/orderlist_addr1"
+        layout="@layout/item_addr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+
+    <include
+        android:id="@+id/orderlist_addr2"
+        layout="@layout/item_addr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin10"
+        android:layout_marginBottom="@dimen/margin10"
+        >
+
+        <TextView
+            android:id="@+id/orderlist_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:layout_gravity="left|center_vertical"
+            android:textColor="@color/textColorMain4"
+            android:textSize="@dimen/textMainSize0"
+            android:text="2017-08-06 11:04:03" />
+
+        <TextView
+            android:id="@+id/orderlist_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/textColorMain4"
+            android:textSize="@dimen/textMainSize5"
+            android:gravity="right"
+            android:text="已完成" />
+    </FrameLayout>
+
+</LinearLayout>

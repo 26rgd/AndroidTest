@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.powercn.grentechdriver.R;
 import com.powercn.grentechdriver.abstration.AbstractBasicActivity;
 import com.powercn.grentechdriver.abstration.AbstratorHandler;
-import com.powercn.grentechdriver.activity.mainmap.AbstractChildView;
 import com.powercn.grentechdriver.adapter.MineAdapter;
 import com.powercn.grentechdriver.common.http.HttpRequestTask;
 import com.powercn.grentechdriver.common.unit.DateUnit;
@@ -133,7 +132,20 @@ public class MainActivity extends AbstractBasicActivity {
             }
         });
 
+        mainItemView1.getTvTitle().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpForResult(MineActivity.class,1);
+            }
+        });
+
         mainItemView2.getIvDetail().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpForResult(OrderListActivity.class,2);
+            }
+        });
+        mainItemView2.getTvTitle().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 jumpForResult(OrderListActivity.class,2);
